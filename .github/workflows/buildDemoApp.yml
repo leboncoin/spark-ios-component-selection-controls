@@ -1,0 +1,9 @@
+name: build-demo-app
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  build-demo-app:
+    uses: leboncoin/spark-ios-common/.github/workflows/buildDemoApp.yml@main

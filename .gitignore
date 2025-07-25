@@ -1,0 +1,15 @@
+.DS_Store
+/.build
+/Packages
+xcuserdata/
+DerivedData/
+.netrc
+.swiftpm/
+*Generated/
+Package.resolved
+.swiftlint/
+Tests/SnapshotTests/.__snapshots__/*/documentation*.png
+
+
+# SwiftLint Remote Config Cache
+.swiftlint/RemoteConfigCache
