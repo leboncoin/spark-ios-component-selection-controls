@@ -1,32 +1,32 @@
-# ___COMPONENT_NAME___
+# SelectionControls
 
 **Spark** is the [Leboncoin](https://www.leboncoin.fr/)'s _Design System_.
 
-The repository here contains only the **iOS ___COMPONENT_NAME___** for _SwiftUI_ and _UIKit_.
+The repository here contains only the **iOS SelectionControls** for _SwiftUI_ and _UIKit_.
 
 You can also see all of our Spark iOS repositories on [Github](https://github.com/orgs/leboncoin/repositories?q=spark-ios+sort%3Aname-asc).
 
 ## Specifications
 
-The ___component_name___ specifications is visible on [Zeroheight](TODO).
+The selectioncontrols specifications is visible on [Zeroheight](TODO).
 
-![Figma anatomy](https://github.com/leboncoin/___REPOSITORY_NAME___/blob/main/.github/assets/anatomy.png)
+![Figma anatomy](https://github.com/leboncoin/spark-ios-component-selection-controls/blob/main/.github/assets/anatomy.png)
 
 ## Technical Documentation
 
-You are a developer ? A technical documentation in _DocC_ is available [here](https://leboncoin.github.io/___REPOSITORY_NAME___/).
+You are a developer ? A technical documentation in _DocC_ is available [here](https://leboncoin.github.io/spark-ios-component-selection-controls/).
 
 ### Swift Package Manager
 
-_Note: Instructions below are for using **SPM** without the Xcode UI. It's the easiest to go to your Project Settings -> Swift Packages and add Spark___COMPONENT_NAME___ from there.\_
+_Note: Instructions below are for using **SPM** without the Xcode UI. It's the easiest to go to your Project Settings -> Swift Packages and add SparkSelectionControls from there.\_
 
 To integrate using Apple's Swift package manager, without Xcode integration, add the following as a dependency to your `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/leboncoin/___REPOSITORY_NAME___.git", .upToNextMajor(from: "1.0.0"))
+.package(url: "https://github.com/leboncoin/spark-ios-component-selection-controls.git", .upToNextMajor(from: "1.0.0"))
 ```
 
-and then specify `Spark___COMPONENT_NAME___` as a dependency of the Target in which you wish to use the Spark___COMPONENT_NAME___.
+and then specify `SparkSelectionControls` as a dependency of the Target in which you wish to use the SparkSelectionControls.
 
 Here's an example `Package.swift`:
 
@@ -46,7 +46,7 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/leboncoin/___REPOSITORY_NAME___.git",
+            url: "https://github.com/leboncoin/spark-ios-component-selection-controls.git",
             .upToNextMajor(from: "1.0.0")
         )
     ],
@@ -55,8 +55,8 @@ let package = Package(
             name: "MyPackage",
             dependencies: [
                 .product(
-                    name: "Spark___COMPONENT_NAME___",
-                    package: "___REPOSITORY_NAME___"
+                    name: "SparkSelectionControls",
+                    package: "spark-ios-component-selection-controls"
                 ),
             ]
         )
