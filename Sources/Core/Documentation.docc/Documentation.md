@@ -1,4 +1,4 @@
-# ``SparkSelectionControls``
+# ``SparkComponentSelectionControls``
 
 ## Overview
 

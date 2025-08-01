@@ -1,6 +1,6 @@
 //
 //  SparkToggleSnapshotTests.swift
-//  SparkSelectionControlsSnapshotTests
+//  SparkComponentSelectionControlsSnapshotTests
 //
 //  Created by robin.lemaire on 11/07/2025.
 //  Copyright © 2025 Leboncoin. All rights reserved.
@@ -8,7 +8,7 @@
 
 import XCTest
 import SnapshotTesting
-@testable import SparkSelectionControls
+@testable import SparkComponentSelectionControls
 @_spi(SI_SPI) import SparkCommon
 @_spi(SI_SPI) import SparkCommonTesting
 @_spi(SI_SPI) import SparkCommonSnapshotTesting

@@ -1,12 +1,12 @@
 //
 //  ToggleScenarioSnapshotTests.swift
-//  SparkSelectionControlsSnapshotTests
+//  SparkComponentSelectionControlsSnapshotTests
 //
 //  Created by robin.lemaire on 09/10/2024.
 //  Copyright © 2023 Leboncoin. All rights reserved.
 //
 
-@testable import SparkSelectionControls
+@testable import SparkComponentSelectionControls
 @_spi(SI_SPI) import SparkCommonSnapshotTesting
 @_spi(SI_SPI) import SparkCommon
 @_spi(SI_SPI) import SparkCommonTesting

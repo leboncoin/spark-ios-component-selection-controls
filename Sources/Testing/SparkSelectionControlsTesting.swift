@@ -1,9 +1,9 @@
 //
-//  ___COMPONENT_NAME___Testing.swift
-//  Spark___COMPONENT_NAME___
+//  SparkComponentSelectionControlsTesting.swift
+//  SparkComponentSelectionControls
 //
-//  Created by ___USERNAME___ on ___CURRENT_DATE___.
-//  Copyright © ___CURRENT_YEAR___ Leboncoin. All rights reserved.
+//  Created by robin.lemaire on 28/07/2025.
+//  Copyright © 2025 Leboncoin. All rights reserved.
 //
 
 import Foundation
