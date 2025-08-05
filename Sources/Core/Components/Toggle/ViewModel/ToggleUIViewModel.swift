@@ -10,7 +10,7 @@ import SwiftUI
 @_spi(SI_SPI) import SparkCommon
 import SparkTheming
 
-/// ViewModel only used by **SwiftUI** View.
+/// ViewModel only used by **UIKit** View.
 // sourcery: AutoPublisherTest, AutoViewModelStub
 final internal class ToggleUIViewModel: CommonUIViewModel<Bool> {
 

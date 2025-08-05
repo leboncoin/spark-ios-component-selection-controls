@@ -1,6 +1,6 @@
 //
 //  CheckboxIntentEnvironmentValues.swift
-//  SparkComponentSelectionControlsTests
+//  SparkComponentSelectionControls
 //
 //  Created by robin.lemaire on 23/07/2025.
 //  Copyright © 2025 Leboncoin. All rights reserved.

@@ -610,7 +610,7 @@ private final class Stub: ToggleUIViewModelStub {
         getTitleFontUseCaseMock.executeUIWithThemeReturnValue = self.expectedTitleFont
 
         let viewModel = ToggleUIViewModel(
-            theme: givenTheme,
+            theme: self.givenTheme,
             getAnimationTypeUseCase: getAnimationTypeUseCaseMock,
             getColorsUseCase: getColorsUseCaseMock,
             getContentRadiusUseCase: getContentRadiusUseCaseMock,

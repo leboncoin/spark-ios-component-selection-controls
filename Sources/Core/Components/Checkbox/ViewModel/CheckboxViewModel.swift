@@ -1,6 +1,6 @@
 //
 //  CheckboxViewModel.swift
-//  SparkComponentSelectionControlsTests
+//  SparkComponentSelectionControls
 //
 //  Created by robin.lemaire on 22/07/2025.
 //  Copyright © 2025 Leboncoin. All rights reserved.
@@ -35,7 +35,7 @@ final internal class CheckboxViewModel: CommonViewModel {
 
     var intent: CheckboxIntent? {
         didSet {
-            guard self.alreadyUpdateAll else { return }
+            guard oldValue != self.intent, self.alreadyUpdateAll else { return }
 
             self.setDynamicColors()
             self.setStaticColors()

@@ -1,6 +1,6 @@
 //
 //  CheckboxGroupAxis.swift
-//  SparkComponentSelectionControlsTests
+//  SparkComponentSelectionControls
 //
 //  Created by robin.lemaire on 23/07/2025.
 //
