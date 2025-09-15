@@ -14,7 +14,7 @@ extension EnvironmentValues {
 
 public extension View {
 
-    /// Set the **axis** on the``SparkCheckboxGroup``.
+    /// Set the **axis** on the ``SparkCheckboxGroup``.
     ///
     /// The default value for this property is *CheckboxGroupAxis.vertical*.
     func sparkCheckboxGroupAxis(_ axis: CheckboxGroupAxis) -> some View {

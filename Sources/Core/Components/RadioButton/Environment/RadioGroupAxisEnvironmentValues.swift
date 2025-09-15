@@ -14,7 +14,7 @@ extension EnvironmentValues {
 
 public extension View {
 
-    /// Set the **axis** on the``SparkRadioGroup``.
+    /// Set the **axis** on the ``SparkRadioGroup``.
     ///
     /// The default value for this property is *RadioGroupAxis.vertical*.
     func sparkRadioGroupAxis(_ axis: RadioGroupAxis) -> some View {
