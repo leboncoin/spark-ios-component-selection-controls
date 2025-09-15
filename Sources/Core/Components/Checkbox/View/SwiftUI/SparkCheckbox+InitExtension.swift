@@ -1,0 +1,211 @@
+//
+//  SparkCheckbox+InitExtension.swift
+//  SparkComponentSelectionControls
+//
+//  Created by robin.lemaire on 31/07/2025.
+//  Copyright © 2025 Leboncoin. All rights reserved.
+//
+
+import SwiftUI
+import SparkTheming
+
+public extension SparkCheckbox {
+
+    // MARK: - Initialization
+
+    /// Creates a Spark checkbox with an empty label.
+    ///
+    /// Note : You must provide an *accessibilityLabel* !
+    ///
+    /// - Parameters:
+    ///   - theme: The current theme.
+    ///   - isSelected: A binding to a property that indicates whether the checkbox is selected or unselected.
+    ///   - selectedIcon: The selected icon. Displayed when the isSelected is **true**.
+    ///
+    /// Implementation example :
+    /// ```swift
+    /// struct MyView: View {
+    ///     let theme: SparkTheming.Theme = MyTheme()
+    ///     @State var isSelected = false
+    ///
+    ///     var body: some View {
+    ///         SparkCheckbox(
+    ///             theme: self.theme,
+    ///             isSelected: self.$isSelected,
+    ///             selectedIcon: .init(systemName: "checkmark")
+    ///         )
+    ///     }
+    /// }
+    /// ```
+    ///
+    /// ![Checkbox rendering.](checkbox/component_unselected.png)
+    init(
+        theme: any Theme,
+        isSelected: Binding<Bool>,
+        selectedIcon: Image
+    ) where Label == EmptyView {
+        self.init(
+            theme: theme,
+            selectionState: Binding(
+                get: {
+                    isSelected.wrappedValue ? .selected : .unselected
+                },
+                set: { value in
+                    isSelected.wrappedValue = value == .selected
+                }
+            ),
+            selectedIcon: selectedIcon,
+            indeterminateIcon: nil
+        )
+    }
+
+    /// Creates a Spark checkbox that generates its label from a localized string key.
+    ///
+    /// - Parameters:
+    ///   - titleKey: The key for the checkbox's localized title, that describes
+    ///     the purpose of the checkbox.
+    ///   - theme: The current theme.
+    ///   - isSelected: A binding to a property that indicates whether the checkbox is selected or unselected.
+    ///   - selectedIcon: The selected icon. Displayed when the isSelected is **true**.
+    ///
+    /// Implementation example :
+    /// ```swift
+    /// struct MyView: View {
+    ///     let theme: SparkTheming.Theme = MyTheme()
+    ///     @State var isSelected = false
+    ///
+    ///     var body: some View {
+    ///         SparkCheckbox(
+    ///             "My placeholder",
+    ///             theme: self.theme,
+    ///             isSelected: self.$isSelected,
+    ///             selectedIcon: .init(systemName: "checkmark")
+    ///         )
+    ///     }
+    /// }
+    /// ```
+    ///
+    /// ![Checkbox rendering with a title.](checkbox/component_with_title.png)
+    init(
+        _ titleKey: LocalizedStringKey,
+        theme: any Theme,
+        isSelected: Binding<Bool>,
+        selectedIcon: Image
+    ) where Label == Text {
+        self.init(
+            titleKey,
+            theme: theme,
+            selectionState: Binding(
+                get: {
+                    isSelected.wrappedValue ? .selected : .unselected
+                },
+                set: { value in
+                    isSelected.wrappedValue = value == .selected
+                }
+            ),
+            selectedIcon: selectedIcon,
+            indeterminateIcon: nil
+        )
+    }
+
+    /// Creates a Spark checkbox that generates its label from a string.
+    ///
+    /// - Parameters:
+    ///   - text: The text for the checkbox's localized title, that describes
+    ///     the purpose of the checkbox.
+    ///   - theme: The current theme.
+    ///   - isSelected: A binding to a property that indicates whether the checkbox is selected or unselected.
+    ///   - selectedIcon: The selected icon. Displayed when the isSelected is **true**.
+    ///
+    /// Implementation example :
+    /// ```swift
+    /// struct MyView: View {
+    ///     let theme: SparkTheming.Theme = MyTheme()
+    ///     @State var isSelected = false
+    ///
+    ///     var body: some View {
+    ///         SparkCheckbox(
+    ///             "My placeholder",
+    ///             theme: self.theme,
+    ///             isSelected: self.$isSelected,
+    ///             selectedIcon: .init(systemName: "checkmark")
+    ///         )
+    ///     }
+    /// }
+    /// ```
+    ///
+    /// ![Checkbox rendering with a title.](checkbox/component_with_title.png)
+    init(
+        _ text: String,
+        theme: any Theme,
+        isSelected: Binding<Bool>,
+        selectedIcon: Image
+    ) where Label == Text {
+        self.init(
+            text,
+            theme: theme,
+            selectionState: Binding(
+                get: {
+                    isSelected.wrappedValue ? .selected : .unselected
+                },
+                set: { value in
+                    isSelected.wrappedValue = value == .selected
+                }
+            ),
+            selectedIcon: selectedIcon,
+            indeterminateIcon: nil
+        )
+    }
+
+    /// Creates a Spark checkbox that displays a custom label.
+    ///
+    /// - Parameters:
+    ///   - theme: The current theme.
+    ///   - isSelected: A binding to a property that indicates whether the checkbox is selected or unselected.
+    ///   - selectedIcon: The selected icon. Displayed when the isSelected is **true**.
+    ///   - label: A view that describes the purpose of the checkbox.
+    ///
+    /// Implementation example :
+    /// ```swift
+    /// struct MyView: View {
+    ///     let theme: SparkTheming.Theme = MyTheme()
+    ///     @State var isSelected = false
+    ///
+    ///     var body: some View {
+    ///         SparkCheckbox(
+    ///             theme: self.theme,
+    ///             isSelected: self.$isSelected,
+    ///             selectedIcon: .init(systemName: "checkmark"),
+    ///             label: {
+    ///                 VStack {
+    ///                     Text("Hello")
+    ///                     Text("World")
+    ///                 }
+    ///             }
+    ///         )
+    ///     }
+    /// }
+    /// ```
+    /// ![Checkbox rendering with a Label.](checkbox/component_with_label.png)
+    init(
+        theme: any Theme,
+        isSelected: Binding<Bool>,
+        selectedIcon: Image,
+        @ViewBuilder label: @escaping () -> Label
+    ) {
+        self.init(
+            theme: theme,
+            selectionState: Binding(
+                get: {
+                    isSelected.wrappedValue ? .selected : .unselected
+                },
+                set: { value in
+                    isSelected.wrappedValue = value == .selected
+                }
+            ),
+            selectedIcon: selectedIcon,
+            indeterminateIcon: nil,
+            label: label
+        )
+    }
+}
