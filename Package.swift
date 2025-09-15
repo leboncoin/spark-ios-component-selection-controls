@@ -5,18 +5,18 @@ import PackageDescription
 
 // swiftlint:disable all
 let package = Package(
-    name: "SparkSelectionControls",
+    name: "SparkComponentSelectionControls",
     platforms: [
         .iOS(.v16)
     ],
     products: [
         .library(
-            name: "SparkSelectionControls",
-            targets: ["SparkSelectionControls"]
+            name: "SparkComponentSelectionControls",
+            targets: ["SparkComponentSelectionControls"]
         ),
         .library(
-            name: "SparkSelectionControlsTesting",
-            targets: ["SparkSelectionControlsTesting"]
+            name: "SparkComponentSelectionControlsTesting",
+            targets: ["SparkComponentSelectionControlsTesting"]
         )
     ],
     dependencies: [
@@ -33,7 +33,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "SparkSelectionControls",
+            name: "SparkComponentSelectionControls",
             dependencies: [
                 .product(
                     name: "SparkCommon",
@@ -47,9 +47,9 @@ let package = Package(
             path: "Sources/Core"
         ),
         .target(
-            name: "SparkSelectionControlsTesting",
+            name: "SparkComponentSelectionControlsTesting",
             dependencies: [
-                "SparkSelectionControls",
+                "SparkComponentSelectionControls",
                 .product(
                     name: "SparkCommon",
                     package: "spark-ios-common"
@@ -70,10 +70,10 @@ let package = Package(
             path: "Sources/Testing"
         ),
         .testTarget(
-            name: "SparkSelectionControlsUnitTests",
+            name: "SparkComponentSelectionControlsUnitTests",
             dependencies: [
-                "SparkSelectionControls",
-                "SparkSelectionControlsTesting",
+                "SparkComponentSelectionControls",
+                "SparkComponentSelectionControlsTesting",
                 .product(
                     name: "SparkCommonTesting",
                     package: "spark-ios-common"
@@ -86,10 +86,10 @@ let package = Package(
             path: "Tests/UnitTests"
         ),
         .testTarget(
-            name: "SparkSelectionControlsSnapshotTests",
+            name: "SparkComponentSelectionControlsSnapshotTests",
             dependencies: [
-                "SparkSelectionControls",
-                "SparkSelectionControlsTesting",
+                "SparkComponentSelectionControls",
+                "SparkComponentSelectionControlsTesting",
                 .product(
                     name: "SparkCommonSnapshotTesting",
                     package: "spark-ios-common"
