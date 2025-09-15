@@ -17,6 +17,9 @@ extension UIView {
         cornerRadius: CGFloat? = nil,
         hoverColorToken: any ColorToken
     ) {
+        // Remove previous layer
+        layer?.removeFromSuperlayer()
+
         if show {
             let width = CommonConstants.hoverPadding
             let inset = -width / 2
@@ -49,9 +52,6 @@ extension UIView {
 
             self.layer.addSublayer(shape)
             layer = shape
-
-        } else if let layer {
-            layer.removeFromSuperlayer()
         }
     }
 }
