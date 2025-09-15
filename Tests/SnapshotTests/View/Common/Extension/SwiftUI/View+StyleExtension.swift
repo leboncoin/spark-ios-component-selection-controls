@@ -13,7 +13,7 @@ extension View {
     @ViewBuilder
     func style(forDocumentation: Bool, useLargePadding: Bool = false) -> some View {
         if forDocumentation {
-            self.padding(4)
+            self.padding(useLargePadding ? CommonSnapshotConstants.largePadding : 4)
                 .background(.background)
                 .fixedSize()
         } else {
