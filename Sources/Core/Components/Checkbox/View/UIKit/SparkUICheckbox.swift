@@ -533,7 +533,8 @@ public final class SparkUICheckbox: UIControl {
         self.toggleView.sparkBorderRadius(
             width: self.toggleBorderWidth,
             radius: self.toggleCornerRadius,
-            colorToken: dynamicColors.border
+            colorToken: dynamicColors.border,
+            masksToBounds: false
         )
     }
 
