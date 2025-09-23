@@ -484,7 +484,8 @@ public final class SparkUIRadioButton: UIControl {
         self.toggleView.sparkBorderRadius(
             width: self.toggleBorderWidth,
             radius: contentRadius,
-            colorToken: dynamicColors.circle
+            colorToken: dynamicColors.circle,
+            masksToBounds: false
         )
     }
 
