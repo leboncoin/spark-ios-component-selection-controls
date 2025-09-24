@@ -138,7 +138,7 @@ public final class SparkUISwitch: UIControl {
     ///
     /// Please **do not set a text/attributedText** in this label but use
     /// the ``text`` and ``attributedText`` directly on the ``SparkUISwitch``.
-    public var textLabel: UILabel = {
+    public private(set) var textLabel: UILabel = {
         let label = UILabel()
         label.applyStyle()
         label.accessibilityIdentifier = AccessibilityIdentifier.text
@@ -387,7 +387,7 @@ public final class SparkUISwitch: UIControl {
         self.setupToggleDotImageViewConstraints()
 
         // Text Label
-        self.setupTextLabelContraints()
+        self.setupTextLabelConstraints()
     }
 
     private func setupContentStackViewConstraints() {
@@ -464,7 +464,7 @@ public final class SparkUISwitch: UIControl {
         )
     }
 
-    private func setupTextLabelContraints() {
+    private func setupTextLabelConstraints() {
         self.textLabel.translatesAutoresizingMaskIntoConstraints = false
         self.textLabel.heightAnchor.constraint(greaterThanOrEqualTo: self.toggleView.heightAnchor).isActive = true
     }

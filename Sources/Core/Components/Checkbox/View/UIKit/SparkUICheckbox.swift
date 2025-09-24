@@ -117,7 +117,7 @@ public final class SparkUICheckbox: UIControl {
     ///
     /// Please **do not set a text/attributedText** in this label but use
     /// the ``text`` and ``attributedText`` directly on the ``SparkUICheckbox``.
-    public var textLabel: UILabel = {
+    public private(set) var textLabel: UILabel = {
         let label = UILabel()
         label.applyStyle()
         label.accessibilityIdentifier = AccessibilityIdentifier.text
@@ -384,10 +384,10 @@ public final class SparkUICheckbox: UIControl {
         self.setupToggleHiddenLabelConstraints()
         self.setupToggleViewConstraints()
         self.setupToggleImageViewConstraints()
-        self.setupTextLabelContraints()
+        self.setupTextLabelConstraints()
 
         // Text Label
-        self.setupTextLabelContraints()
+        self.setupTextLabelConstraints()
     }
 
     private func setupContentStackViewConstraints() {
@@ -443,7 +443,7 @@ public final class SparkUICheckbox: UIControl {
         )
     }
 
-    private func setupTextLabelContraints() {
+    private func setupTextLabelConstraints() {
         self.textLabel.translatesAutoresizingMaskIntoConstraints = false
         self.textLabel.heightAnchor.constraint(greaterThanOrEqualTo: self.toggleView.heightAnchor).isActive = true
     }
