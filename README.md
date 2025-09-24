@@ -2,15 +2,24 @@
 
 **Spark** is the [Leboncoin](https://www.leboncoin.fr/)'s _Design System_.
 
-The repository here contains only the **iOS SelectionControls** for _SwiftUI_ and _UIKit_.
+The repository here contains the _SwiftUI_ and _UIKit_ **iOS** : 
+- **Checkbox** & **CheckboxGroup**
+- **RadioButton** & **RadioGroup**
+- **Toggle** & **Switch**
 
 You can also see all of our Spark iOS repositories on [Github](https://github.com/orgs/leboncoin/repositories?q=spark-ios+sort%3Aname-asc).
 
 ## Specifications
 
-The switch/toggle specifications is visible on [Zeroheight](https://zeroheight.com/1186e1705/p/58a2c6-switch).
+- The checkbox/checkboxGroup specifications are visible on [Zeroheight](https://zeroheight.com/1186e1705/p/76f5a8-checkbox).
+![Figma anatomy](https://github.com/leboncoin/spark-ios-component-selection-controls/blob/main/.github/assets/anatomy-checkbox.png)
 
-![Figma anatomy](https://github.com/leboncoin/spark-ios-component-selection-controls/blob/main/.github/assets/anatomy.png)
+- The radioButton/radioGroup specifications are visible on [Zeroheight](https://zeroheight.com/1186e1705/p/98058f-radio-button).
+![Figma anatomy](https://github.com/leboncoin/spark-ios-component-selection-controls/blob/main/.github/assets/anatomy-radiogroup.png)
+
+- The toggle/switch specifications are visible on [Zeroheight](https://zeroheight.com/1186e1705/p/58a2c6-switch).
+![Figma anatomy](https://github.com/leboncoin/spark-ios-component-selection-controls/blob/main/.github/assets/anatomy-toggle.png)
+
 
 ## Technical Documentation
 
@@ -18,7 +27,7 @@ You are a developer ? A technical documentation in _DocC_ is available [here](ht
 
 ### Swift Package Manager
 
-_Note: Instructions below are for using **SPM** without the Xcode UI. It's the easiest to go to your Project Settings -> Swift Packages and add SparkSelectionControls from there.\_
+_Note: Instructions below are for using **SPM** without the Xcode UI. It's the easiest to go to your Project Settings -> Swift Packages and add SparkComponentSelectionControls from there.\_
 
 To integrate using Apple's Swift package manager, without Xcode integration, add the following as a dependency to your `Package.swift`:
 
@@ -26,7 +35,7 @@ To integrate using Apple's Swift package manager, without Xcode integration, add
 .package(url: "https://github.com/leboncoin/spark-ios-component-selection-controls.git", .upToNextMajor(from: "1.0.0"))
 ```
 
-and then specify `SparkSelectionControls` as a dependency of the Target in which you wish to use the SparkSelectionControls.
+and then specify `SparkComponentSelectionControls` as a dependency of the Target in which you wish to use the SparkComponentSelectionControls.
 
 Here's an example `Package.swift`:
 
@@ -55,7 +64,7 @@ let package = Package(
             name: "MyPackage",
             dependencies: [
                 .product(
-                    name: "SparkSelectionControls",
+                    name: "SparkComponentSelectionControls",
                     package: "spark-ios-component-selection-controls"
                 ),
             ]

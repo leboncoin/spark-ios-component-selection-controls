@@ -1,0 +1,85 @@
+//
+//  SparkCheckboxSnapshotTests.swift
+//  SparkComponentSelectionControlsSnapshotTests
+//
+//  Created by robin.lemaire on 11/09/2025.
+//  Copyright © 2025 Leboncoin. All rights reserved.
+//
+
+import XCTest
+import SnapshotTesting
+@testable import SparkComponentSelectionControls
+@_spi(SI_SPI) import SparkCommon
+@_spi(SI_SPI) import SparkCommonTesting
+@_spi(SI_SPI) import SparkCommonSnapshotTesting
+@_spi(SI_SPI) import SparkThemingTesting
+import SparkTheming
+import SparkTheme
+import SwiftUI
+
+final class SparkCheckboxSnapshotTests: SwiftUIComponentSnapshotTestCase {
+
+    // MARK: - Properties
+
+    private let theme: any Theme = SparkTheme.shared
+
+    // MARK: - Tests
+
+    func test() throws {
+        let forDocumentation = false
+
+        let scenarios = CheckboxScenarioSnapshotTests.allCases(forDocumentation: forDocumentation)
+
+        for scenario in scenarios {
+            let configurations: [CheckboxConfigurationSnapshotTests] = try scenario.configuration()
+
+            for configuration in configurations {
+                let view = self.component(configuration: configuration)
+                    .sparkCheckboxIntent(configuration.intent)
+                    .disabled(!configuration.status.isEnabled)
+                    .style(forDocumentation: forDocumentation)
+
+                self.assertSnapshot(
+                    matching: view,
+                    modes: configuration.modes,
+                    sizes: configuration.sizes,
+                    testName: configuration.testName()
+                )
+            }
+        }
+    }
+
+    @ViewBuilder func component(configuration: CheckboxConfigurationSnapshotTests) -> some View {
+        if let text = configuration.content.text {
+            SparkCheckbox(
+                text,
+                theme: self.theme,
+                selectionState: .constant(configuration.value.selectionState),
+                selectedIcon: .selected,
+                indeterminateIcon: .indeterminate
+            )
+        } else if configuration.content == .other {
+            SparkCheckbox(
+                theme: self.theme,
+                selectionState: .constant(configuration.value.selectionState),
+                selectedIcon: .selected,
+                indeterminateIcon: .indeterminate,
+                label: { OtherContentView() }
+            )
+        } else {
+            SparkCheckbox(
+                theme: self.theme,
+                selectionState: .constant(configuration.value.selectionState),
+                selectedIcon: .selected,
+                indeterminateIcon: .indeterminate
+            )
+        }
+    }
+}
+
+// MARK: - Extension
+
+private extension Image {
+    static var selected = Image(uiImage: IconographyTests.shared.checkmark)
+    static var indeterminate = Image(uiImage: IconographyTests.shared.arrow)
+}
