@@ -13,7 +13,7 @@ struct CheckboxStyle: ToggleStyle {
 
     // MARK: - Properties
 
-    @StateObject private var viewModel: CheckboxViewModel
+    private let viewModel: CheckboxViewModel
 
     private let selectedIcon: Image
     private let indeterminateIcon: Image?
@@ -38,7 +38,7 @@ struct CheckboxStyle: ToggleStyle {
         selectedIcon: Image,
         indeterminateIcon: Image?
     ) {
-        self._viewModel = .init(wrappedValue: viewModel)
+        self.viewModel = viewModel
         self.selectedIcon = selectedIcon
         self.indeterminateIcon = indeterminateIcon
 
