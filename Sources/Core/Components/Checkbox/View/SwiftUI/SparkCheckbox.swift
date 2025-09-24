@@ -246,7 +246,7 @@ public struct SparkCheckbox<Label>: View where Label: View {
     ///     var body: some View {
     ///         SparkCheckbox(
     ///             theme: self.theme,
-    ///             selectionState: self.$selectionState,,
+    ///             selectionState: self.$selectionState,
     ///             selectedIcon: .init(systemName: "checkmark"),
     ///             indeterminateIcon: .init(systemName: "minus")
     ///             label: {
