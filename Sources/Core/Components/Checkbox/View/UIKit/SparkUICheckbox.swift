@@ -1,8 +1,8 @@
 //
-//  SparkUIRadioButton.swift
+//  SparkUICheckbox.swift
 //  SparkComponentSelectionControls
 //
-//  Created by robin.lemaire on 02/09/2025.
+//  Created by robin.lemaire on 09/09/2025.
 //  Copyright © 2025 Leboncoin. All rights reserved.
 //
 
@@ -12,7 +12,7 @@ import SwiftUI
 @_spi(SI_SPI) import SparkCommon
 import SparkTheming
 
-/// A Spark control that radio button between selected and unselected states.
+/// A Spark control that checkbox between selected, indeterminate and unselected states.
 ///
 /// This component inherits from **UIControl**.
 ///
@@ -20,37 +20,44 @@ import SparkTheming
 /// ```swift
 /// let theme: SparkTheming.Theme = MyTheme()
 ///
-/// let myRadioButton = SparkUIRadioButton(
-///     theme: theme
+/// let myCheckbox = SparkUICheckbox(
+///     theme: theme,
+///     selectedIcon: .init(systemName: "checkmark")!,
+///     indeterminateIcon: .init(systemName: "minus")!
 /// )
 /// ```
 ///
-/// RadioButton when isSelected is **true** :
-/// ![RadioButton rendering.](radioButton/component_selected.png)
+/// Checkbox when selectionState is **selected** or isSelected is **true**:
+/// ![Checkbox rendering.](checkbox/component_selected.png)
 ///
-/// RadioButton when isSelected is **false**:
-/// ![RadioButton rendering.](radioButton/component_unselected.png)
+/// Checkbox when selectionState is **unselected** or isSelected is **false**:
+/// ![Checkbox rendering.](checkbox/component_unselected.png)
+///
+/// Checkbox when selectionState is **indeterminate**:
+/// ![Checkbox rendering.](checkbox/component_indeterminate.png)
 ///
 /// To add a text, you must provide a **text** or a **attributedText**:
 /// ```swift
 /// let theme: SparkTheming.Theme = MyTheme()
 ///
-/// let myRadioButton = SparkUIRadioButton(
-///     theme: theme
+/// let myCheckbox = SparkUICheckbox(
+///     theme: theme,
+///     selectedIcon: .init(systemName: "checkmark")!,
+///     indeterminateIcon: .init(systemName: "minus")!
 /// )
-/// myRadioButton.text = "My radio button"
+/// myCheckbox.text = "My checkbox"
 /// ```
 /// *Note*: Please **do not set a text/attributedText** on the ``textLabel`` but use the ``text`` and
-/// ``attributedText`` directly on the ``SparkUIRadioButton``.
-/// ![RadioButton rendering with a text.](radioButton/component_with_title.png)
+/// ``attributedText`` directly on the ``SparkUICheckbox``.
+/// ![Checkbox rendering with a text.](checkbox/component_with_title.png)
 ///
-/// ![RadioButton rendering with a multiline text.](radioButton/component_with_mutliline.png)
-public final class SparkUIRadioButton: UIControl {
+/// ![Checkbox rendering with a multiline text.](checkbox/component_with_mutliline.png)
+public final class SparkUICheckbox: UIControl {
 
     // MARK: - Type alias
 
-    private typealias AccessibilityIdentifier = RadioButtonAccessibilityIdentifier
-    private typealias Constants = RadioButtonConstants
+    private typealias AccessibilityIdentifier = CheckboxAccessibilityIdentifier
+    private typealias Constants = CheckboxConstants
 
     // MARK: - Components
 
@@ -87,7 +94,7 @@ public final class SparkUIRadioButton: UIControl {
     private lazy var toggleView: UIView = {
         let view = UIView()
         view.accessibilityIdentifier = AccessibilityIdentifier.toggleView
-        view.addSubview(self.toggleSelectedDotView)
+        view.addSubview(self.toggleImageView)
         view.setContentCompressionResistancePriority(
             .required,
             for: .vertical
@@ -100,12 +107,16 @@ public final class SparkUIRadioButton: UIControl {
         return view
     }()
 
-    private lazy var toggleSelectedDotView = UIView()
+    private var toggleImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        return imageView
+    }()
 
-    /// The UILabel used to display the radio button text.
+    /// The UILabel used to display the checkbox text.
     ///
     /// Please **do not set a text/attributedText** in this label but use
-    /// the ``text`` and ``attributedText`` directly on the ``SparkUIRadioButton``.
+    /// the ``text`` and ``attributedText`` directly on the ``SparkUICheckbox``.
     public private(set) var textLabel: UILabel = {
         let label = UILabel()
         label.applyStyle()
@@ -115,11 +126,15 @@ public final class SparkUIRadioButton: UIControl {
 
     // MARK: - Public Properties
 
+    private let selectionStateSubject = PassthroughSubject<CheckboxSelectionState, Never>()
+    /// The publisher used to notify when selectionState value changed on checkbox.
+    public private(set) lazy var selectionStatePublisher: AnyPublisher<CheckboxSelectionState, Never> = self.selectionStateSubject.eraseToAnyPublisher()
+
     private let isSelectedChangedSubject = PassthroughSubject<Bool, Never>()
-    /// The publisher used to notify when isSelected value changed on radio button.
+    /// The publisher used to notify when isSelected value changed on checkbox.
     public private(set) lazy var isSelectedChangedPublisher: AnyPublisher<Bool, Never> = self.isSelectedChangedSubject.eraseToAnyPublisher()
 
-    /// The spark theme of the radio button.
+    /// The spark theme of the checkbox.
     public var theme: any Theme {
         get {
             return self.viewModel.theme
@@ -129,8 +144,8 @@ public final class SparkUIRadioButton: UIControl {
         }
     }
 
-    /// The intent of the radio button.
-    public var intent: RadioButtonIntent {
+    /// The intent of the checkbox.
+    public var intent: CheckboxIntent {
         get {
             return self.viewModel.intent
         }
@@ -139,7 +154,7 @@ public final class SparkUIRadioButton: UIControl {
         }
     }
 
-    /// The text of the radio button.
+    /// The text of the checkbox.
     public var text: String? {
         get {
             return self.textLabel.text
@@ -154,7 +169,7 @@ public final class SparkUIRadioButton: UIControl {
         }
     }
 
-    /// The attributed text of the radio button.
+    /// The attributed text of the checkbox.
     public var attributedText: NSAttributedString? {
         get {
             return self.textLabel.attributedText
@@ -169,14 +184,20 @@ public final class SparkUIRadioButton: UIControl {
         }
     }
 
-    /// The value of the radio button (retrieve and set without animation).
+    /// The current selection state of the checkbox.
     ///
-    /// RadioButton when isSelected is **true** :
-    /// ![RadioButton rendering.](radioButton/component_selected.png)
+    /// Note: If you don't need to have an **indeterminate** state,
+    /// you must use the ``isSelected`` property.
     ///
-    /// RadioButton when isSelected is **false**:
-    /// ![RadioButton rendering.](radioButton/component_unselected.png)
-    public override var isSelected: Bool {
+    /// Checkbox when selectionState is **selected**:
+    /// ![Checkbox rendering.](checkbox/component_selected.png)
+    ///
+    /// Checkbox when selectionState is **unselected**:
+    /// ![Checkbox rendering.](checkbox/component_unselected.png)
+    ///
+    /// Checkbox when selectionState is **indeterminate**:
+    /// ![Checkbox rendering.](checkbox/component_indeterminate.png)
+    public var selectionState: CheckboxSelectionState {
         get {
             return self.viewModel.selectedValue
         }
@@ -186,8 +207,24 @@ public final class SparkUIRadioButton: UIControl {
         }
     }
 
-    /// The state of the radio button: enabled or not.
-    /// ![RadioButton rendering with when it's disabled.](radioButton/component_disabled.png)
+    /// The value of the checkbox (retrieve and set without animation).
+    ///
+    /// Checkbox when isSelected is **selected** :
+    /// ![Checkbox rendering.](checkbox/component_selected.png) 
+    ///
+    /// Checkbox when isSelected is **unselected**:
+    /// ![Checkbox rendering.](checkbox/component_unselected.png)
+    public override var isSelected: Bool {
+        get {
+            return self.selectionState == .selected
+        }
+        set {
+            self.selectionState = newValue ? .selected : .unselected
+        }
+    }
+
+    /// The state of the checkbox: enabled or not.
+    /// ![Checkbox rendering with when it's disabled.](checkbox/component_disabled.png)
     public override var isEnabled: Bool {
         get {
             return self.viewModel.isEnabled
@@ -198,7 +235,7 @@ public final class SparkUIRadioButton: UIControl {
         }
     }
 
-    /// A localized string that describes the radio button.
+    /// A localized string that describes the checkbox.
     public override var accessibilityLabel: String? {
         get {
             return self.toggleView.accessibilityLabel
@@ -210,20 +247,27 @@ public final class SparkUIRadioButton: UIControl {
 
     // MARK: - Internal Properties
 
-    /// The identifier of the radio button. Used by the ``SparkUIRadioGroup``. *Optional*. 
+    /// The identifier of the checkbox. Used by the ``SparkUICheckboxGroup``. *Optional*.
     internal var id: String?
 
     // MARK: - Private Properties
 
-    private let viewModel: RadioButtonUIViewModel
+    private let viewModel: CheckboxUIViewModel
 
     private var toggleWidthConstraint: NSLayoutConstraint?
 
     private var toggleSelectedDotWidthConstraint: NSLayoutConstraint?
 
-    @LimitedScaledUIMetric private var toggleWidth: CGFloat = Constants.size
-    @LimitedScaledUIMetric private var toggleSelectedDotWidth: CGFloat = 0
-    @LimitedScaledUIMetric private var toggleBorderWidth: CGFloat = Constants.lineWidth
+    private var toggleImageLeadingConstraint: NSLayoutConstraint?
+    private var toggleImageTopConstraint: NSLayoutConstraint?
+
+    @LimitedScaledUIMetric private var toggleWidth: CGFloat
+    @LimitedScaledUIMetric private var toggleBorderWidth: CGFloat
+    @LimitedScaledUIMetric private var toggleCornerRadius: CGFloat = 0
+    @LimitedScaledUIMetric private var toggleIconPadding: CGFloat
+
+    private let selectedIcon: UIImage
+    private let indeterminateIcon: UIImage?
 
     private var isReduceMotionEnabled: Bool {
         UIAccessibility.isReduceMotionEnabled
@@ -235,31 +279,42 @@ public final class SparkUIRadioButton: UIControl {
 
     // MARK: - Initialization
 
-    /// Creates a Spark radio button.
+    /// Creates a Spark checkbox.
     ///
     /// Note : You must provide an *accessibilityLabel* !
     ///
     /// - Parameters:
     ///   - theme: The current theme.
+    ///   - selectedIcon: The selected icon. Displayed when the selectionState is **selected**.
+    ///   - indeterminateIcon: The indeterminate icon. Displayed when the selectionState is **indeterminate**. *Optional*.
     ///
     /// Implementation example :
     /// ```swift
     /// let theme: SparkTheming.Theme = MyTheme()
     ///
-    /// let myRadioButton = SparkUIRadioButton(
-    ///     theme: theme
+    /// let myCheckbox = SparkUICheckbox(
+    ///     theme: theme,
+    ///     selectedIcon: .init(systemName: "checkmark")!,
+    ///     indeterminateIcon: .init(systemName: "minus")!
     /// )
     /// ```
     ///
-    /// ![RadioButton rendering.](radioButton/component_unselected.png)
-    public init(theme: any Theme) {
+    /// ![Checkbox rendering.](checkbox/component_unselected.png)
+    public init(
+        theme: any Theme,
+        selectedIcon: UIImage,
+        indeterminateIcon: UIImage?
+    ) {
         self.viewModel = .init(
             theme: theme
         )
 
+        self.selectedIcon = selectedIcon
+        self.indeterminateIcon = indeterminateIcon
+
         self._toggleWidth = .init(wrappedValue: Constants.size)
-        self._toggleSelectedDotWidth = .init(wrappedValue: 0)
         self._toggleBorderWidth = .init(wrappedValue: Constants.lineWidth)
+        self._toggleIconPadding = .init(wrappedValue: Constants.iconPadding)
 
         super.init(frame: .zero)
 
@@ -301,7 +356,6 @@ public final class SparkUIRadioButton: UIControl {
 
         // Updates
         self.updateToggleViewSize()
-        self.updateToggleSelectedDotView()
 
         // Load view model
         self.viewModel.load(
@@ -324,12 +378,12 @@ public final class SparkUIRadioButton: UIControl {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.setupContentStackViewConstraints()
 
-        // RadioButton View and subviews
+        // Checkbox View and subviews
         self.setupContentStackViewConstraints()
         self.setupToggleContentViewConstraints()
         self.setupToggleHiddenLabelConstraints()
         self.setupToggleViewConstraints()
-        self.setupToggleSelectedDotViewConstraints()
+        self.setupToggleImageViewConstraints()
         self.setupTextLabelConstraints()
 
         // Text Label
@@ -375,14 +429,16 @@ public final class SparkUIRadioButton: UIControl {
         )
     }
 
-    private func setupToggleSelectedDotViewConstraints() {
-        self.toggleSelectedDotView.translatesAutoresizingMaskIntoConstraints = false
+    private func setupToggleImageViewConstraints() {
+        self.toggleImageView.translatesAutoresizingMaskIntoConstraints = false
 
-        self.toggleSelectedDotWidthConstraint = self.toggleSelectedDotView.widthAnchor.constraint(equalToConstant: .zero)
-        self.toggleSelectedDotView.heightAnchor.constraint(equalTo: self.toggleSelectedDotView.widthAnchor).isActive = true
+        self.toggleImageLeadingConstraint = self.toggleImageView.leadingAnchor.constraint(equalTo: self.toggleView.leadingAnchor)
+        self.toggleImageLeadingConstraint?.isActive = true
+        self.toggleImageTopConstraint = self.toggleImageView.topAnchor.constraint(equalTo: self.toggleView.topAnchor)
+        self.toggleImageTopConstraint?.isActive = true
 
         NSLayoutConstraint.center(
-            from: self.toggleSelectedDotView,
+            from: self.toggleImageView,
             to: self.toggleView
         )
     }
@@ -405,21 +461,29 @@ public final class SparkUIRadioButton: UIControl {
 
     // MARK: - Setter
 
-    /// Set the selection of the radio button and optionally animating the transition.
-    public func setIsSelected(_ isSelected: Bool, animated: Bool) {
+    /// Set the selection state of the checkbox and optionally animating the transition.
+    public func setSelectionState(_ selectionState: CheckboxSelectionState, animated: Bool) {
         self.viewModel.setSelectedValue(
-            isSelected,
+            selectionState,
             animated: animated
         )
 
         self.updateAccessibilityValue()
     }
 
+    /// Set the isSelected of the checkbox and optionally animating the transition.
+    public func setIsSelected(_ isSelected: Bool, animated: Bool) {
+        self.setSelectionState(
+            isSelected ? .selected : .unselected,
+            animated: animated
+        )
+    }
+
     // MARK: - Actions
 
     @objc private func buttonLongGestureAction(_ sender: UILongPressGestureRecognizer) {
         switch sender.state {
-        case .began where !self.isReduceMotionEnabled && !self.isSelected:
+        case .began where !self.isReduceMotionEnabled:
             self.updateHover(show: true)
         case .ended:
             self.toggleAction()
@@ -430,15 +494,14 @@ public final class SparkUIRadioButton: UIControl {
     }
 
     private func toggleAction() {
-        guard self.viewModel.toggleIfPossible() else {
-            return
-        }
+        self.viewModel.toggle()
 
         // Accessibility
         self.updateAccessibilityValue()
 
         // Action
         self.sendActions(for: .valueChanged)
+        self.selectionStateSubject.send(self.selectionState)
         self.isSelectedChangedSubject.send(self.isSelected)
 
         // Haptic
@@ -462,43 +525,35 @@ public final class SparkUIRadioButton: UIControl {
         }
     }
 
-    private func updateToggleSelectedDotView() {
-        if self.toggleSelectedDotWidth != self.toggleSelectedDotWidthConstraint?.constant {
-
-            self.toggleSelectedDotWidthConstraint?.constant = self.toggleSelectedDotWidth
-            self.toggleSelectedDotWidthConstraint?.isActive = true
-
-            self.toggleSelectedDotView.updateConstraints()
-
-            self.updateToggleSelectedDotCornerRadius()
-        }
-    }
-
     private func updateToggleBorderRadius(
-        dynamicColors: RadioButtonDynamicColors? = nil,
-        contentRadius: CGFloat? = nil
+        dynamicColors: CheckboxDynamicColors? = nil
     ) {
         let dynamicColors = dynamicColors ?? self.viewModel.dynamicColors
-        let contentRadius = contentRadius ?? self.viewModel.contentRadius
         self.layoutIfNeeded()
         self.toggleView.sparkBorderRadius(
             width: self.toggleBorderWidth,
-            radius: contentRadius,
-            colorToken: dynamicColors.circle,
+            radius: self.toggleCornerRadius,
+            colorToken: dynamicColors.border,
             masksToBounds: false
         )
     }
 
-    private func updateToggleSelectedDotCornerRadius(contentRadius: CGFloat? = nil) {
-        let contentRadius = contentRadius ?? self.viewModel.contentRadius
-        self.layoutIfNeeded()
-        self.toggleSelectedDotView.sparkCornerRadius(contentRadius)
+    private func updateToggleImageViewPadding() {
+        // Reload spacing only if value changed
+        if self.toggleIconPadding != self.toggleImageLeadingConstraint?.constant {
+            self.toggleImageLeadingConstraint?.constant = self.toggleIconPadding
+            self.toggleImageTopConstraint?.constant = self.toggleIconPadding
+
+            self.toggleImageView.updateConstraintsIfNeeded()
+            self.invalidateIntrinsicContentSize()
+        }
     }
 
     private func updateHover(show: Bool) {
         self.toggleView.updateHover(
             show: show,
             layer: &self.hoverToggleLayer,
+            cornerRadius: self.toggleCornerRadius,
             hoverColorToken: self.viewModel.staticColors.hover
         )
     }
@@ -541,7 +596,7 @@ public final class SparkUIRadioButton: UIControl {
         self.viewModel.$staticColors.subscribe(in: &self.subscriptions) { [weak self] staticColors in
             guard let self else { return }
 
-            self.toggleSelectedDotView.backgroundColor(staticColors.dot)
+            self.toggleImageView.tintColor(staticColors.iconForeground)
         }
         // **
 
@@ -550,7 +605,40 @@ public final class SparkUIRadioButton: UIControl {
         self.viewModel.$dynamicColors.subscribe(in: &self.subscriptions) { [weak self] dynamicColors in
             guard let self else { return }
 
-            self.updateToggleBorderRadius(dynamicColors: dynamicColors)
+            UIView.execute(animationType: self.viewModel.dynamicAnimationType) { [weak self] in
+                guard let self else { return }
+
+                self.toggleView.backgroundColor(dynamicColors.background)
+                self.updateToggleBorderRadius(dynamicColors: dynamicColors)
+
+            } completion: { [weak self] _ in
+                self?.viewModel.setCompletedAnimation(.dynamicColors)
+            }
+        }
+        // **
+
+        // **
+        // Is Icon
+        self.viewModel.$isIcon.subscribe(in: &self.subscriptions) { [weak self] isIcon in
+            guard let self else { return }
+
+            let icon: UIImage? = switch self.selectionState {
+            case .selected: self.selectedIcon
+            case .indeterminate: self.indeterminateIcon
+            default: nil
+            }
+
+            UIView.execute(
+                with: self.toggleImageView,
+                animationType: self.viewModel.dynamicAnimationType,
+                options: .transitionCrossDissolve,
+                instructions: { [weak self] in
+                    self?.toggleImageView.image = icon
+                },
+                completion: { [weak self] _ in
+                    self?.viewModel.setCompletedAnimation(.isIcon)
+                }
+            )
         }
         // **
 
@@ -559,8 +647,11 @@ public final class SparkUIRadioButton: UIControl {
         self.viewModel.$contentRadius.subscribe(in: &self.subscriptions) { [weak self] contentRadius in
             guard let self else { return }
 
-            self.updateToggleBorderRadius(contentRadius: contentRadius)
-            self.updateToggleSelectedDotCornerRadius(contentRadius: contentRadius)
+            self._toggleCornerRadius = .init(
+                wrappedValue: contentRadius,
+                traitCollection: self.traitCollection
+            )
+            self.updateToggleBorderRadius()
         }
         // **
 
@@ -594,29 +685,6 @@ public final class SparkUIRadioButton: UIControl {
             self.invalidateIntrinsicContentSize()
         }
         // **
-
-        // **
-        // Show selected dot
-        self.viewModel.$showSelectedDot.subscribe(in: &self.subscriptions) { [weak self] showSelectedDot in
-            guard let self else { return }
-
-            UIView.execute(animationType: self.viewModel.dynamicAnimationType) { [weak self] in
-                guard let self else { return }
-
-                self._toggleSelectedDotWidth = .init(
-                    wrappedValue: showSelectedDot ? Constants.dotSize : 0,
-                    traitCollection: self.traitCollection
-                )
-
-                self.updateToggleSelectedDotView()
-
-            } completion: { [weak self] _ in
-                guard let self else { return }
-
-                self.viewModel.setCompletedAnimation(.showSelectedDot)
-            }
-        }
-        // **
     }
 
     // MARK: - Trait Collection
@@ -629,12 +697,12 @@ public final class SparkUIRadioButton: UIControl {
         self._toggleWidth.update(traitCollection: self.traitCollection)
         self.updateToggleViewSize()
 
-        self._toggleSelectedDotWidth.update(traitCollection: self.traitCollection)
-        self.updateToggleSelectedDotView()
-        self.updateToggleSelectedDotCornerRadius()
-
+        self._toggleCornerRadius.update(traitCollection: self.traitCollection)
         self._toggleBorderWidth.update(traitCollection: self.traitCollection)
         self.updateToggleBorderRadius()
+
+        self._toggleIconPadding.update(traitCollection: self.traitCollection)
+        self.updateToggleImageViewPadding()
         // **
     }
 }
