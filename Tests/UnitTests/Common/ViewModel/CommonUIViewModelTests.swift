@@ -603,47 +603,35 @@ private func XCTAssertNotCalled(
     getTitleStyle getTitleStyleNotCalled: Bool = false,
     resetAnimation resetAnimationNotCalled: Bool = false
 ) {
-    if getStaticAnimationTypeNotCalled {
-        CommonGetAnimationTypeUseCaseableMockTest.XCTCallsCount(
-            stub.getAnimationTypeUseCaseMock,
-            executeWithIsReduceMotionEnabledNumberOfCalls: 0
-        )
-    }
+    CommonGetAnimationTypeUseCaseableMockTest.XCTCalled(
+        stub.getAnimationTypeUseCaseMock,
+        executeWithIsReduceMotionEnabledCalled: !getStaticAnimationTypeNotCalled
+    )
 
-    if getDynamicAnimationTypeNotCalled {
-        CommonGetAnimationTypeUseCaseableMockTest.XCTCallsCount(
-            stub.getAnimationTypeUseCaseMock,
-            executeWithSelectedValueAnimatedAndIsReduceMotionEnabledNumberOfCalls: 0
-        )
-    }
+    CommonGetAnimationTypeUseCaseableMockTest.XCTCalled(
+        stub.getAnimationTypeUseCaseMock,
+        executeWithSelectedValueAnimatedAndIsReduceMotionEnabledCalled: !getDynamicAnimationTypeNotCalled
+    )
 
-    if getContentRadiusNotCalled {
-        CommonGetContentRadiusUseCaseableMockTest.XCTCallsCount(
-            stub.getContentRadiusUseCaseMock,
-            executeWithThemeAndTypeNumberOfCalls: 0
-        )
-    }
+    CommonGetContentRadiusUseCaseableMockTest.XCTCalled(
+        stub.getContentRadiusUseCaseMock,
+        executeWithThemeAndTypeCalled: !getContentRadiusNotCalled
+    )
 
-    if getSpacingNotCalled {
-        CommonGetSpacingUseCaseableMockTest.XCTCallsCount(
-            stub.getSpacingUseCaseMock,
-            executeWithThemeNumberOfCalls: 0
-        )
-    }
+    CommonGetSpacingUseCaseableMockTest.XCTCalled(
+        stub.getSpacingUseCaseMock,
+        executeWithThemeCalled: !getSpacingNotCalled
+    )
 
-    if getTitleStyleNotCalled {
-        CommonGetTitleStyleUseCaseableMockTest.XCTCallsCount(
-            stub.getTitleStyleUseCaseMock,
-            executeWithThemeNumberOfCalls: 0
-        )
-    }
+    CommonGetTitleStyleUseCaseableMockTest.XCTCalled(
+        stub.getTitleStyleUseCaseMock,
+        executeWithThemeCalled: !getTitleStyleNotCalled
+    )
 
-    if resetAnimationNotCalled {
-        CommonResetAnimationUseCaseableMockTest.XCTCallsCount(
-            stub.resetAnimationUseCaseMock,
-            executeWithAnimationTypeAndCompletedAnimationsAndSelectedValueAnimatedAndIsReduceMotionEnabledNumberOfCalls: 0
-        )
-    }
+    CommonResetAnimationUseCaseableMockTest.XCTCalled(
+        stub.resetAnimationUseCaseMock,
+        executeWithAnimationTypeAndCompletedAnimationsAndSelectedValueAnimatedAndIsReduceMotionEnabledCalled: !resetAnimationNotCalled
+    )
 }
 
 private func XCTAssertEqualToExpected(

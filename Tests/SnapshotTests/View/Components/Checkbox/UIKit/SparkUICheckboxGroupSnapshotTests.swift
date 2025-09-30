@@ -35,8 +35,7 @@ final class SparkUICheckboxGroupSnapshotTests: UIKitComponentSnapshotTestCase {
             let configurations: [CommonGroupConfigurationSnapshotTests] = try scenario.configuration()
             for configuration in configurations {
                 let view = SparkUICheckboxGroup<Int>(
-                    theme: self.theme,
-                    selectedIcon: .selected
+                    theme: self.theme
                 )
                 view.axis = configuration.axis
                 view.intent = configuration.intent
@@ -56,10 +55,4 @@ final class SparkUICheckboxGroupSnapshotTests: UIKitComponentSnapshotTestCase {
             }
         }
     }
-}
-
-// MARK: - Extension
-
-private extension UIImage {
-    static var selected = IconographyTests.shared.checkmark
 }

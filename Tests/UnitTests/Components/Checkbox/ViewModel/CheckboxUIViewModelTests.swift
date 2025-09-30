@@ -330,7 +330,8 @@ final class CheckboxUIViewModelTests: XCTestCase {
         // UseCase Calls Count
         XCTAssertNotCalled(
             on: stub,
-            getStaticColors: true
+            getStaticColors: true,
+            getNewSelectedValue: true
         )
 
         CheckboxGetColorsUseCaseableMockTest.XCTAssert(
@@ -420,33 +421,25 @@ private func XCTAssertNotCalled(
     getIsIcon getIsIconNotCalled: Bool = false,
     getNewSelectedValue getNewSelectedValueNotCalled: Bool = false
 ) {
-    if getDynamicColorsNotCalled {
-        CheckboxGetColorsUseCaseableMockTest.XCTCallsCount(
-            stub.getColorsUseCaseMock,
-            executeDynamicWithThemeAndIntentAndSelectionStateNumberOfCalls: 0
-        )
-    }
+    CheckboxGetColorsUseCaseableMockTest.XCTCalled(
+        stub.getColorsUseCaseMock,
+        executeDynamicWithThemeAndIntentAndSelectionStateCalled: !getDynamicColorsNotCalled
+    )
 
-    if getStaticColorsNotCalled {
-        CheckboxGetColorsUseCaseableMockTest.XCTCallsCount(
-            stub.getColorsUseCaseMock,
-            executeStaticWithThemeAndIntentNumberOfCalls: 0
-        )
-    }
+    CheckboxGetColorsUseCaseableMockTest.XCTCalled(
+        stub.getColorsUseCaseMock,
+        executeStaticWithThemeAndIntentCalled: !getStaticColorsNotCalled
+    )
 
-    if getIsIconNotCalled {
-        CheckboxGetIsIconUseCaseableMockTest.XCTCallsCount(
-            stub.getIsIconUseCaseMock,
-            executeWithSelectionStateNumberOfCalls: 0
-        )
-    }
+    CheckboxGetIsIconUseCaseableMockTest.XCTCalled(
+        stub.getIsIconUseCaseMock,
+        executeWithSelectionStateCalled: !getIsIconNotCalled
+    )
 
-    if getNewSelectedValueNotCalled {
-        CheckboxGetNewSelectedValueUseCaseableMockTest.XCTCallsCount(
-            stub.getNewSelectedValueUseCaseMock,
-            executeWithSelectionStateAndIsEnabledNumberOfCalls: 0
-        )
-    }
+    CheckboxGetNewSelectedValueUseCaseableMockTest.XCTCalled(
+        stub.getNewSelectedValueUseCaseMock,
+        executeWithSelectionStateAndIsEnabledCalled: !getNewSelectedValueNotCalled
+    )
 }
 
 private func XCTAssertEqualToExpected(

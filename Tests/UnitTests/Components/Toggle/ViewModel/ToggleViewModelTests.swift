@@ -342,26 +342,26 @@ private func XCTAssertNotCalled(
     getStaticColors getStaticColorsNotCalled: Bool = false,
     getIsIcon getIsIconNotCalled: Bool = false
 ) {
-    if getDynamicColorsNotCalled {
-        ToggleGetColorsUseCaseableMockTest.XCTCallsCount(
-            stub.getColorsUseCaseMock,
-            executeDynamicWithThemeAndIsOnNumberOfCalls: 0
-        )
-    }
+    ToggleGetColorsUseCaseableMockTest.XCTCalled(
+        stub.getColorsUseCaseMock,
+        executeDynamicWithThemeAndIsOnCalled: !getDynamicColorsNotCalled
+    )
 
-    if getStaticColorsNotCalled {
-        ToggleGetColorsUseCaseableMockTest.XCTCallsCount(
-            stub.getColorsUseCaseMock,
-            executeStaticWithThemeNumberOfCalls: 0
-        )
-    }
+    ToggleGetColorsUseCaseableMockTest.XCTCalled(
+        stub.getColorsUseCaseMock,
+        executeStaticWithThemeCalled: !getStaticColorsNotCalled
+    )
 
-    if getIsIconNotCalled {
-        ToggleGetIsIconUseCaseableMockTest.XCTCallsCount(
-            stub.getIsIconUseCaseMock,
-            executeUIWithIsOnOffSwitchLabelsEnabledAndContrastNumberOfCalls: 0
-        )
-    }
+    ToggleGetIsIconUseCaseableMockTest.XCTCalled(
+        stub.getIsIconUseCaseMock,
+        executeWithIsOnOffSwitchLabelsEnabledAndContrastCalled: !getIsIconNotCalled
+    )
+
+    // Never called
+    ToggleGetIsIconUseCaseableMockTest.XCTCalled(
+        stub.getIsIconUseCaseMock,
+        executeUIWithIsOnOffSwitchLabelsEnabledAndContrastCalled: false
+    )
 }
 
 private func XCTAssertEqualToExpected(

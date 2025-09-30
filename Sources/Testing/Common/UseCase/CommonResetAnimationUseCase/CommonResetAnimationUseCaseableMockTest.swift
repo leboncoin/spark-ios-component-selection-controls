@@ -36,6 +36,17 @@ import SparkTheming
         )
     }
 
+    public static func XCTCalled(
+        _ mock: CommonResetAnimationUseCaseableGeneratedMock,
+        executeWithAnimationTypeAndCompletedAnimationsAndSelectedValueAnimatedAndIsReduceMotionEnabledCalled isCalled: Bool
+    ) {
+        XCTAssertEqual(
+            mock.executeWithAnimationTypeAndCompletedAnimationsAndSelectedValueAnimatedAndIsReduceMotionEnabledCallsCount > 0,
+            isCalled,
+            "Wrong execute<CommonCompletedAnimationMock>(animationType: inout UIExecuteAnimationType, completedAnimations: inout [CommonCompletedAnimationMock], selectedValueAnimated: inout Bool, isReduceMotionEnabled: Bool) called on CommonResetAnimationUseCaseable"
+        )
+    }
+
     public static func XCTAssert(
         _ mock: CommonResetAnimationUseCaseableGeneratedMock,
         expectedNumberOfCalls: Int,

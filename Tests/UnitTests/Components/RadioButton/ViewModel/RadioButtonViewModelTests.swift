@@ -286,19 +286,15 @@ private func XCTAssertNotCalled(
     getDynamicColors getDynamicColorsNotCalled: Bool = false,
     getStaticColors getStaticColorsNotCalled: Bool = false
 ) {
-    if getDynamicColorsNotCalled {
-        RadioButtonGetColorsUseCaseableMockTest.XCTCallsCount(
-            stub.getColorsUseCaseMock,
-            executeDynamicWithThemeAndIntentAndIsOnNumberOfCalls: 0
-        )
-    }
+    RadioButtonGetColorsUseCaseableMockTest.XCTCalled(
+        stub.getColorsUseCaseMock,
+        executeDynamicWithThemeAndIntentAndIsOnCalled: !getDynamicColorsNotCalled
+    )
 
-    if getStaticColorsNotCalled {
-        RadioButtonGetColorsUseCaseableMockTest.XCTCallsCount(
-            stub.getColorsUseCaseMock,
-            executeStaticWithThemeAndIntentNumberOfCalls: 0
-        )
-    }
+    RadioButtonGetColorsUseCaseableMockTest.XCTCalled(
+        stub.getColorsUseCaseMock,
+        executeStaticWithThemeAndIntentCalled: !getStaticColorsNotCalled
+    )
 }
 
 private func XCTAssertEqualToExpected(

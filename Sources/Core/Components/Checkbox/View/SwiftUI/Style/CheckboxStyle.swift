@@ -101,7 +101,7 @@ struct CheckboxStyle: ToggleStyle {
             }
         }
         .buttonPressedStyle(self.$isPressed)
-        .sensoryFeedback(trigger: configuration.isOn)
+        .sparkSensoryFeedback(trigger: configuration.isOn)
         .accessibilityAction {
             configuration.isOn.toggle()
         }

@@ -22,9 +22,7 @@ import SparkTheming
 ///     var body: some View {
 ///         SparkToggle(
 ///             theme: self.theme,
-///             isOn: self.$isOn,
-///             onIcon: .init(systemName: "checkmark"),
-///             offIcon: .init(systemName: "xmark")
+///             isOn: self.$isOn
 ///         )
 ///     }
 /// }
@@ -45,9 +43,7 @@ import SparkTheming
 ///         SparkToggle(
 ///             "My placeholder",
 ///             theme: self.theme,
-///             isOn: self.$isOn,
-///             onIcon: .init(systemName: "checkmark"),
-///             offIcon: .init(systemName: "xmark")
+///             isOn: self.$isOn
 ///         )
 ///     }
 /// }
@@ -67,8 +63,6 @@ import SparkTheming
 ///         SparkToggle(
 ///             theme: self.theme,
 ///             isOn: self.$isOn,
-///             onIcon: .init(systemName: "checkmark"),
-///             offIcon: .init(systemName: "xmark"),
 ///             label: {
 ///                 VStack {
 ///                     Text("Hello")
@@ -86,8 +80,6 @@ public struct SparkToggle<Label>: View where Label: View {
 
     private let theme: any Theme
     @Binding private var isOn: Bool
-    private let onIcon: Image
-    private let offIcon: Image
     private let label: () -> Label
 
     @Environment(\.colorSchemeContrast) private var contrast
@@ -104,10 +96,6 @@ public struct SparkToggle<Label>: View where Label: View {
     /// - Parameters:
     ///   - theme: The current theme.
     ///   - isOn: A binding to a property that indicates whether the toggle is on or off.
-    ///   - onIcon: The on icon. Displayed when the *UIAccessibility.isOnOffSwitchLabelsEnabled*
-    ///   is **true** and the toogle is **on**.
-    ///   - offIcon: The offIcon icon. Displayed when the *UIAccessibility.isOnOffSwitchLabelsEnabled*
-    ///   is **true** and the toogle is **off**.
     ///
     /// Implementation example :
     /// ```swift
@@ -118,9 +106,7 @@ public struct SparkToggle<Label>: View where Label: View {
     ///     var body: some View {
     ///         SparkToggle(
     ///             theme: self.theme,
-    ///             isOn: self.$isOn,
-    ///             onIcon: .init(systemName: "checkmark"),
-    ///             offIcon: .init(systemName: "xmark")
+    ///             isOn: self.$isOn
     ///         )
     ///     }
     /// }
@@ -129,14 +115,10 @@ public struct SparkToggle<Label>: View where Label: View {
     /// ![Toggle rendering.](toggle/component_on.png)
     public init(
         theme: any Theme,
-        isOn: Binding<Bool>,
-        onIcon: Image,
-        offIcon: Image
+        isOn: Binding<Bool>
     ) where Label == EmptyView {
         self.theme = theme
         self._isOn = isOn
-        self.onIcon = onIcon
-        self.offIcon = offIcon
         self.label = { EmptyView() }
     }
 
@@ -147,10 +129,6 @@ public struct SparkToggle<Label>: View where Label: View {
     ///     the purpose of the toggle.
     ///   - theme: The current theme.
     ///   - isOn: A binding to a property that indicates whether the toggle is on or off.
-    ///   - onIcon: The on icon. Displayed when the *UIAccessibility.isOnOffSwitchLabelsEnabled*
-    ///   is **true** and the toogle is **on**.
-    ///   - offIcon: The offIcon icon. Displayed when the *UIAccessibility.isOnOffSwitchLabelsEnabled*
-    ///   is **true** and the toogle is **off**.
     ///
     /// Implementation example :
     /// ```swift
@@ -162,9 +140,7 @@ public struct SparkToggle<Label>: View where Label: View {
     ///         SparkToggle(
     ///             "My placeholder",
     ///             theme: self.theme,
-    ///             isOn: self.$isOn,
-    ///             onIcon: .init(systemName: "checkmark"),
-    ///             offIcon: .init(systemName: "xmark")
+    ///             isOn: self.$isOn
     ///         )
     ///     }
     /// }
@@ -174,14 +150,10 @@ public struct SparkToggle<Label>: View where Label: View {
     public init(
         _ titleKey: LocalizedStringKey,
         theme: any Theme,
-        isOn: Binding<Bool>,
-        onIcon: Image,
-        offIcon: Image
+        isOn: Binding<Bool>
     ) where Label == Text {
         self.theme = theme
         self._isOn = isOn
-        self.onIcon = onIcon
-        self.offIcon = offIcon
         self.label = { Text(titleKey) }
     }
 
@@ -192,10 +164,6 @@ public struct SparkToggle<Label>: View where Label: View {
     ///     the purpose of the toggle.
     ///   - theme: The current theme.
     ///   - isOn: A binding to a property that indicates whether the toggle is on or off.
-    ///   - onIcon: The on icon. Displayed when the *UIAccessibility.isOnOffSwitchLabelsEnabled*
-    ///   is **true** and the toogle is **on**.
-    ///   - offIcon: The offIcon icon. Displayed when the *UIAccessibility.isOnOffSwitchLabelsEnabled*
-    ///   is **true** and the toogle is **off**.
     ///
     /// Implementation example :
     /// ```swift
@@ -207,9 +175,7 @@ public struct SparkToggle<Label>: View where Label: View {
     ///         SparkToggle(
     ///             "My placeholder",
     ///             theme: self.theme,
-    ///             isOn: self.$isOn,
-    ///             onIcon: .init(systemName: "checkmark"),
-    ///             offIcon: .init(systemName: "xmark")
+    ///             isOn: self.$isOn
     ///         )
     ///     }
     /// }
@@ -219,14 +185,10 @@ public struct SparkToggle<Label>: View where Label: View {
     public init(
         _ text: String,
         theme: any Theme,
-        isOn: Binding<Bool>,
-        onIcon: Image,
-        offIcon: Image
+        isOn: Binding<Bool>
     ) where Label == Text {
         self.theme = theme
         self._isOn = isOn
-        self.onIcon = onIcon
-        self.offIcon = offIcon
         self.label = { Text(text) }
     }
 
@@ -235,10 +197,6 @@ public struct SparkToggle<Label>: View where Label: View {
     /// - Parameters:
     ///   - theme: The current theme.
     ///   - isOn: A binding to a property that indicates whether the toggle is on or off.
-    ///   - onIcon: The on icon. Displayed when the *UIAccessibility.isOnOffSwitchLabelsEnabled*
-    ///   is **true** and the toogle is **on**.
-    ///   - offIcon: The offIcon icon. Displayed when the *UIAccessibility.isOnOffSwitchLabelsEnabled*
-    ///   is **true** and the toogle is **off**.
     ///   - label: A view that describes the purpose of the toggle.
     ///
     /// Implementation example :
@@ -251,8 +209,6 @@ public struct SparkToggle<Label>: View where Label: View {
     ///         SparkToggle(
     ///             theme: self.theme,
     ///             isOn: self.$isOn,
-    ///             onIcon: .init(systemName: "checkmark"),
-    ///             offIcon: .init(systemName: "xmark"),
     ///             label: {
     ///                 VStack {
     ///                     Text("Hello")
@@ -267,14 +223,10 @@ public struct SparkToggle<Label>: View where Label: View {
     public init(
         theme: any Theme,
         isOn: Binding<Bool>,
-        onIcon: Image,
-        offIcon: Image,
         @ViewBuilder label: @escaping () -> Label
     ) {
         self.theme = theme
         self._isOn = isOn
-        self.onIcon = onIcon
-        self.offIcon = offIcon
         self.label = label
     }
 
@@ -283,9 +235,7 @@ public struct SparkToggle<Label>: View where Label: View {
     public var body: some View {
         Toggle(isOn: self.$isOn, label: self.label)
             .toggleStyle(.custom(
-                viewModel: self.viewModel,
-                onIcon: self.onIcon,
-                offIcon: self.offIcon
+                viewModel: self.viewModel
             ))
             .accessibilityIdentifier(ToggleAccessibilityIdentifier.view)
             .onAppear() {

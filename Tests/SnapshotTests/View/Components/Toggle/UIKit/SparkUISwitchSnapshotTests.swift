@@ -35,9 +35,7 @@ final class SparkUISwitchSnapshotTests: UIKitComponentSnapshotTestCase {
             let configurations: [ToggleConfigurationSnapshotTests] = try scenario.configuration()
             for configuration in configurations {
                 let view = SparkUISwitch(
-                    theme: self.theme,
-                    onIcon: .on,
-                    offIcon: .off
+                    theme: self.theme
                 )
                 view.isOn = configuration.value.isOn
                 view.isEnabled = configuration.status.isEnabled
@@ -60,11 +58,4 @@ final class SparkUISwitchSnapshotTests: UIKitComponentSnapshotTestCase {
             }
         }
     }
-}
-
-// MARK: - Extension
-
-private extension UIImage {
-    static var on = IconographyTests.shared.switchOn
-    static var off = IconographyTests.shared.switchOff
 }

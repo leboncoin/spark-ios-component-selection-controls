@@ -22,9 +22,7 @@ import SparkTheming
 ///     var body: some View {
 ///         SparkCheckbox(
 ///             theme: self.theme,
-///             selectionState: self.$selectionState,
-///             selectedIcon: .init(systemName: "checkmark"),
-///             indeterminateIcon: .init(systemName: "minus")
+///             selectionState: self.$selectionState
 ///         )
 ///     }
 /// }
@@ -49,9 +47,7 @@ import SparkTheming
 ///         SparkCheckbox(
 ///             "My placeholder",
 ///             theme: self.theme,
-///             selectionState: self.$selectionState,
-///             selectedIcon: .init(systemName: "checkmark"),
-///             indeterminateIcon: .init(systemName: "minus")
+///             selectionState: self.$selectionState
 ///         )
 ///     }
 /// }
@@ -71,8 +67,6 @@ import SparkTheming
 ///         SparkCheckbox(
 ///             theme: self.theme,
 ///             selectionState: self.$selectionState,
-///             selectedIcon: .init(systemName: "checkmark"),
-///             indeterminateIcon: .init(systemName: "minus")
 ///             label: {
 ///                 VStack {
 ///                     Text("Hello")
@@ -90,8 +84,8 @@ public struct SparkCheckbox<Label>: View where Label: View {
 
     private let theme: any Theme
     @Binding private var selectionState: CheckboxSelectionState
-    private let selectedIcon: Image
-    private let indeterminateIcon: Image?
+    private let selectedIcon: Image = .sparkCheck
+    private let indeterminateIcon: Image? = .sparkMinus
     private let label: () -> Label
 
     @Environment(\.checkboxIntent) private var intent
@@ -108,8 +102,6 @@ public struct SparkCheckbox<Label>: View where Label: View {
     /// - Parameters:
     ///   - theme: The current theme.
     ///   - selectionState: A binding to a property that indicates the checkbox selection state.
-    ///   - selectedIcon: The selected icon. Displayed when the selectionState is **selected**.
-    ///   - indeterminateIcon: The indeterminate icon. Displayed when the selectionState is **indeterminate**.
     ///
     /// Implementation example :
     /// ```swift
@@ -120,9 +112,7 @@ public struct SparkCheckbox<Label>: View where Label: View {
     ///     var body: some View {
     ///         SparkCheckbox(
     ///             theme: self.theme,
-    ///             selectionState: self.$selectionState,
-    ///             selectedIcon: .init(systemName: "checkmark"),
-    ///             indeterminateIcon: .init(systemName: "minus")
+    ///             selectionState: self.$selectionState
     ///         )
     ///     }
     /// }
@@ -131,14 +121,10 @@ public struct SparkCheckbox<Label>: View where Label: View {
     /// ![Checkbox rendering.](checkbox/component_unselected.png)
     public init(
         theme: any Theme,
-        selectionState: Binding<CheckboxSelectionState>,
-        selectedIcon: Image,
-        indeterminateIcon: Image?
+        selectionState: Binding<CheckboxSelectionState>
     ) where Label == EmptyView {
         self.theme = theme
         self._selectionState = selectionState
-        self.selectedIcon = selectedIcon
-        self.indeterminateIcon = indeterminateIcon
         self.label = { EmptyView() }
     }
 
@@ -149,8 +135,6 @@ public struct SparkCheckbox<Label>: View where Label: View {
     ///     the purpose of the checkbox.
     ///   - theme: The current theme.
     ///   - selectionState: A binding to a property that indicates the checkbox selection state.
-    ///   - selectedIcon: The selected icon. Displayed when the selectionState is **selected**.
-    ///   - indeterminateIcon: The indeterminate icon. Displayed when the selectionState is **indeterminate**.
     ///
     /// Implementation example :
     /// ```swift
@@ -162,9 +146,7 @@ public struct SparkCheckbox<Label>: View where Label: View {
     ///         SparkCheckbox(
     ///             "My placeholder",
     ///             theme: self.theme,
-    ///             selectionState: self.$selectionState,
-    ///             selectedIcon: .init(systemName: "checkmark"),
-    ///             indeterminateIcon: .init(systemName: "minus")
+    ///             selectionState: self.$selectionState
     ///         )
     ///     }
     /// }
@@ -174,14 +156,10 @@ public struct SparkCheckbox<Label>: View where Label: View {
     public init(
         _ titleKey: LocalizedStringKey,
         theme: any Theme,
-        selectionState: Binding<CheckboxSelectionState>,
-        selectedIcon: Image,
-        indeterminateIcon: Image?
+        selectionState: Binding<CheckboxSelectionState>
     ) where Label == Text {
         self.theme = theme
         self._selectionState = selectionState
-        self.selectedIcon = selectedIcon
-        self.indeterminateIcon = indeterminateIcon
         self.label = { Text(titleKey) }
     }
 
@@ -192,8 +170,6 @@ public struct SparkCheckbox<Label>: View where Label: View {
     ///     the purpose of the checkbox.
     ///   - theme: The current theme.
     ///   - selectionState: A binding to a property that indicates the checkbox selection state.
-    ///   - selectedIcon: The selected icon. Displayed when the selectionState is **selected**.
-    ///   - indeterminateIcon: The indeterminate icon. Displayed when the selectionState is **indeterminate**.
     ///
     /// Implementation example :
     /// ```swift
@@ -205,9 +181,7 @@ public struct SparkCheckbox<Label>: View where Label: View {
     ///         SparkCheckbox(
     ///             "My placeholder",
     ///             theme: self.theme,
-    ///             selectionState: self.$selectionState,
-    ///             selectedIcon: .init(systemName: "checkmark"),
-    ///             indeterminateIcon: .init(systemName: "minus")
+    ///             selectionState: self.$selectionState
     ///         )
     ///     }
     /// }
@@ -217,14 +191,10 @@ public struct SparkCheckbox<Label>: View where Label: View {
     public init(
         _ text: String,
         theme: any Theme,
-        selectionState: Binding<CheckboxSelectionState>,
-        selectedIcon: Image,
-        indeterminateIcon: Image?
+        selectionState: Binding<CheckboxSelectionState>
     ) where Label == Text {
         self.theme = theme
         self._selectionState = selectionState
-        self.selectedIcon = selectedIcon
-        self.indeterminateIcon = indeterminateIcon
         self.label = { Text(text) }
     }
 
@@ -233,8 +203,6 @@ public struct SparkCheckbox<Label>: View where Label: View {
     /// - Parameters:
     ///   - theme: The current theme.
     ///   - selectionState: A binding to a property that indicates the checkbox selection state.
-    ///   - selectedIcon: The selected icon. Displayed when the selectionState is **selected**.
-    ///   - indeterminateIcon: The indeterminate icon. Displayed when the selectionState is **indeterminate**.
     ///   - label: A view that describes the purpose of the checkbox.
     ///
     /// Implementation example :
@@ -247,8 +215,6 @@ public struct SparkCheckbox<Label>: View where Label: View {
     ///         SparkCheckbox(
     ///             theme: self.theme,
     ///             selectionState: self.$selectionState,
-    ///             selectedIcon: .init(systemName: "checkmark"),
-    ///             indeterminateIcon: .init(systemName: "minus")
     ///             label: {
     ///                 VStack {
     ///                     Text("Hello")
@@ -263,14 +229,10 @@ public struct SparkCheckbox<Label>: View where Label: View {
     public init(
         theme: any Theme,
         selectionState: Binding<CheckboxSelectionState>,
-        selectedIcon: Image,
-        indeterminateIcon: Image?,
         @ViewBuilder label: @escaping () -> Label
     ) {
         self.theme = theme
         self._selectionState = selectionState
-        self.selectedIcon = selectedIcon
-        self.indeterminateIcon = indeterminateIcon
         self.label = label
     }
 

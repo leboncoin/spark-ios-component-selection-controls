@@ -20,11 +20,7 @@ import SparkTheming
 /// ```swift
 /// let theme: SparkTheming.Theme = MyTheme()
 ///
-/// let myCheckbox = SparkUICheckbox(
-///     theme: theme,
-///     selectedIcon: .init(systemName: "checkmark")!,
-///     indeterminateIcon: .init(systemName: "minus")!
-/// )
+/// let myCheckbox = SparkUICheckbox(theme: theme)
 /// ```
 ///
 /// Checkbox when selectionState is **selected** or isSelected is **true**:
@@ -40,11 +36,7 @@ import SparkTheming
 /// ```swift
 /// let theme: SparkTheming.Theme = MyTheme()
 ///
-/// let myCheckbox = SparkUICheckbox(
-///     theme: theme,
-///     selectedIcon: .init(systemName: "checkmark")!,
-///     indeterminateIcon: .init(systemName: "minus")!
-/// )
+/// let myCheckbox = SparkUICheckbox(theme: theme)
 /// myCheckbox.text = "My checkbox"
 /// ```
 /// *Note*: Please **do not set a text/attributedText** on the ``textLabel`` but use the ``text`` and
@@ -266,8 +258,8 @@ public final class SparkUICheckbox: UIControl {
     @LimitedScaledUIMetric private var toggleCornerRadius: CGFloat = 0
     @LimitedScaledUIMetric private var toggleIconPadding: CGFloat
 
-    private let selectedIcon: UIImage
-    private let indeterminateIcon: UIImage?
+    private let selectedIcon: UIImage = .sparkCheck
+    private let indeterminateIcon: UIImage? = .sparkMinus
 
     private var isReduceMotionEnabled: Bool {
         UIAccessibility.isReduceMotionEnabled
@@ -285,32 +277,21 @@ public final class SparkUICheckbox: UIControl {
     ///
     /// - Parameters:
     ///   - theme: The current theme.
-    ///   - selectedIcon: The selected icon. Displayed when the selectionState is **selected**.
-    ///   - indeterminateIcon: The indeterminate icon. Displayed when the selectionState is **indeterminate**. *Optional*.
     ///
     /// Implementation example :
     /// ```swift
     /// let theme: SparkTheming.Theme = MyTheme()
     ///
     /// let myCheckbox = SparkUICheckbox(
-    ///     theme: theme,
-    ///     selectedIcon: .init(systemName: "checkmark")!,
-    ///     indeterminateIcon: .init(systemName: "minus")!
+    ///     theme: theme
     /// )
     /// ```
     ///
     /// ![Checkbox rendering.](checkbox/component_unselected.png)
-    public init(
-        theme: any Theme,
-        selectedIcon: UIImage,
-        indeterminateIcon: UIImage?
-    ) {
+    public init(theme: any Theme) {
         self.viewModel = .init(
             theme: theme
         )
-
-        self.selectedIcon = selectedIcon
-        self.indeterminateIcon = indeterminateIcon
 
         self._toggleWidth = .init(wrappedValue: Constants.size)
         self._toggleBorderWidth = .init(wrappedValue: Constants.lineWidth)

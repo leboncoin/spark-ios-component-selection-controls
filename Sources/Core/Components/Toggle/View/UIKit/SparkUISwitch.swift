@@ -21,9 +21,7 @@ import SparkTheming
 /// let theme: SparkTheming.Theme = MyTheme()
 ///
 /// let myToggle = SparkUISwitch(
-///     theme: theme,
-///     onIcon: .init(systemName: "checkmark")!,
-///     offIcon: .init(systemName: "xmark")!
+///     theme: theme
 /// )
 /// ```
 ///
@@ -38,9 +36,7 @@ import SparkTheming
 /// let theme: SparkTheming.Theme = MyTheme()
 ///
 /// let myToggle = SparkUISwitch(
-///     theme: theme,
-///     onIcon: .init(systemName: "checkmark")!,
-///     offIcon: .init(systemName: "xmark")!
+///     theme: theme
 /// )
 /// myToggle.text = "My switch"
 /// ```
@@ -251,8 +247,8 @@ public final class SparkUISwitch: UIControl {
     private let toggleSpacing: CGFloat = Constants.padding
     private let toggleDotSpacing: CGFloat = Constants.toggleDotImagePadding
 
-    private let onIcon: UIImage
-    private let offIcon: UIImage
+    private let onIcon: UIImage = .sparkCheck
+    private let offIcon: UIImage = .sparkCross
 
     private var isReduceMotionEnabled: Bool {
         UIAccessibility.isReduceMotionEnabled
@@ -270,34 +266,21 @@ public final class SparkUISwitch: UIControl {
     ///
     /// - Parameters:
     ///   - theme: The current theme.
-    ///   - onIcon: The on icon. Displayed when the *UIAccessibility.isOnOffSwitchLabelsEnabled*
-    ///   is **true** and the toogle is **on**.
-    ///   - offIcon: The offIcon icon. Displayed when the *UIAccessibility.isOnOffSwitchLabelsEnabled*
-    ///   is **true** and the toogle is **off**.
     ///
     /// Implementation example :
     /// ```swift
     /// let theme: SparkTheming.Theme = MyTheme()
     ///
     /// let myToggle = SparkUISwitch(
-    ///     theme: theme,
-    ///     onIcon: .init(systemName: "checkmark")!,
-    ///     offIcon: .init(systemName: "xmark")!
+    ///     theme: theme
     /// )
     /// ```
     ///
     /// ![Toggle rendering.](toggle/component_on.png)
-    public init(
-        theme: any Theme,
-        onIcon: UIImage,
-        offIcon: UIImage
-    ) {
+    public init(theme: any Theme) {
         self.viewModel = .init(
             theme: theme
         )
-
-        self.onIcon = onIcon
-        self.offIcon = offIcon
 
         super.init(frame: .zero)
 

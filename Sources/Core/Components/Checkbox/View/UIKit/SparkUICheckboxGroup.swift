@@ -22,10 +22,7 @@ import SparkTheming
 /// ```swift
 /// let theme: SparkTheming.Theme = MyTheme()
 ///
-/// let myCheckboxGroup = SparkUICheckboxGroup(
-///     theme: theme,
-///     selectedIcon: .init(systemName: "checkmark")!
-/// )
+/// let myCheckboxGroup = SparkUICheckboxGroup(theme: theme)
 /// ```
 ///
 /// Example of rendering:
@@ -33,10 +30,28 @@ import SparkTheming
 ///
 /// Example of usage:
 /// ```swift
-/// let myCheckboxGroup = SparkUICheckboxGroup<Int>(
-///     theme: theme,
-///     selectedIcon: .init(systemName: "checkmark")!
+/// let theme: SparkTheming.Theme = MyTheme()
+///
+/// let myCheckboxGroup = SparkUICheckboxGroup(
+///     theme: self.theme,
+///     items: [
+///         .init(
+///             id: 1,
+///             text: "First",
+///             isEnabled: true
+///         ),
+///         .init(
+///             id: 2,
+///             text: "Last",
+///             isEnabled: true
+///         )
+///     ]
 /// )
+/// ```
+///
+/// Another example:
+/// ```swift
+/// let myCheckboxGroup = SparkUICheckboxGroup<Int>(theme: theme)
 /// myCheckboxGroup.intent = .error
 /// myCheckboxGroup.items = [
 ///     .init(
@@ -113,8 +128,6 @@ public final class SparkUICheckboxGroup<ID>: SelectionControlsGroup<ID> where ID
 
     private var _selectedIDs: [ID] = []
 
-    private let selectedIcon: UIImage
-
     // MARK: - Initialization
 
     /// Creates a Spark checkbox group with items.
@@ -122,7 +135,6 @@ public final class SparkUICheckboxGroup<ID>: SelectionControlsGroup<ID> where ID
     /// - Parameters:
     ///   - theme: The current theme.
     ///   - items: The ``CheckboxGroupUIItem`` items of the checkbox group.
-    ///   - selectedIcon: The selected icon. Displayed when the selectionState is **selected**.
     ///
     /// Implementation example :
     /// ```swift
@@ -141,19 +153,16 @@ public final class SparkUICheckboxGroup<ID>: SelectionControlsGroup<ID> where ID
     ///             text: "Last",
     ///             isEnabled: true
     ///         )
-    ///     ],
-    ///     selectedIcon: .init(systemName: "checkmark")!
+    ///     ]
     /// )
     /// ```
     ///
     /// ![Checkbox group rendering.](checkboxGroup/component.png)
     public init(
         theme: any Theme,
-        items: [CheckboxGroupUIItem<ID>],
-        selectedIcon: UIImage
+        items: [CheckboxGroupUIItem<ID>]
     ) {
         self.items = items
-        self.selectedIcon = selectedIcon
 
         super.init(theme: theme)
 
@@ -165,25 +174,20 @@ public final class SparkUICheckboxGroup<ID>: SelectionControlsGroup<ID> where ID
     ///
     /// - Parameters:
     ///   - theme: The current theme.
-    ///   - selectedIcon: The selected icon. Displayed when the selectionState is **selected**.
     ///
     /// Implementation example :
     /// ```swift
     /// let theme: SparkTheming.Theme = MyTheme()
     ///
     /// let myCheckboxGroup = SparkUICheckboxGroup(
-    ///     theme: self.theme,
-    ///     selectedIcon: .init(systemName: "checkmark")!
+    ///     theme: self.theme
     /// )
     /// ```
     ///
     /// ![Checkbox group rendering.](checkboxGroup/component.png)
-    public init(
-        theme: any Theme,
-        selectedIcon: UIImage
+    public override init(
+        theme: any Theme
     ) {
-        self.selectedIcon = selectedIcon
-
         super.init(theme: theme)
 
         // Setup
@@ -215,11 +219,7 @@ public final class SparkUICheckboxGroup<ID>: SelectionControlsGroup<ID> where ID
         self.contentStackView.removeArrangedSubviews()
         for item in self.items {
 
-            let checkbox = SparkUICheckbox(
-                theme: self.theme,
-                selectedIcon: self.selectedIcon,
-                indeterminateIcon: nil
-            )
+            let checkbox = SparkUICheckbox(theme: self.theme)
             checkbox.id = item.id.description
             checkbox.intent = self.intent
             checkbox.setText(from: item)
