@@ -118,7 +118,8 @@ final class CommonViewModelTests: XCTestCase {
         // **
         // UseCase Calls Count
         XCTAssertNotCalled(
-            on: stub
+            on: stub,
+            getShowHiddenEmptyLabel: true
         )
 
         CommonGetContentRadiusUseCaseableMockTest.XCTAssert(
@@ -175,6 +176,7 @@ final class CommonViewModelTests: XCTestCase {
             on: stub,
             getContentRadius: true,
             getTitleStyle: true,
+            getShowHiddenEmptyLabel: true,
             getSpacing: true
         )
 
@@ -209,6 +211,7 @@ final class CommonViewModelTests: XCTestCase {
             getContentRadius: true,
             getDim: true,
             getTitleStyle: true,
+            getShowHiddenEmptyLabel: true,
             getSpacing: true
         )
     }
@@ -324,40 +327,30 @@ private func XCTAssertNotCalled(
     getShowHiddenEmptyLabel getShowHiddenEmptyLabelCalled: Bool = false,
     getSpacing getSpacingNotCalled: Bool = false
 ) {
-    if getContentRadiusNotCalled {
-        CommonGetContentRadiusUseCaseableMockTest.XCTCallsCount(
-            stub.getContentRadiusUseCaseMock,
-            executeWithThemeAndTypeNumberOfCalls: 0
-        )
-    }
+    CommonGetContentRadiusUseCaseableMockTest.XCTCalled(
+        stub.getContentRadiusUseCaseMock,
+        executeWithThemeAndTypeCalled: !getContentRadiusNotCalled
+    )
 
-    if getDimNotCalled {
-        CommonGetDimUseCaseableMockTest.XCTCallsCount(
-            stub.getDimUseCaseMock,
-            executeWithThemeAndIsEnabledNumberOfCalls: 0
-        )
-    }
+    CommonGetDimUseCaseableMockTest.XCTCalled(
+        stub.getDimUseCaseMock,
+        executeWithThemeAndIsEnabledCalled: !getDimNotCalled
+    )
 
-    if getTitleStyleNotCalled {
-        CommonGetTitleStyleUseCaseableMockTest.XCTCallsCount(
-            stub.getTitleStyleUseCaseMock,
-            executeWithThemeNumberOfCalls: 0
-        )
-    }
+    CommonGetTitleStyleUseCaseableMockTest.XCTCalled(
+        stub.getTitleStyleUseCaseMock,
+        executeWithThemeCalled: !getTitleStyleNotCalled
+    )
 
-    if getShowHiddenEmptyLabelCalled {
-        CommonGetShowHiddenEmptyLabelUseCaseableMockTest.XCTCallsCount(
-            stub.getShowHiddenEmptyLabelUseCaseMock,
-            executeWithIsCustomLabelNumberOfCalls: 0
-        )
-    }
+    CommonGetShowHiddenEmptyLabelUseCaseableMockTest.XCTCalled(
+        stub.getShowHiddenEmptyLabelUseCaseMock,
+        executeWithIsCustomLabelCalled: !getShowHiddenEmptyLabelCalled
+    )
 
-    if getSpacingNotCalled {
-        CommonGetSpacingUseCaseableMockTest.XCTCallsCount(
-            stub.getSpacingUseCaseMock,
-            executeWithThemeNumberOfCalls: 0
-        )
-    }
+    CommonGetSpacingUseCaseableMockTest.XCTCalled(
+        stub.getSpacingUseCaseMock,
+        executeWithThemeCalled: !getSpacingNotCalled
+    )
 }
 
 private func XCTAssertEqualToExpected(

@@ -37,8 +37,7 @@ final class SparkCheckboxGroupSnapshotTests: SwiftUIComponentSnapshotTestCase {
                 let view = SparkCheckboxGroup(
                     theme: self.theme,
                     selectedIDs: .constant([1]),
-                    items: .allCases(contentResilience: configuration.content),
-                    selectedIcon: .selected
+                    items: .allCases(contentResilience: configuration.content)
                 )
                     .sparkCheckboxGroupAxis(configuration.axis)
                     .sparkCheckboxIntent(configuration.intent)
@@ -57,10 +56,4 @@ final class SparkCheckboxGroupSnapshotTests: SwiftUIComponentSnapshotTestCase {
             }
         }
     }
-}
-
-// MARK: - Extension
-
-private extension Image {
-    static var selected = Image(uiImage: IconographyTests.shared.checkmark)
 }

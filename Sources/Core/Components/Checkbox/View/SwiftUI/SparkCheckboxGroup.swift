@@ -30,8 +30,7 @@ import SparkTheming
 ///                     id: 2,
 ///                     title: "My last item"
 ///                 )
-///             ],
-///             selectedIcon: .init(systemName: "checkmark")
+///             ]
 ///         )
 ///     }
 /// }
@@ -42,7 +41,6 @@ public struct SparkCheckboxGroup<ID, Label>: View where ID: SelectionControlsGro
     // MARK: - Properties
 
     private let theme: any Theme
-    private let selectedIcon: Image
 
     @Binding private var selectedIDs: [ID]
     private let items: [CheckboxGroupItem<ID, Label>]
@@ -79,8 +77,7 @@ public struct SparkCheckboxGroup<ID, Label>: View where ID: SelectionControlsGro
     ///                     id: 2,
     ///                     title: "My last item"
     ///                 )
-    ///             ],
-    ///             selectedIcon: .init(systemName: "checkmark")
+    ///             ]
     ///         )
     ///     }
     /// }     
@@ -90,13 +87,11 @@ public struct SparkCheckboxGroup<ID, Label>: View where ID: SelectionControlsGro
     public init(
         theme: any Theme,
         selectedIDs: Binding<[ID]>,
-        items: [CheckboxGroupItem<ID, Label>],
-        selectedIcon: Image
+        items: [CheckboxGroupItem<ID, Label>]
     ) {
         self.theme = theme
         self._selectedIDs = selectedIDs
         self.items = items
-        self.selectedIcon = selectedIcon
     }
 
     // MARK: - View
@@ -118,7 +113,6 @@ public struct SparkCheckboxGroup<ID, Label>: View where ID: SelectionControlsGro
                             }
                         }
                     ),
-                    selectedIcon: self.selectedIcon,
                     label: item.label
                 )
                 .disabled(!item.isEnabled)

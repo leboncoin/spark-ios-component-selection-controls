@@ -87,7 +87,7 @@ struct RadioButtonStyle: ToggleStyle {
             }
         }
         .buttonPressedStyle(self.$isPressed)
-        .sensoryFeedback(trigger: configuration.isOn)
+        .sparkSensoryFeedback(trigger: configuration.isOn)
         .accessibilityAction {
             self.action(configuration: configuration)
         }

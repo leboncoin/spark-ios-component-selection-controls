@@ -233,12 +233,10 @@ private func XCTAssertNotCalled(
     on stub: Stub,
     getSpacing getSpacingNotCalled: Bool = false
 ) {
-    if getSpacingNotCalled {
-        CommonGroupGetSpacingUseCaseableMockTest.XCTCallsCount(
-            stub.getSpacingUseCaseMock,
-            executeWithThemeAndAxisAndIsAccessibilitySizeNumberOfCalls: 0
-        )
-    }
+    CommonGroupGetSpacingUseCaseableMockTest.XCTCalled(
+        stub.getSpacingUseCaseMock,
+        executeWithThemeAndAxisAndIsAccessibilitySizeCalled: !getSpacingNotCalled
+    )
 }
 
 private func XCTAssertEqualToExpected(

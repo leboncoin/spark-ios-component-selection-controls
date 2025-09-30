@@ -35,9 +35,7 @@ final class SparkUICheckboxSnapshotTests: UIKitComponentSnapshotTestCase {
             let configurations: [CheckboxConfigurationSnapshotTests] = try scenario.configuration()
             for configuration in configurations {
                 let view = SparkUICheckbox(
-                    theme: self.theme,
-                    selectedIcon: .selected,
-                    indeterminateIcon: .indeterminate
+                    theme: self.theme
                 )
                 view.intent = configuration.intent
                 view.selectionState = configuration.value.selectionState
@@ -61,11 +59,4 @@ final class SparkUICheckboxSnapshotTests: UIKitComponentSnapshotTestCase {
             }
         }
     }
-}
-
-// MARK: - Extension
-
-private extension UIImage {
-    static var selected = IconographyTests.shared.checkmark
-    static var indeterminate = IconographyTests.shared.arrow
 }

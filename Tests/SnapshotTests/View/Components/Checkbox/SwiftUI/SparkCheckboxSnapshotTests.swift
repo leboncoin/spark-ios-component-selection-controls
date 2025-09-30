@@ -54,32 +54,19 @@ final class SparkCheckboxSnapshotTests: SwiftUIComponentSnapshotTestCase {
             SparkCheckbox(
                 text,
                 theme: self.theme,
-                selectionState: .constant(configuration.value.selectionState),
-                selectedIcon: .selected,
-                indeterminateIcon: .indeterminate
+                selectionState: .constant(configuration.value.selectionState)
             )
         } else if configuration.content == .other {
             SparkCheckbox(
                 theme: self.theme,
                 selectionState: .constant(configuration.value.selectionState),
-                selectedIcon: .selected,
-                indeterminateIcon: .indeterminate,
                 label: { OtherContentView() }
             )
         } else {
             SparkCheckbox(
                 theme: self.theme,
-                selectionState: .constant(configuration.value.selectionState),
-                selectedIcon: .selected,
-                indeterminateIcon: .indeterminate
+                selectionState: .constant(configuration.value.selectionState)
             )
         }
     }
-}
-
-// MARK: - Extension
-
-private extension Image {
-    static var selected = Image(uiImage: IconographyTests.shared.checkmark)
-    static var indeterminate = Image(uiImage: IconographyTests.shared.arrow)
 }

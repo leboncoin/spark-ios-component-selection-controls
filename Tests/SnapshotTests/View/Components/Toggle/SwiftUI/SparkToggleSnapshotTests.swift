@@ -53,32 +53,19 @@ final class SparkToggleSnapshotTests: SwiftUIComponentSnapshotTestCase {
             SparkToggle(
                 text,
                 theme: self.theme,
-                isOn: .constant(configuration.value.isOn),
-                onIcon: .on,
-                offIcon: .off
+                isOn: .constant(configuration.value.isOn)
             )
         } else if configuration.content == .other {
             SparkToggle(
                 theme: self.theme,
                 isOn: .constant(configuration.value.isOn),
-                onIcon: .on,
-                offIcon: .off,
                 label: { OtherContentView() }
             )
         } else {
             SparkToggle(
                 theme: self.theme,
-                isOn: .constant(configuration.value.isOn),
-                onIcon: .on,
-                offIcon: .off
+                isOn: .constant(configuration.value.isOn)
             )
         }
     }
-}
-
-// MARK: - Extension
-
-private extension Image {
-    static var on = Image(uiImage: IconographyTests.shared.switchOn)
-    static var off = Image(uiImage: IconographyTests.shared.switchOff)
 }

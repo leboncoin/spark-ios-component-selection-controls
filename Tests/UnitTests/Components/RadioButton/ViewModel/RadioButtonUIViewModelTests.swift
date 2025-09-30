@@ -378,26 +378,20 @@ private func XCTAssertNotCalled(
     getStaticColors getStaticColorsNotCalled: Bool = false,
     getShowSelectedDot getShowSelectedDotNotCalled: Bool = false
 ) {
-    if getDynamicColorsNotCalled {
-        RadioButtonGetColorsUseCaseableMockTest.XCTCallsCount(
-            stub.getColorsUseCaseMock,
-            executeDynamicWithThemeAndIntentAndIsOnNumberOfCalls: 0
-        )
-    }
+    RadioButtonGetColorsUseCaseableMockTest.XCTCalled(
+        stub.getColorsUseCaseMock,
+        executeDynamicWithThemeAndIntentAndIsOnCalled: !getDynamicColorsNotCalled
+    )
 
-    if getStaticColorsNotCalled {
-        RadioButtonGetColorsUseCaseableMockTest.XCTCallsCount(
-            stub.getColorsUseCaseMock,
-            executeStaticWithThemeAndIntentNumberOfCalls: 0
-        )
-    }
+    RadioButtonGetColorsUseCaseableMockTest.XCTCalled(
+        stub.getColorsUseCaseMock,
+        executeStaticWithThemeAndIntentCalled: !getStaticColorsNotCalled
+    )
 
-    if getShowSelectedDotNotCalled {
-        RadioButtonGetShowSelectedDotUseCaseableMockTest.XCTCallsCount(
-            stub.getShowSelectedDotUseCaseMock,
-            executeWithIsSelectedNumberOfCalls: 0
-        )
-    }
+    RadioButtonGetShowSelectedDotUseCaseableMockTest.XCTCalled(
+        stub.getShowSelectedDotUseCaseMock,
+        executeWithIsSelectedCalled: !getShowSelectedDotNotCalled
+    )
 }
 
 private func XCTAssertEqualToExpected(

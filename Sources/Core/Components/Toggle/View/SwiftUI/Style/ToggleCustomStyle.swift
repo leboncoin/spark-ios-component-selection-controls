@@ -14,8 +14,8 @@ struct ToggleCustomStyle: ToggleStyle {
     // MARK: - Properties
 
     private let viewModel: ToggleViewModel
-    private let onIcon: Image
-    private let offIcon: Image
+    private let onIcon: Image = .sparkCheck
+    private let offIcon: Image = .sparkCross
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -23,10 +23,8 @@ struct ToggleCustomStyle: ToggleStyle {
 
     // MARK: - Initialization
 
-    init(viewModel: ToggleViewModel, onIcon: Image, offIcon: Image) {
+    init(viewModel: ToggleViewModel) {
         self.viewModel = viewModel
-        self.onIcon = onIcon
-        self.offIcon = offIcon
     }
 
     // MARK: - Body
@@ -88,7 +86,7 @@ struct ToggleCustomStyle: ToggleStyle {
                         )
                 }
                 .buttonPressedStyle(self.$isPressed)
-                .sensoryFeedback(trigger: configuration.isOn)
+                .sparkSensoryFeedback(trigger: configuration.isOn)
                 .optionalAnimation(
                     .easeInOut(duration: CommonConstants.animationDuration),
                     value: self.isPressed
@@ -146,8 +144,8 @@ struct ToggleCustomStyle: ToggleStyle {
 
 extension ToggleStyle where Self == ToggleCustomStyle {
 
-    static func custom(viewModel: ToggleViewModel, onIcon: Image, offIcon: Image) -> ToggleCustomStyle {
-        .init(viewModel: viewModel, onIcon: onIcon, offIcon: offIcon)
+    static func custom(viewModel: ToggleViewModel) -> ToggleCustomStyle {
+        .init(viewModel: viewModel)
     }
 }
 

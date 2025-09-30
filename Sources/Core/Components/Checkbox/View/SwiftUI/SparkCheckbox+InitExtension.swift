@@ -20,7 +20,6 @@ public extension SparkCheckbox {
     /// - Parameters:
     ///   - theme: The current theme.
     ///   - isSelected: A binding to a property that indicates whether the checkbox is selected or unselected.
-    ///   - selectedIcon: The selected icon. Displayed when the isSelected is **true**.
     ///
     /// Implementation example :
     /// ```swift
@@ -31,8 +30,7 @@ public extension SparkCheckbox {
     ///     var body: some View {
     ///         SparkCheckbox(
     ///             theme: self.theme,
-    ///             isSelected: self.$isSelected,
-    ///             selectedIcon: .init(systemName: "checkmark")
+    ///             isSelected: self.$isSelected
     ///         )
     ///     }
     /// }
@@ -41,8 +39,7 @@ public extension SparkCheckbox {
     /// ![Checkbox rendering.](checkbox/component_unselected.png)
     init(
         theme: any Theme,
-        isSelected: Binding<Bool>,
-        selectedIcon: Image
+        isSelected: Binding<Bool>
     ) where Label == EmptyView {
         self.init(
             theme: theme,
@@ -53,9 +50,7 @@ public extension SparkCheckbox {
                 set: { value in
                     isSelected.wrappedValue = value == .selected
                 }
-            ),
-            selectedIcon: selectedIcon,
-            indeterminateIcon: nil
+            )
         )
     }
 
@@ -66,7 +61,6 @@ public extension SparkCheckbox {
     ///     the purpose of the checkbox.
     ///   - theme: The current theme.
     ///   - isSelected: A binding to a property that indicates whether the checkbox is selected or unselected.
-    ///   - selectedIcon: The selected icon. Displayed when the isSelected is **true**.
     ///
     /// Implementation example :
     /// ```swift
@@ -78,8 +72,7 @@ public extension SparkCheckbox {
     ///         SparkCheckbox(
     ///             "My placeholder",
     ///             theme: self.theme,
-    ///             isSelected: self.$isSelected,
-    ///             selectedIcon: .init(systemName: "checkmark")
+    ///             isSelected: self.$isSelected
     ///         )
     ///     }
     /// }
@@ -89,8 +82,7 @@ public extension SparkCheckbox {
     init(
         _ titleKey: LocalizedStringKey,
         theme: any Theme,
-        isSelected: Binding<Bool>,
-        selectedIcon: Image
+        isSelected: Binding<Bool>
     ) where Label == Text {
         self.init(
             titleKey,
@@ -102,9 +94,7 @@ public extension SparkCheckbox {
                 set: { value in
                     isSelected.wrappedValue = value == .selected
                 }
-            ),
-            selectedIcon: selectedIcon,
-            indeterminateIcon: nil
+            )
         )
     }
 
@@ -115,7 +105,6 @@ public extension SparkCheckbox {
     ///     the purpose of the checkbox.
     ///   - theme: The current theme.
     ///   - isSelected: A binding to a property that indicates whether the checkbox is selected or unselected.
-    ///   - selectedIcon: The selected icon. Displayed when the isSelected is **true**.
     ///
     /// Implementation example :
     /// ```swift
@@ -127,8 +116,7 @@ public extension SparkCheckbox {
     ///         SparkCheckbox(
     ///             "My placeholder",
     ///             theme: self.theme,
-    ///             isSelected: self.$isSelected,
-    ///             selectedIcon: .init(systemName: "checkmark")
+    ///             isSelected: self.$isSelected
     ///         )
     ///     }
     /// }
@@ -138,8 +126,7 @@ public extension SparkCheckbox {
     init(
         _ text: String,
         theme: any Theme,
-        isSelected: Binding<Bool>,
-        selectedIcon: Image
+        isSelected: Binding<Bool>
     ) where Label == Text {
         self.init(
             text,
@@ -151,9 +138,7 @@ public extension SparkCheckbox {
                 set: { value in
                     isSelected.wrappedValue = value == .selected
                 }
-            ),
-            selectedIcon: selectedIcon,
-            indeterminateIcon: nil
+            )
         )
     }
 
@@ -162,7 +147,6 @@ public extension SparkCheckbox {
     /// - Parameters:
     ///   - theme: The current theme.
     ///   - isSelected: A binding to a property that indicates whether the checkbox is selected or unselected.
-    ///   - selectedIcon: The selected icon. Displayed when the isSelected is **true**.
     ///   - label: A view that describes the purpose of the checkbox.
     ///
     /// Implementation example :
@@ -174,8 +158,7 @@ public extension SparkCheckbox {
     ///     var body: some View {
     ///         SparkCheckbox(
     ///             theme: self.theme,
-    ///             isSelected: self.$isSelected,
-    ///             selectedIcon: .init(systemName: "checkmark"),
+    ///             isSelected: self.$isSelected
     ///             label: {
     ///                 VStack {
     ///                     Text("Hello")
@@ -190,7 +173,6 @@ public extension SparkCheckbox {
     init(
         theme: any Theme,
         isSelected: Binding<Bool>,
-        selectedIcon: Image,
         @ViewBuilder label: @escaping () -> Label
     ) {
         self.init(
@@ -203,8 +185,6 @@ public extension SparkCheckbox {
                     isSelected.wrappedValue = value == .selected
                 }
             ),
-            selectedIcon: selectedIcon,
-            indeterminateIcon: nil,
             label: label
         )
     }

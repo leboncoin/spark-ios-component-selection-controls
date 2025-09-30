@@ -334,33 +334,25 @@ private func XCTAssertNotCalled(
     getIsIconUseCase getIsIconUseCaseNotCalled: Bool = false,
     getToggleOpacitiesUseCase getToggleOpacitiesUseCaeNotCalled: Bool = false
 ) {
-    if getColorsUseCaseDynamicNotCalled {
-        CheckboxGetColorsUseCaseableMockTest.XCTCallsCount(
-            stub.getColorsUseCaseMock,
-            executeDynamicWithThemeAndIntentAndSelectionStateNumberOfCalls: 0
-        )
-    }
+    CheckboxGetColorsUseCaseableMockTest.XCTCalled(
+        stub.getColorsUseCaseMock,
+        executeDynamicWithThemeAndIntentAndSelectionStateCalled: !getColorsUseCaseDynamicNotCalled
+    )
 
-    if getColorsUseCaseStaticNotCalled {
-        CheckboxGetColorsUseCaseableMockTest.XCTCallsCount(
-            stub.getColorsUseCaseMock,
-            executeStaticWithThemeAndIntentNumberOfCalls: 0
-        )
-    }
+    CheckboxGetColorsUseCaseableMockTest.XCTCalled(
+        stub.getColorsUseCaseMock,
+        executeStaticWithThemeAndIntentCalled: !getColorsUseCaseStaticNotCalled
+    )
 
-    if getIsIconUseCaseNotCalled {
-        CheckboxGetIsIconUseCaseableMockTest.XCTCallsCount(
-            stub.getIsIconUseCaseMock,
-            executeWithSelectionStateNumberOfCalls: 0
-        )
-    }
+    CheckboxGetIsIconUseCaseableMockTest.XCTCalled(
+        stub.getIsIconUseCaseMock,
+        executeWithSelectionStateCalled: !getIsIconUseCaseNotCalled
+    )
 
-    if getToggleOpacitiesUseCaeNotCalled {
-        CheckboxGetToggleOpacitiesUseCaseableMockTest.XCTCallsCount(
-            stub.getToggleOpacitiesUseCaseMock,
-            executeWithSelectionStateNumberOfCalls: 0
-        )
-    }
+    CheckboxGetToggleOpacitiesUseCaseableMockTest.XCTCalled(
+        stub.getToggleOpacitiesUseCaseMock,
+        executeWithSelectionStateCalled: !getToggleOpacitiesUseCaeNotCalled
+    )
 }
 
 private func XCTAssertEqualToExpected(
