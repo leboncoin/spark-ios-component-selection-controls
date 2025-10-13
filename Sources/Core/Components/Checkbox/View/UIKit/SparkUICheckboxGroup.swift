@@ -201,6 +201,9 @@ public final class SparkUICheckboxGroup<ID>: SelectionControlsGroup<ID> where ID
     private func setupView() {
         // Accessibility
         self.accessibilityIdentifier = CheckboxAccessibilityIdentifier.group
+
+        // Items
+        self.updateItems()
     }
 
     // MARK: - Setter
