@@ -184,6 +184,9 @@ public final class SparkUIRadioGroup<ID>: SelectionControlsGroup<ID> where ID: S
     private func setupView() {
         // Accessibility
         self.accessibilityIdentifier = RadioButtonAccessibilityIdentifier.group
+
+        // Items
+        self.updateItems()
     }
 
     // MARK: - Setter
