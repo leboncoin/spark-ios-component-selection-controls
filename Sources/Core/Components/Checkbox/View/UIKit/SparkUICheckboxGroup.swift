@@ -26,7 +26,7 @@ import SparkTheming
 /// ```
 ///
 /// Example of rendering:
-/// ![Checkbox group rendering.](checkboxGroup/component.png)
+/// ![Checkbox group rendering.](checkboxGroup.png)
 ///
 /// Example of usage:
 /// ```swift
@@ -117,7 +117,7 @@ public final class SparkUICheckboxGroup<ID>: SelectionControlsGroup<ID> where ID
     }
 
     /// The state of the checkbox: enabled or not.
-    /// ![Checkbox group rendering with when it's disabled.](checkboxGroup/component_disabled.png)
+    /// ![Checkbox group rendering with when it's disabled.](checkboxGroup_disabled.png)
     public override var isEnabled: Bool {
         didSet {
             self.checkboxes.forEach { $0.isEnabled = self.isEnabled }
@@ -157,7 +157,7 @@ public final class SparkUICheckboxGroup<ID>: SelectionControlsGroup<ID> where ID
     /// )
     /// ```
     ///
-    /// ![Checkbox group rendering.](checkboxGroup/component.png)
+    /// ![Checkbox group rendering.](checkboxGroup.png)
     public init(
         theme: any Theme,
         items: [CheckboxGroupUIItem<ID>]
@@ -184,7 +184,7 @@ public final class SparkUICheckboxGroup<ID>: SelectionControlsGroup<ID> where ID
     /// )
     /// ```
     ///
-    /// ![Checkbox group rendering.](checkboxGroup/component.png)
+    /// ![Checkbox group rendering.](checkboxGroup.png)
     public override init(
         theme: any Theme
     ) {

@@ -26,10 +26,10 @@ import SparkTheming
 /// ```
 ///
 /// Toggle when isOn is **true** :
-/// ![Toggle rendering.](toggle/component_on.png)
+/// ![Toggle rendering.](toggle_on.png)
 ///
 /// Toggle when isOn is **false**:
-/// ![Toggle rendering.](toggle/component_off.png)
+/// ![Toggle rendering.](toggle_off.png)
 ///
 /// To add a text, you must provide a **text** or a **attributedText**:
 /// ```swift
@@ -42,9 +42,9 @@ import SparkTheming
 /// ```
 /// *Note*: Please **do not set a text/attributedText** on the ``textLabel`` but use the ``text`` and
 /// ``attributedText`` directly on the ``SparkUISwitch``.
-/// ![Toggle rendering with a text.](toggle/component_with_title.png)
+/// ![Toggle rendering with a text.](toggle_with_title.png)
 ///
-/// ![Toggle rendering with a multiline text.](toggle/component_with_mutliline.png)
+/// ![Toggle rendering with a multiline text.](toggle_with_mutliline.png)
 public final class SparkUISwitch: UIControl {
 
     // MARK: - Type alias
@@ -163,7 +163,7 @@ public final class SparkUISwitch: UIControl {
     /// ![Toggle rendering.](toggle/component.png)
     ///
     /// Toggle when isOn is **false**:
-    /// ![Toggle rendering.](toggle/component_off.png)
+    /// ![Toggle rendering.](toggle_off.png)
     public var isOn: Bool {
         get {
             return self.viewModel.selectedValue
@@ -205,7 +205,7 @@ public final class SparkUISwitch: UIControl {
     }
 
     /// The state of the switch: enabled or not.
-    /// ![Toggle rendering with when it's disabled.](toggle/component_disabled.png)
+    /// ![Toggle rendering with when it's disabled.](toggle_disabled.png)
     public override var isEnabled: Bool {
         get {
             return self.viewModel.isEnabled
@@ -276,7 +276,7 @@ public final class SparkUISwitch: UIControl {
     /// )
     /// ```
     ///
-    /// ![Toggle rendering.](toggle/component_on.png)
+    /// ![Toggle rendering.](toggle_on.png)
     public init(theme: any Theme) {
         self.viewModel = .init(
             theme: theme

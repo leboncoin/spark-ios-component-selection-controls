@@ -36,7 +36,7 @@ public extension SparkCheckbox {
     /// }
     /// ```
     ///
-    /// ![Checkbox rendering.](checkbox/component_unselected.png)
+    /// ![Checkbox rendering.](checkbox_unselected.png)
     init(
         theme: any Theme,
         isSelected: Binding<Bool>
@@ -78,7 +78,7 @@ public extension SparkCheckbox {
     /// }
     /// ```
     ///
-    /// ![Checkbox rendering with a title.](checkbox/component_with_title.png)
+    /// ![Checkbox rendering with a title.](checkbox_with_title.png)
     init(
         _ titleKey: LocalizedStringKey,
         theme: any Theme,
@@ -122,7 +122,7 @@ public extension SparkCheckbox {
     /// }
     /// ```
     ///
-    /// ![Checkbox rendering with a title.](checkbox/component_with_title.png)
+    /// ![Checkbox rendering with a title.](checkbox_with_title.png)
     init(
         _ text: String,
         theme: any Theme,
@@ -169,7 +169,7 @@ public extension SparkCheckbox {
     ///     }
     /// }
     /// ```
-    /// ![Checkbox rendering with a Label.](checkbox/component_with_label.png)
+    /// ![Checkbox rendering with a Label.](checkbox_with_label.png)
     init(
         theme: any Theme,
         isSelected: Binding<Bool>,

@@ -35,7 +35,7 @@ import SparkTheming
 ///     }
 /// }
 /// ```
-/// ![Radio group rendering with a Label.](radioGroup/component.png)
+/// ![Radio group rendering with a Label.](radioGroup.png)
 public struct SparkRadioGroup<ID, Label>: View where ID: SelectionControlsGroupID, Label: View {
 
     // MARK: - Properties
@@ -81,7 +81,7 @@ public struct SparkRadioGroup<ID, Label>: View where ID: SelectionControlsGroupI
     /// }     
     /// ```
     ///
-    /// ![Radio Group rendering.](radioGroup/component.png)
+    /// ![Radio Group rendering.](radioGroup.png)
     public init(
         theme: any Theme,
         selectedID: Binding<ID?>,

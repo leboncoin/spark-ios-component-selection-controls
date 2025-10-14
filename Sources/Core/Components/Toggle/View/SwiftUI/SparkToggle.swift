@@ -28,10 +28,10 @@ import SparkTheming
 /// }
 /// ```
 /// Toggle when isOn is **true** :
-/// ![Toggle rendering.](toggle/component_on.png)
+/// ![Toggle rendering.](toggle_on.png)
 ///
 /// Toggle when isOn is **false**:
-/// ![Toggle rendering.](toggle/component_false.png)
+/// ![Toggle rendering.](toggle_false.png)
 ///
 /// - With a localized string key or a string:
 /// ```swift
@@ -48,9 +48,9 @@ import SparkTheming
 ///     }
 /// }
 /// ```
-/// ![Toggle rendering with a title.](toggle/component_with_title.png)
+/// ![Toggle rendering with a title.](toggle_with_title.png)
 ///
-/// ![Toggle rendering with a multiline text.](toggle/component_with_mutliline.png)
+/// ![Toggle rendering with a multiline text.](toggle_with_mutliline.png)
 ///
 /// - With a custom Label:
 /// **Use it carefully with Spark font and color !**
@@ -73,7 +73,7 @@ import SparkTheming
 ///     }
 /// }
 /// ```
-/// ![Toggle rendering with a Label.](toggle/component_with_label.png)
+/// ![Toggle rendering with a Label.](toggle_with_label.png)
 public struct SparkToggle<Label>: View where Label: View {
 
     // MARK: - Properties
@@ -112,7 +112,7 @@ public struct SparkToggle<Label>: View where Label: View {
     /// }
     /// ```
     ///
-    /// ![Toggle rendering.](toggle/component_on.png)
+    /// ![Toggle rendering.](toggle_on.png)
     public init(
         theme: any Theme,
         isOn: Binding<Bool>
@@ -146,7 +146,7 @@ public struct SparkToggle<Label>: View where Label: View {
     /// }
     /// ```
     ///
-    /// ![Toggle rendering with a title.](toggle/component_with_title.png)
+    /// ![Toggle rendering with a title.](toggle_with_title.png)
     public init(
         _ titleKey: LocalizedStringKey,
         theme: any Theme,
@@ -181,7 +181,7 @@ public struct SparkToggle<Label>: View where Label: View {
     /// }
     /// ```
     ///
-    /// ![Toggle rendering with a title.](toggle/component_with_title.png)
+    /// ![Toggle rendering with a title.](toggle_with_title.png)
     public init(
         _ text: String,
         theme: any Theme,
@@ -219,7 +219,7 @@ public struct SparkToggle<Label>: View where Label: View {
     ///     }
     /// }     
     /// ```
-    /// ![Toggle rendering with a Label.](toggle/component_with_label.png)
+    /// ![Toggle rendering with a Label.](toggle_with_label.png)
     public init(
         theme: any Theme,
         isOn: Binding<Bool>,

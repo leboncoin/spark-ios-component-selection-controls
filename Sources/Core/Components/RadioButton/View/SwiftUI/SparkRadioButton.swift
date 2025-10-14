@@ -28,10 +28,10 @@ import SparkTheming
 /// }
 /// ```
 /// Radio button when isSelected is **true** :
-/// ![Radio button rendering.](radioButton/component_selected.png)
+/// ![Radio button rendering.](radioButton_selected.png)
 ///
 /// Radio button when isSelected is **false**:
-/// ![Radio button rendering.](radioButton/component_unselected.png)
+/// ![Radio button rendering.](radioButton_unselected.png)
 ///
 /// - With a localized string key or a string:
 /// ```swift
@@ -48,9 +48,9 @@ import SparkTheming
 ///     }
 /// }
 /// ```
-/// ![Radio button rendering with a title.](radioButton/component_with_title.png)
+/// ![Radio button rendering with a title.](radioButton_with_title.png)
 ///
-/// ![Radio button rendering with a multiline text.](radioButton/component_with_mutliline.png)
+/// ![Radio button rendering with a multiline text.](radioButton_with_mutliline.png)
 ///
 /// - With a custom Label:
 /// **Use it carefully with Spark font and color !**
@@ -73,7 +73,7 @@ import SparkTheming
 ///     }
 /// }
 /// ```
-/// ![Radio button rendering with a Label.](radioButton/component_with_label.png)
+/// ![Radio button rendering with a Label.](radioButton_with_label.png)
 public struct SparkRadioButton<Label>: View where Label: View {
 
     // MARK: - Properties
@@ -112,7 +112,7 @@ public struct SparkRadioButton<Label>: View where Label: View {
     /// }
     /// ```
     ///
-    /// ![Radio button rendering.](radioButton/component_unselected.png)
+    /// ![Radio button rendering.](radioButton_unselected.png)
     public init(
         theme: any Theme,
         isSelected: Binding<Bool>
@@ -146,7 +146,7 @@ public struct SparkRadioButton<Label>: View where Label: View {
     /// }
     /// ```
     ///
-    /// ![Radio button rendering with a title.](radioButton/component_with_title.png)
+    /// ![Radio button rendering with a title.](radioButton_with_title.png)
     public init(
         _ titleKey: LocalizedStringKey,
         theme: any Theme,
@@ -181,7 +181,7 @@ public struct SparkRadioButton<Label>: View where Label: View {
     /// }     
     /// ```
     ///
-    /// ![Radio button rendering with a title.](radioButton/component_with_title.png)
+    /// ![Radio button rendering with a title.](radioButton_with_title.png)
     public init(
         _ text: String,
         theme: any Theme,
@@ -219,7 +219,7 @@ public struct SparkRadioButton<Label>: View where Label: View {
     ///     }
     /// }
     /// ```
-    /// ![Radio button rendering with a Label.](radioButton/component_with_label.png)
+    /// ![Radio button rendering with a Label.](radioButton_with_label.png)
     public init(
         theme: any Theme,
         isSelected: Binding<Bool>,

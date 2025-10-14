@@ -29,13 +29,13 @@ import SparkTheming
 /// ```
 ///
 /// Checkbox when selectionState is **selected** or isSelected is **true**:
-/// ![Checkbox rendering.](checkbox/component_selected.png)
+/// ![Checkbox rendering.](checkbox_selected.png)
 ///
 /// Checkbox when selectionState is **unselected** or isSelected is **false**:
-/// ![Checkbox rendering.](checkbox/component_unselected.png)
+/// ![Checkbox rendering.](checkbox_unselected.png)
 ///
 /// Checkbox when selectionState is **indeterminate**:
-/// ![Checkbox rendering.](checkbox/component_indeterminate.png)
+/// ![Checkbox rendering.](checkbox_indeterminate.png)
 ///
 /// - With a localized string key or a string:
 /// ```swift
@@ -52,9 +52,9 @@ import SparkTheming
 ///     }
 /// }
 /// ```
-/// ![Checkbox rendering with a title.](checkbox/component_with_title.png)
+/// ![Checkbox rendering with a title.](checkbox_with_title.png)
 ///
-/// ![Checkbox rendering with a multiline text.](checkbox/component_with_mutliline.png)
+/// ![Checkbox rendering with a multiline text.](checkbox_with_mutliline.png)
 ///
 /// - With a custom Label:
 /// **Use it carefully with Spark font and color !**
@@ -77,7 +77,7 @@ import SparkTheming
 ///     }
 /// }
 /// ```
-/// ![Checkbox rendering with a Label.](checkbox/component_with_label.png)
+/// ![Checkbox rendering with a Label.](checkbox_with_label.png)
 public struct SparkCheckbox<Label>: View where Label: View {
 
     // MARK: - Properties
@@ -118,7 +118,7 @@ public struct SparkCheckbox<Label>: View where Label: View {
     /// }
     /// ```
     ///
-    /// ![Checkbox rendering.](checkbox/component_unselected.png)
+    /// ![Checkbox rendering.](checkbox_unselected.png)
     public init(
         theme: any Theme,
         selectionState: Binding<CheckboxSelectionState>
@@ -152,7 +152,7 @@ public struct SparkCheckbox<Label>: View where Label: View {
     /// }
     /// ```
     ///
-    /// ![Checkbox rendering with a title.](checkbox/component_with_title.png)
+    /// ![Checkbox rendering with a title.](checkbox_with_title.png)
     public init(
         _ titleKey: LocalizedStringKey,
         theme: any Theme,
@@ -187,7 +187,7 @@ public struct SparkCheckbox<Label>: View where Label: View {
     /// }
     /// ```
     ///
-    /// ![Checkbox rendering with a title.](checkbox/component_with_title.png)
+    /// ![Checkbox rendering with a title.](checkbox_with_title.png)
     public init(
         _ text: String,
         theme: any Theme,
@@ -225,7 +225,7 @@ public struct SparkCheckbox<Label>: View where Label: View {
     ///     }
     /// }     
     /// ```
-    /// ![Checkbox rendering with a Label.](checkbox/component_with_label.png)
+    /// ![Checkbox rendering with a Label.](checkbox_with_label.png)
     public init(
         theme: any Theme,
         selectionState: Binding<CheckboxSelectionState>,
