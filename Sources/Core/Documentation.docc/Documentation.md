@@ -25,25 +25,25 @@ It is a small square used to select or deselect multiple options in a list.
 #### Rendering
 
 - Default :
-![Component rendering.](checkbox/component_unselected.png)
+![Component rendering.](checkbox_unselected.png)
 
 - When the selection state value is .selected :
-![Component rendering.](checkbox/component_selected.png)
+![Component rendering.](checkbox_selected.png)
 
 - When the selection state value is .indeterminate :
-![Component rendering with the indeterminate selection state.](checkbox/component_indeterminate.png)
+![Component rendering with the indeterminate selection state.](checkbox_indeterminate.png)
 
 - With a short title : 
-![Component rendering with a short title.](checkbox/component_with_title.png)
+![Component rendering with a short title.](checkbox_with_title.png)
 
 - With a multiline title : 
-![Component rendering with a multiline title.](checkbox/component_with_mutliline.png)
+![Component rendering with a multiline title.](checkbox_with_mutliline.png)
 
 - When the disabled state is active : 
-![Component rendering when isEnabled is false.](checkbox/component_disabled.png)
+![Component rendering when isEnabled is false.](checkbox_disabled.png)
 
 - A group : 
-![Component rendering.](checkboxGroup/component.png)
+![Component rendering.](checkboxGroup.png)
 
 ### A11y
 
@@ -82,22 +82,22 @@ It is a small circle used to select only one option from a list of choices.
 #### Rendering
 
 - Default :
-![Component rendering.](radioButton/component_selected.png)
+![Component rendering.](radioButton_selected.png)
 
 - When the isSelected value is true :
-![Component rendering.](radioButton/component_unselected.png)
+![Component rendering.](radioButton_unselected.png)
 
 - With a short title : 
-![Component rendering with a short title.](radioButton/component_with_title.png)
+![Component rendering with a short title.](radioButton_with_title.png)
 
 - With a multiline title : 
-![Component rendering with a multiline title.](radioButton/component_with_mutliline.png)
+![Component rendering with a multiline title.](radioButton_with_mutliline.png)
 
 - When the disabled state is active : 
-![Component rendering when isEnabled is false.](radioButton/component_disabled.png)
+![Component rendering when isEnabled is false.](radioButton_disabled.png)
 
 - A group : 
-![Component rendering.](radioGroup/component.png)
+![Component rendering.](radioGroup.png)
 
 ### A11y
 
@@ -132,19 +132,19 @@ It is a control that toggles between on and off states.
 #### Rendering
 
 - Default :
-![Component rendering.](toggle/component_on.png)
+![Component rendering.](toggle_on.png)
 
 - When the isOn value is false :
-![Component rendering.](toggle/component_off.png)
+![Component rendering.](toggle_off.png)
 
 - With a short title : 
-![Component rendering with a short title.](toggle/component_with_title.png)
+![Component rendering with a short title.](toggle_with_title.png)
 
 - With a multiline title : 
-![Component rendering with a multiline title.](toggle/component_with_mutliline.png)
+![Component rendering with a multiline title.](toggle_with_mutliline.png)
 
 - When the disabled state is active : 
-![Component rendering when isEnabled is false.](toggle/component_disabled.png)
+![Component rendering when isEnabled is false.](toggle_disabled.png)
 
 ### A11y
 

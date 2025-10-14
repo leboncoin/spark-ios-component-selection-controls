@@ -24,13 +24,13 @@ import SparkTheming
 /// ```
 ///
 /// Checkbox when selectionState is **selected** or isSelected is **true**:
-/// ![Checkbox rendering.](checkbox/component_selected.png)
+/// ![Checkbox rendering.](checkbox_selected.png)
 ///
 /// Checkbox when selectionState is **unselected** or isSelected is **false**:
-/// ![Checkbox rendering.](checkbox/component_unselected.png)
+/// ![Checkbox rendering.](checkbox_unselected.png)
 ///
 /// Checkbox when selectionState is **indeterminate**:
-/// ![Checkbox rendering.](checkbox/component_indeterminate.png)
+/// ![Checkbox rendering.](checkbox_indeterminate.png)
 ///
 /// To add a text, you must provide a **text** or a **attributedText**:
 /// ```swift
@@ -41,9 +41,9 @@ import SparkTheming
 /// ```
 /// *Note*: Please **do not set a text/attributedText** on the ``textLabel`` but use the ``text`` and
 /// ``attributedText`` directly on the ``SparkUICheckbox``.
-/// ![Checkbox rendering with a text.](checkbox/component_with_title.png)
+/// ![Checkbox rendering with a text.](checkbox_with_title.png)
 ///
-/// ![Checkbox rendering with a multiline text.](checkbox/component_with_mutliline.png)
+/// ![Checkbox rendering with a multiline text.](checkbox_with_mutliline.png)
 public final class SparkUICheckbox: UIControl {
 
     // MARK: - Type alias
@@ -182,13 +182,13 @@ public final class SparkUICheckbox: UIControl {
     /// you must use the ``isSelected`` property.
     ///
     /// Checkbox when selectionState is **selected**:
-    /// ![Checkbox rendering.](checkbox/component_selected.png)
+    /// ![Checkbox rendering.](checkbox_selected.png)
     ///
     /// Checkbox when selectionState is **unselected**:
-    /// ![Checkbox rendering.](checkbox/component_unselected.png)
+    /// ![Checkbox rendering.](checkbox_unselected.png)
     ///
     /// Checkbox when selectionState is **indeterminate**:
-    /// ![Checkbox rendering.](checkbox/component_indeterminate.png)
+    /// ![Checkbox rendering.](checkbox_indeterminate.png)
     public var selectionState: CheckboxSelectionState {
         get {
             return self.viewModel.selectedValue
@@ -202,10 +202,10 @@ public final class SparkUICheckbox: UIControl {
     /// The value of the checkbox (retrieve and set without animation).
     ///
     /// Checkbox when isSelected is **selected** :
-    /// ![Checkbox rendering.](checkbox/component_selected.png) 
+    /// ![Checkbox rendering.](checkbox_selected.png) 
     ///
     /// Checkbox when isSelected is **unselected**:
-    /// ![Checkbox rendering.](checkbox/component_unselected.png)
+    /// ![Checkbox rendering.](checkbox_unselected.png)
     public override var isSelected: Bool {
         get {
             return self.selectionState == .selected
@@ -216,7 +216,7 @@ public final class SparkUICheckbox: UIControl {
     }
 
     /// The state of the checkbox: enabled or not.
-    /// ![Checkbox rendering with when it's disabled.](checkbox/component_disabled.png)
+    /// ![Checkbox rendering with when it's disabled.](checkbox_disabled.png)
     public override var isEnabled: Bool {
         get {
             return self.viewModel.isEnabled
@@ -287,7 +287,7 @@ public final class SparkUICheckbox: UIControl {
     /// )
     /// ```
     ///
-    /// ![Checkbox rendering.](checkbox/component_unselected.png)
+    /// ![Checkbox rendering.](checkbox_unselected.png)
     public init(theme: any Theme) {
         self.viewModel = .init(
             theme: theme

@@ -28,7 +28,7 @@ import SparkTheming
 /// ```
 ///
 /// Example of rendering:
-/// ![Radio group rendering.](radioGroup/component.png)
+/// ![Radio group rendering.](radioGroup.png)
 ///
 /// Example of usage:
 /// ```swift
@@ -100,7 +100,7 @@ public final class SparkUIRadioGroup<ID>: SelectionControlsGroup<ID> where ID: S
     }
 
     /// The state of the radio button: enabled or not.
-    /// ![Radio group rendering with when it's disabled.](radioGroup/component_disabled.png)
+    /// ![Radio group rendering with when it's disabled.](radioGroup_disabled.png)
     public override var isEnabled: Bool {
         didSet {
             self.radioButtons.forEach { $0.isEnabled = self.isEnabled }
@@ -140,7 +140,7 @@ public final class SparkUIRadioGroup<ID>: SelectionControlsGroup<ID> where ID: S
     /// )
     /// ```
     ///
-    /// ![Radio group rendering.](radioGroup/component.png)
+    /// ![Radio group rendering.](radioGroup.png)
     public init(
         theme: any Theme,
         items: [RadioGroupUIItem<ID>]
@@ -167,7 +167,7 @@ public final class SparkUIRadioGroup<ID>: SelectionControlsGroup<ID> where ID: S
     /// )
     /// ```
     ///
-    /// ![Radio group rendering.](radioGroup/component.png)
+    /// ![Radio group rendering.](radioGroup.png)
     public override init(
         theme: any Theme
     ) {

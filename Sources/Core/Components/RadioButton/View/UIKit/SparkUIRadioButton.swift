@@ -26,10 +26,10 @@ import SparkTheming
 /// ```
 ///
 /// RadioButton when isSelected is **true** :
-/// ![RadioButton rendering.](radioButton/component_selected.png)
+/// ![RadioButton rendering.](radioButton_selected.png)
 ///
 /// RadioButton when isSelected is **false**:
-/// ![RadioButton rendering.](radioButton/component_unselected.png)
+/// ![RadioButton rendering.](radioButton_unselected.png)
 ///
 /// To add a text, you must provide a **text** or a **attributedText**:
 /// ```swift
@@ -42,9 +42,9 @@ import SparkTheming
 /// ```
 /// *Note*: Please **do not set a text/attributedText** on the ``textLabel`` but use the ``text`` and
 /// ``attributedText`` directly on the ``SparkUIRadioButton``.
-/// ![RadioButton rendering with a text.](radioButton/component_with_title.png)
+/// ![RadioButton rendering with a text.](radioButton_with_title.png)
 ///
-/// ![RadioButton rendering with a multiline text.](radioButton/component_with_mutliline.png)
+/// ![RadioButton rendering with a multiline text.](radioButton_with_mutliline.png)
 public final class SparkUIRadioButton: UIControl {
 
     // MARK: - Type alias
@@ -172,10 +172,10 @@ public final class SparkUIRadioButton: UIControl {
     /// The value of the radio button (retrieve and set without animation).
     ///
     /// RadioButton when isSelected is **true** :
-    /// ![RadioButton rendering.](radioButton/component_selected.png)
+    /// ![RadioButton rendering.](radioButton_selected.png)
     ///
     /// RadioButton when isSelected is **false**:
-    /// ![RadioButton rendering.](radioButton/component_unselected.png)
+    /// ![RadioButton rendering.](radioButton_unselected.png)
     public override var isSelected: Bool {
         get {
             return self.viewModel.selectedValue
@@ -187,7 +187,7 @@ public final class SparkUIRadioButton: UIControl {
     }
 
     /// The state of the radio button: enabled or not.
-    /// ![RadioButton rendering with when it's disabled.](radioButton/component_disabled.png)
+    /// ![RadioButton rendering with when it's disabled.](radioButton_disabled.png)
     public override var isEnabled: Bool {
         get {
             return self.viewModel.isEnabled
@@ -251,7 +251,7 @@ public final class SparkUIRadioButton: UIControl {
     /// )
     /// ```
     ///
-    /// ![RadioButton rendering.](radioButton/component_unselected.png)
+    /// ![RadioButton rendering.](radioButton_unselected.png)
     public init(theme: any Theme) {
         self.viewModel = .init(
             theme: theme

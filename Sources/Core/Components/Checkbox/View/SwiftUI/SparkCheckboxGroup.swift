@@ -35,7 +35,7 @@ import SparkTheming
 ///     }
 /// }
 /// ```
-/// ![Checkbox group rendering with a Label.](checkboxGroup/component.png)
+/// ![Checkbox group rendering with a Label.](checkboxGroup.png)
 public struct SparkCheckboxGroup<ID, Label>: View where ID: SelectionControlsGroupID, Label: View {
 
     // MARK: - Properties
@@ -83,7 +83,7 @@ public struct SparkCheckboxGroup<ID, Label>: View where ID: SelectionControlsGro
     /// }     
     /// ```
     ///
-    /// ![Checkbox Group rendering.](checkboxGroup/component.png)
+    /// ![Checkbox Group rendering.](checkboxGroup.png)
     public init(
         theme: any Theme,
         selectedIDs: Binding<[ID]>,
