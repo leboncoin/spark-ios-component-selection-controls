@@ -314,6 +314,14 @@ public final class SparkUICheckbox: UIControl {
         )
     }
 
+    // MARK: - Layout
+
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+
+        self.updateToggleBorderRadius()
+    }
+
     // MARK: - View setup
 
     private func setupView() {
@@ -510,7 +518,8 @@ public final class SparkUICheckbox: UIControl {
         dynamicColors: CheckboxDynamicColors? = nil
     ) {
         let dynamicColors = dynamicColors ?? self.viewModel.dynamicColors
-        self.layoutIfNeeded()
+
+        self.contentStackView.layoutIfNeeded()
         self.toggleView.sparkBorderRadius(
             width: self.toggleBorderWidth,
             radius: self.toggleCornerRadius,
