@@ -210,7 +210,7 @@ public final class SparkUIRadioButton: UIControl {
 
     // MARK: - Internal Properties
 
-    /// The identifier of the radio button. Used by the ``SparkUIRadioGroup``. *Optional*. 
+    /// The identifier of the radio button. Used by the ``SparkUIRadioGroup``. *Optional*.
     internal var id: String?
 
     // MARK: - Private Properties
@@ -276,6 +276,15 @@ public final class SparkUIRadioButton: UIControl {
             name: UIAccessibility.reduceMotionStatusDidChangeNotification,
             object: nil
         )
+    }
+
+    // MARK: - Layout
+
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+
+        self.updateToggleBorderRadius()
+        self.updateToggleSelectedDotCornerRadius()
     }
 
     // MARK: - View setup
@@ -480,7 +489,8 @@ public final class SparkUIRadioButton: UIControl {
     ) {
         let dynamicColors = dynamicColors ?? self.viewModel.dynamicColors
         let contentRadius = contentRadius ?? self.viewModel.contentRadius
-        self.layoutIfNeeded()
+
+        self.toggleContentView.layoutIfNeeded()
         self.toggleView.sparkBorderRadius(
             width: self.toggleBorderWidth,
             radius: contentRadius,
@@ -491,7 +501,8 @@ public final class SparkUIRadioButton: UIControl {
 
     private func updateToggleSelectedDotCornerRadius(contentRadius: CGFloat? = nil) {
         let contentRadius = contentRadius ?? self.viewModel.contentRadius
-        self.layoutIfNeeded()
+
+        self.toggleContentView.layoutIfNeeded()
         self.toggleSelectedDotView.sparkCornerRadius(contentRadius)
     }
 
