@@ -19,5 +19,5 @@ public enum CheckboxSelectionState: CaseIterable {
     // MARK: - Properties
 
     /// The default case. Equals to **.unselected**.
-    public static var `default` = Self.unselected
+    public static let `default`: Self = .unselected
 }
