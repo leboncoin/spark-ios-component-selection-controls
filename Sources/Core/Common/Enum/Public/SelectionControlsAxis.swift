@@ -19,5 +19,5 @@ public enum SelectionControlsAxis: String, CaseIterable {
     // MARK: - Properties
 
     /// The default case. Equals to **.vertical**.
-    static var `default` = Self.vertical
+    public static var `default` = Self.vertical
 }

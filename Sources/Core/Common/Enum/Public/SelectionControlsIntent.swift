@@ -16,5 +16,5 @@ public enum SelectionControlsIntent: String, CaseIterable {
     // MARK: - Properties
 
     /// The default case. Equals to **.basic**.
-    static var `default` = Self.basic
+    public static var `default` = Self.basic
 }
