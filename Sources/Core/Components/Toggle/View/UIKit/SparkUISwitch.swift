@@ -581,6 +581,7 @@ public final class SparkUISwitch: UIControl {
 
     private func updateCornerRadius(_ value: CGFloat? = nil) {
         self.toggleView.layoutIfNeeded()
+        self.toggleDotView.layoutIfNeeded()
 
         self.toggleView.sparkCornerRadius(value ?? self.viewModel.contentRadius)
         self.toggleDotView.sparkCornerRadius(value ?? self.viewModel.contentRadius)
