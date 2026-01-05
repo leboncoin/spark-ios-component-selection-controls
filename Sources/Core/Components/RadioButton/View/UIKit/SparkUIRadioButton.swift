@@ -495,6 +495,7 @@ public final class SparkUIRadioButton: UIControl {
             width: self.toggleBorderWidth,
             radius: contentRadius,
             colorToken: dynamicColors.circle,
+            cornerCurve: .circular,
             masksToBounds: false
         )
     }
