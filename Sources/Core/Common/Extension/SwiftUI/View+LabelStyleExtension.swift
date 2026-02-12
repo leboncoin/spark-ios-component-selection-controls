@@ -20,6 +20,7 @@ extension View {
         self.font(titleStyle.typography)
             .foregroundStyle(titleStyle.color)
             .frame(minHeight: minHeight)
+            .contextFrame()
     }
 
     func applyHiddenLabelStyle(

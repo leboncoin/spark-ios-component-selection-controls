@@ -21,9 +21,11 @@ import SparkTheming
 ///
 ///     var body: some View {
 ///         SparkRadioButton(
-///             theme: self.theme,
 ///             isSelected: self.$isSelected
 ///         )
+///         .sparkTheme(self.theme)
+///         .sparkRadioButtonIntent(.error)
+///         .sparkRadioButtonIsAnimated(false)
 ///     }
 /// }
 /// ```
@@ -42,9 +44,9 @@ import SparkTheming
 ///     var body: some View {
 ///         SparkRadioButton(
 ///             "My placeholder",
-///             theme: self.theme,
 ///             isSelected: self.$isSelected
 ///         )
+///         .sparkTheme(self.theme)
 ///     }
 /// }
 /// ```
@@ -61,7 +63,6 @@ import SparkTheming
 ///
 ///     var body: some View {
 ///         SparkRadioButton(
-///             theme: self.theme,
 ///             isSelected: self.$isSelected
 ///             label: {
 ///                 VStack {
@@ -70,22 +71,52 @@ import SparkTheming
 ///                 }
 ///             }
 ///         )
+///         .sparkTheme(self.theme)
 ///     }
 /// }
 /// ```
 /// ![Radio button rendering with a Label.](radioButton_with_label.png)
+///
+/// - **Full Width**
+/// If you want to have a full width checkbox, you use a custom content and add a **frame maxWidth** and a **contentShape** like this :
+/// ```swift
+/// struct MyView: View {
+///     let theme: SparkTheming.Theme = MyTheme()
+///     @State var isSelected = false
+///
+///     var body: some View {
+///         SparkRadioButton(
+///             isSelected: self.$isSelected
+///             label: {
+///                 VStack {
+///                     Text("Hello")
+///                     Text("World")
+///                 }
+///                 .frame(maxWidth: .infinity, alignment: .leading)
+///                 .contentShape(Rectangle())
+///             }
+///         )
+///         .sparkTheme(self.theme)
+///     }
+/// }
+/// ```
 public struct SparkRadioButton<Label>: View where Label: View {
 
     // MARK: - Properties
 
-    private let theme: any Theme
     @Binding private var isSelected: Bool
     private let label: () -> Label
 
     @Environment(\.radioButtonIntent) private var intent
     @Environment(\.isEnabled) private var isEnabled
+    @Environment(\.theme) private var theme
 
     @StateObject private var viewModel = RadioButtonViewModel()
+
+    // MARK: - Private Properties
+
+    @available(*, deprecated, message: "Remove the deprecated and this property ASAP. (02/02/2026)")
+    private var deprecatedTheme: (any Theme)?
 
     // MARK: - Initialization
 
@@ -94,7 +125,6 @@ public struct SparkRadioButton<Label>: View where Label: View {
     /// Note : You must provide an *accessibilityLabel* !
     ///
     /// - Parameters:
-    ///   - theme: The current theme.
     ///   - isSelected: A binding to a property that indicates whether the radio button is selected or not.
     ///
     /// Implementation example :
@@ -105,19 +135,17 @@ public struct SparkRadioButton<Label>: View where Label: View {
     ///
     ///     var body: some View {
     ///         SparkRadioButton(
-    ///             theme: self.theme,
     ///             isSelected: self.$isSelected
     ///         )
+    ///         .sparkTheme(self.theme)
     ///     }
     /// }
     /// ```
     ///
     /// ![Radio button rendering.](radioButton_unselected.png)
     public init(
-        theme: any Theme,
         isSelected: Binding<Bool>
     ) where Label == EmptyView {
-        self.theme = theme
         self._isSelected = isSelected
         self.label = { EmptyView() }
     }
@@ -127,7 +155,6 @@ public struct SparkRadioButton<Label>: View where Label: View {
     /// - Parameters:
     ///   - titleKey: The key for the radio button's localized title, that describes
     ///     the purpose of the radio button.
-    ///   - theme: The current theme.
     ///   - isSelected: A binding to a property that indicates whether the radio button is selected or not.
     ///
     /// Implementation example :
@@ -139,9 +166,9 @@ public struct SparkRadioButton<Label>: View where Label: View {
     ///     var body: some View {
     ///         SparkRadioButton(
     ///             "My placeholder",
-    ///             theme: self.theme,
     ///             isSelected: self.$isSelected
     ///         )
+    ///         .sparkTheme(self.theme)
     ///     }
     /// }
     /// ```
@@ -149,10 +176,8 @@ public struct SparkRadioButton<Label>: View where Label: View {
     /// ![Radio button rendering with a title.](radioButton_with_title.png)
     public init(
         _ titleKey: LocalizedStringKey,
-        theme: any Theme,
         isSelected: Binding<Bool>
     ) where Label == Text {
-        self.theme = theme
         self._isSelected = isSelected
         self.label = { Text(titleKey) }
     }
@@ -162,7 +187,6 @@ public struct SparkRadioButton<Label>: View where Label: View {
     /// - Parameters:
     ///   - text: The text for the radio button's localized title, that describes
     ///     the purpose of the radio button.
-    ///   - theme: The current theme.
     ///   - isSelected: A binding to a property that indicates whether the radio button is selected or not.
     ///
     /// Implementation example :
@@ -174,9 +198,9 @@ public struct SparkRadioButton<Label>: View where Label: View {
     ///     var body: some View {
     ///         SparkRadioButton(
     ///             "My placeholder",
-    ///             theme: self.theme,
     ///             isSelected: self.$isSelected
     ///         )
+    ///         .sparkTheme(self.theme)
     ///     }
     /// }     
     /// ```
@@ -184,10 +208,8 @@ public struct SparkRadioButton<Label>: View where Label: View {
     /// ![Radio button rendering with a title.](radioButton_with_title.png)
     public init(
         _ text: String,
-        theme: any Theme,
         isSelected: Binding<Bool>
     ) where Label == Text {
-        self.theme = theme
         self._isSelected = isSelected
         self.label = { Text(text) }
     }
@@ -195,7 +217,6 @@ public struct SparkRadioButton<Label>: View where Label: View {
     /// Creates a Spark radio button that displays a custom label.
     ///
     /// - Parameters:
-    ///   - theme: The current theme.
     ///   - isSelected: A binding to a property that indicates whether the radio button is selected or not.
     ///   - label: A view that describes the purpose of the radio button.
     ///
@@ -207,7 +228,6 @@ public struct SparkRadioButton<Label>: View where Label: View {
     ///
     ///     var body: some View {
     ///         SparkRadioButton(
-    ///             theme: self.theme,
     ///             isSelected: self.$isSelected,
     ///             label: {
     ///                 VStack {
@@ -216,18 +236,58 @@ public struct SparkRadioButton<Label>: View where Label: View {
     ///                 }
     ///             }
     ///         )
+    ///         .sparkTheme(self.theme)
     ///     }
     /// }
     /// ```
     /// ![Radio button rendering with a Label.](radioButton_with_label.png)
     public init(
-        theme: any Theme,
         isSelected: Binding<Bool>,
         @ViewBuilder label: @escaping () -> Label
     ) {
-        self.theme = theme
         self._isSelected = isSelected
         self.label = label
+    }
+
+    // MARK: - Deprecated Initialization
+
+    @available(*, deprecated, message: "Use the init without theme instead. Set the theme after the init.")
+    public init(
+        theme: any Theme,
+        isSelected: Binding<Bool>
+    ) where Label == EmptyView {
+        self.init(isSelected: isSelected)
+        self.deprecatedTheme = theme
+    }
+
+    @available(*, deprecated, message: "Use the init without theme instead. Set the theme after the init.")
+    public init(
+        _ titleKey: LocalizedStringKey,
+        theme: any Theme,
+        isSelected: Binding<Bool>
+    ) where Label == Text {
+        self.init(titleKey, isSelected: isSelected)
+        self.deprecatedTheme = theme
+    }
+
+    @available(*, deprecated, message: "Use the init without theme instead. Set the theme after the init.")
+    public init(
+        _ text: String,
+        theme: any Theme,
+        isSelected: Binding<Bool>
+    ) where Label == Text {
+        self.init(text, isSelected: isSelected)
+        self.deprecatedTheme = theme
+    }
+
+    @available(*, deprecated, message: "Use the init without theme instead. Set the theme after the init.")
+    public init(
+        theme: (any Theme)?,
+        isSelected: Binding<Bool>,
+        @ViewBuilder label: @escaping () -> Label
+    ) {
+        self.init(isSelected: isSelected, label: label)
+        self.deprecatedTheme = theme
     }
 
     // MARK: - View
@@ -241,12 +301,15 @@ public struct SparkRadioButton<Label>: View where Label: View {
         .accessibilityIdentifier(RadioButtonAccessibilityIdentifier.view)
         .onAppear() {
             self.viewModel.setup(
-                theme: self.theme,
+                theme: self.deprecatedTheme ?? self.theme.value,
                 intent: self.intent,
                 isSelected: self.isSelected,
                 isEnabled: self.isEnabled,
                 isCustomLabel: Label.self != EmptyView.self && Label.self != Text.self
             )
+        }
+        .onChange(of: self.theme) { newTheme in
+            self.viewModel.theme = newTheme.value
         }
         .onChange(of: self.intent) { intent in
             self.viewModel.intent = intent

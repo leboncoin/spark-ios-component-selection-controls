@@ -19,7 +19,6 @@ import SparkTheming
 ///
 ///     var body: some View {
 ///         SparkRadioGroup(
-///             theme: self.theme,
 ///             selectedID: self.$selectedID,
 ///             items: [
 ///                 RadioGroupItem(
@@ -32,6 +31,7 @@ import SparkTheming
 ///                 )
 ///             ]
 ///         )
+///         .sparkTheme(self.theme)
 ///     }
 /// }
 /// ```
@@ -40,11 +40,13 @@ public struct SparkRadioGroup<ID, Label>: View where ID: SelectionControlsGroupI
 
     // MARK: - Properties
 
-    private let theme: any Theme
+    @available(*, deprecated, message: "Remove the deprecated and this property ASAP. (02/02/2026)")
+    private var deprecatedTheme: (any Theme)?
 
     @Binding private var selectedID: ID?
     private let items: [RadioGroupItem<ID, Label>]
 
+    @Environment(\.theme) private var theme
     @Environment(\.radioGroupAxis) private var axis
 
     // MARK: - Initialization
@@ -52,7 +54,6 @@ public struct SparkRadioGroup<ID, Label>: View where ID: SelectionControlsGroupI
     /// Creates a Spark radio group with items.
     ///
     /// - Parameters:
-    ///   - theme: The current theme.
     ///   - selectedID: A binding to a property that indicates whether the radio button is selected or not. The value is optional.
     ///   - items: The items (array of ``RadioGroupItem``) of the group.
     ///
@@ -64,7 +65,6 @@ public struct SparkRadioGroup<ID, Label>: View where ID: SelectionControlsGroupI
     ///
     ///     var body: some View {
     ///         SparkRadioGroup(
-    ///             theme: self.theme,
     ///             selectedID: self.$selectedID,
     ///             items: [
     ///                 RadioGroupItem(
@@ -77,17 +77,27 @@ public struct SparkRadioGroup<ID, Label>: View where ID: SelectionControlsGroupI
     ///                 )
     ///             ]
     ///         )
+    ///         .sparkTheme(self.theme)
     ///     }
     /// }     
     /// ```
     ///
     /// ![Radio Group rendering.](radioGroup.png)
     public init(
+        selectedID: Binding<ID?>,
+        items: [RadioGroupItem<ID, Label>]
+    ) {
+        self._selectedID = selectedID
+        self.items = items
+    }
+
+    @available(*, deprecated, message: "Use the init without theme instead. Set the theme after the init.")
+    public init(
         theme: any Theme,
         selectedID: Binding<ID?>,
         items: [RadioGroupItem<ID, Label>]
     ) {
-        self.theme = theme
+        self.deprecatedTheme = theme
         self._selectedID = selectedID
         self.items = items
     }
@@ -95,10 +105,10 @@ public struct SparkRadioGroup<ID, Label>: View where ID: SelectionControlsGroupI
     // MARK: - View
 
     public var body: some View {
-        CommonGroup(theme: self.theme) {
+        CommonGroup(theme: self.deprecatedTheme) {
             ForEach(self.items, id: \.id) { item in
                 SparkRadioButton(
-                    theme: self.theme,
+                    theme: self.deprecatedTheme,
                     isSelected: Binding(
                         get: {
                             self.selectedID == item.id

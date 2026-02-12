@@ -35,6 +35,7 @@ final class SparkToggleSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
             for configuration in configurations {
                 let view = self.component(configuration: configuration)
+                    .sparkTheme(self.theme)
                     .disabled(!configuration.status.isEnabled)
                     .style(forDocumentation: forDocumentation)
 
@@ -52,18 +53,15 @@ final class SparkToggleSnapshotTests: SwiftUIComponentSnapshotTestCase {
         if let text = configuration.content.text {
             SparkToggle(
                 text,
-                theme: self.theme,
                 isOn: .constant(configuration.value.isOn)
             )
         } else if configuration.content == .other {
             SparkToggle(
-                theme: self.theme,
                 isOn: .constant(configuration.value.isOn),
                 label: { OtherContentView() }
             )
         } else {
             SparkToggle(
-                theme: self.theme,
                 isOn: .constant(configuration.value.isOn)
             )
         }

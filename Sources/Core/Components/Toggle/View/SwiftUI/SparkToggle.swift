@@ -21,9 +21,9 @@ import SparkTheming
 ///
 ///     var body: some View {
 ///         SparkToggle(
-///             theme: self.theme,
 ///             isOn: self.$isOn
 ///         )
+///         .sparkTheme(self.theme)
 ///     }
 /// }
 /// ```
@@ -42,9 +42,9 @@ import SparkTheming
 ///     var body: some View {
 ///         SparkToggle(
 ///             "My placeholder",
-///             theme: self.theme,
 ///             isOn: self.$isOn
 ///         )
+///         .sparkTheme(self.theme)
 ///     }
 /// }
 /// ```
@@ -61,7 +61,6 @@ import SparkTheming
 ///
 ///     var body: some View {
 ///         SparkToggle(
-///             theme: self.theme,
 ///             isOn: self.$isOn,
 ///             label: {
 ///                 VStack {
@@ -70,6 +69,7 @@ import SparkTheming
 ///                 }
 ///             }
 ///         )
+///         .sparkTheme(self.theme)
 ///     }
 /// }
 /// ```
@@ -78,10 +78,13 @@ public struct SparkToggle<Label>: View where Label: View {
 
     // MARK: - Properties
 
-    private let theme: any Theme
+    @available(*, deprecated, message: "Remove the deprecated and this property ASAP. (02/02/2026)")
+    private var deprecatedTheme: (any Theme)?
+
     @Binding private var isOn: Bool
     private let label: () -> Label
 
+    @Environment(\.theme) private var theme
     @Environment(\.colorSchemeContrast) private var contrast
     @Environment(\.isEnabled) private var isEnabled
 
@@ -94,7 +97,6 @@ public struct SparkToggle<Label>: View where Label: View {
     /// Note : You must provide an *accessibilityLabel* !
     ///
     /// - Parameters:
-    ///   - theme: The current theme.
     ///   - isOn: A binding to a property that indicates whether the toggle is on or off.
     ///
     /// Implementation example :
@@ -104,20 +106,14 @@ public struct SparkToggle<Label>: View where Label: View {
     ///     @State var isOn = false
     ///
     ///     var body: some View {
-    ///         SparkToggle(
-    ///             theme: self.theme,
-    ///             isOn: self.$isOn
-    ///         )
+    ///         SparkToggle(isOn: self.$isOn)
+    ///             .sparkTheme(self.theme)
     ///     }
     /// }
     /// ```
     ///
     /// ![Toggle rendering.](toggle_on.png)
-    public init(
-        theme: any Theme,
-        isOn: Binding<Bool>
-    ) where Label == EmptyView {
-        self.theme = theme
+    public init(isOn: Binding<Bool>) where Label == EmptyView {
         self._isOn = isOn
         self.label = { EmptyView() }
     }
@@ -127,7 +123,6 @@ public struct SparkToggle<Label>: View where Label: View {
     /// - Parameters:
     ///   - titleKey: The key for the toggle's localized title, that describes
     ///     the purpose of the toggle.
-    ///   - theme: The current theme.
     ///   - isOn: A binding to a property that indicates whether the toggle is on or off.
     ///
     /// Implementation example :
@@ -139,9 +134,9 @@ public struct SparkToggle<Label>: View where Label: View {
     ///     var body: some View {
     ///         SparkToggle(
     ///             "My placeholder",
-    ///             theme: self.theme,
     ///             isOn: self.$isOn
     ///         )
+    ///         .sparkTheme(self.theme)
     ///     }
     /// }
     /// ```
@@ -149,10 +144,8 @@ public struct SparkToggle<Label>: View where Label: View {
     /// ![Toggle rendering with a title.](toggle_with_title.png)
     public init(
         _ titleKey: LocalizedStringKey,
-        theme: any Theme,
         isOn: Binding<Bool>
     ) where Label == Text {
-        self.theme = theme
         self._isOn = isOn
         self.label = { Text(titleKey) }
     }
@@ -162,7 +155,6 @@ public struct SparkToggle<Label>: View where Label: View {
     /// - Parameters:
     ///   - text: The text for the toggle's localized title, that describes
     ///     the purpose of the toggle.
-    ///   - theme: The current theme.
     ///   - isOn: A binding to a property that indicates whether the toggle is on or off.
     ///
     /// Implementation example :
@@ -174,9 +166,9 @@ public struct SparkToggle<Label>: View where Label: View {
     ///     var body: some View {
     ///         SparkToggle(
     ///             "My placeholder",
-    ///             theme: self.theme,
     ///             isOn: self.$isOn
     ///         )
+    ///         .sparkTheme(self.theme)
     ///     }
     /// }
     /// ```
@@ -184,10 +176,8 @@ public struct SparkToggle<Label>: View where Label: View {
     /// ![Toggle rendering with a title.](toggle_with_title.png)
     public init(
         _ text: String,
-        theme: any Theme,
         isOn: Binding<Bool>
     ) where Label == Text {
-        self.theme = theme
         self._isOn = isOn
         self.label = { Text(text) }
     }
@@ -195,7 +185,6 @@ public struct SparkToggle<Label>: View where Label: View {
     /// Creates a Spark toggle that displays a custom label.
     ///
     /// - Parameters:
-    ///   - theme: The current theme.
     ///   - isOn: A binding to a property that indicates whether the toggle is on or off.
     ///   - label: A view that describes the purpose of the toggle.
     ///
@@ -207,7 +196,6 @@ public struct SparkToggle<Label>: View where Label: View {
     ///
     ///     var body: some View {
     ///         SparkToggle(
-    ///             theme: self.theme,
     ///             isOn: self.$isOn,
     ///             label: {
     ///                 VStack {
@@ -216,16 +204,87 @@ public struct SparkToggle<Label>: View where Label: View {
     ///                 }
     ///             }
     ///         )
+    ///         .sparkTheme(self.theme)
     ///     }
     /// }     
     /// ```
     /// ![Toggle rendering with a Label.](toggle_with_label.png)
     public init(
+        isOn: Binding<Bool>,
+        @ViewBuilder label: @escaping () -> Label
+    ) {
+        self._isOn = isOn
+        self.label = label
+    }
+
+    // MARK: - Deprecated Initialization
+
+    /// Creates a Spark toggle with an empty label.
+    ///
+    /// Note : You must provide an *accessibilityLabel* !
+    ///
+    /// - Parameters:
+    ///   - theme: The current theme.
+    ///   - isOn: A binding to a property that indicates whether the toggle is on or off.
+    @available(*, deprecated, message: "Use the init without theme instead. Set the theme after the init.")
+    public init(
+        theme: any Theme,
+        isOn: Binding<Bool>
+    ) where Label == EmptyView {
+        self.deprecatedTheme = theme
+        self._isOn = isOn
+        self.label = { EmptyView() }
+    }
+
+    /// Creates a Spark toggle that generates its label from a localized string key.
+    ///
+    /// - Parameters:
+    ///   - titleKey: The key for the toggle's localized title, that describes
+    ///     the purpose of the toggle.
+    ///   - theme: The current theme.
+    ///   - isOn: A binding to a property that indicates whether the toggle is on or off.
+    @available(*, deprecated, message: "Use the init without theme instead. Set the theme after the init.")
+    public init(
+        _ titleKey: LocalizedStringKey,
+        theme: any Theme,
+        isOn: Binding<Bool>
+    ) where Label == Text {
+        self.deprecatedTheme = theme
+        self._isOn = isOn
+        self.label = { Text(titleKey) }
+    }
+
+    /// Creates a Spark toggle that generates its label from a string.
+    ///
+    /// - Parameters:
+    ///   - text: The text for the toggle's localized title, that describes
+    ///     the purpose of the toggle.
+    ///   - theme: The current theme.
+    ///   - isOn: A binding to a property that indicates whether the toggle is on or off.
+    @available(*, deprecated, message: "Use the init without theme instead. Set the theme after the init.")
+    public init(
+        _ text: String,
+        theme: any Theme,
+        isOn: Binding<Bool>
+    ) where Label == Text {
+        self.deprecatedTheme = theme
+        self._isOn = isOn
+        self.label = { Text(text) }
+    }
+
+    /// Creates a Spark toggle that displays a custom label.
+    ///
+    /// - Parameters:
+    ///   - theme: The current theme.
+    ///   - isOn: A binding to a property that indicates whether the toggle is on or off.
+    ///   - label: A view that describes the purpose of the toggle.
+    @available(*, deprecated, message: "Use the init without theme instead. Set the theme after the init.")
+    public init(
         theme: any Theme,
         isOn: Binding<Bool>,
         @ViewBuilder label: @escaping () -> Label
     ) {
-        self.theme = theme
+        self.deprecatedTheme = theme
         self._isOn = isOn
         self.label = label
     }
@@ -240,13 +299,16 @@ public struct SparkToggle<Label>: View where Label: View {
             .accessibilityIdentifier(ToggleAccessibilityIdentifier.view)
             .onAppear() {
                 self.viewModel.setup(
-                    theme: self.theme,
+                    theme: self.deprecatedTheme ?? self.theme.value,
                     isOn: self.isOn,
                     isOnOffSwitchLabelsEnabled: UIAccessibility.isOnOffSwitchLabelsEnabled,
                     contrast: self.contrast,
                     isEnabled: self.isEnabled,
                     isCustomLabel: Label.self != EmptyView.self && Label.self != Text.self
                 )
+            }
+            .onChange(of: self.theme) { newTheme in
+                self.viewModel.theme = newTheme.value
             }
             .onChange(of: self.isOn) { isOn in
                 self.viewModel.isOn = isOn

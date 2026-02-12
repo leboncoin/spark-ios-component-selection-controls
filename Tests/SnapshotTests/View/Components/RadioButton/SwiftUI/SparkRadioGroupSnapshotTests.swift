@@ -35,10 +35,10 @@ final class SparkRadioGroupSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
             for configuration in configurations {
                 let view = SparkRadioGroup(
-                    theme: self.theme,
                     selectedID: .constant(1),
                     items: .allCases(contentResilience: configuration.content)
                 )
+                    .sparkTheme(self.theme)
                     .sparkRadioGroupAxis(configuration.axis)
                     .sparkRadioButtonIntent(configuration.intent)
                     .disabled(!configuration.status.isEnabled)

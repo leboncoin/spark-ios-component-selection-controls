@@ -35,6 +35,7 @@ final class SparkCheckboxSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
             for configuration in configurations {
                 let view = self.component(configuration: configuration)
+                    .sparkTheme(self.theme)
                     .sparkCheckboxIntent(configuration.intent)
                     .disabled(!configuration.status.isEnabled)
                     .style(forDocumentation: forDocumentation)
@@ -53,18 +54,15 @@ final class SparkCheckboxSnapshotTests: SwiftUIComponentSnapshotTestCase {
         if let text = configuration.content.text {
             SparkCheckbox(
                 text,
-                theme: self.theme,
                 selectionState: .constant(configuration.value.selectionState)
             )
         } else if configuration.content == .other {
             SparkCheckbox(
-                theme: self.theme,
                 selectionState: .constant(configuration.value.selectionState),
                 label: { OtherContentView() }
             )
         } else {
             SparkCheckbox(
-                theme: self.theme,
                 selectionState: .constant(configuration.value.selectionState)
             )
         }

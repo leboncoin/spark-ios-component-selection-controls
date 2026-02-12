@@ -22,6 +22,8 @@ struct RadioButtonStyle: ToggleStyle {
     @LimitedScaledMetric private var lineWidth: CGFloat
     @LimitedScaledMetric private var hoverPadding: CGFloat
 
+    @Environment(\.radioButtonIsAnimated) private var isAnimated
+
     // MARK: - Initialization
 
     init(viewModel: RadioButtonViewModel) {
@@ -64,7 +66,7 @@ struct RadioButtonStyle: ToggleStyle {
                         width: self.size,
                         height: self.size
                     )
-                    .transaction()
+                    .transaction(isAnimated: self.isAnimated)
                     .overlay(
                         self.pressedView(configuration: configuration)
                     )

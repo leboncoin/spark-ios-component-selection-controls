@@ -20,7 +20,6 @@ struct CheckboxStyle: ToggleStyle {
 
     @State private var isPressed: Bool = false
 
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.isEnabled) private var isEnabled
 
     @LimitedScaledMetric private var size: CGFloat

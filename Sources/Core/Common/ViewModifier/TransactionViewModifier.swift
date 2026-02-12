@@ -8,9 +8,11 @@
 
 import SwiftUI
 
-struct TransactionViewModifier: ViewModifier {
+private struct TransactionViewModifier: ViewModifier {
 
     // MARK: - Properties
+
+    let isAnimated: Bool
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
@@ -19,7 +21,7 @@ struct TransactionViewModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .transaction {
-                if self.reduceMotion {
+                if !self.isAnimated || self.reduceMotion {
                     $0.animation = nil
                 }
             }
@@ -30,7 +32,9 @@ struct TransactionViewModifier: ViewModifier {
 
 extension View {
 
-    func transaction() -> some View {
-        self.modifier(TransactionViewModifier())
+    func transaction(isAnimated: Bool = true) -> some View {
+        self.modifier(TransactionViewModifier(
+            isAnimated: isAnimated
+        ))
     }
 }
