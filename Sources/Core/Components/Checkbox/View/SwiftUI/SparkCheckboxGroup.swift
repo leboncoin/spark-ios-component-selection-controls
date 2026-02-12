@@ -19,7 +19,6 @@ import SparkTheming
 ///
 ///     var body: some View {
 ///         SparkCheckboxGroup(
-///             theme: self.theme,
 ///             selectedIDs: self.$selectedIDs,
 ///             items: [
 ///                 CheckboxGroupItem(
@@ -32,6 +31,7 @@ import SparkTheming
 ///                 )
 ///             ]
 ///         )
+///         .sparkTheme(self.theme)
 ///     }
 /// }
 /// ```
@@ -40,11 +40,13 @@ public struct SparkCheckboxGroup<ID, Label>: View where ID: SelectionControlsGro
 
     // MARK: - Properties
 
-    private let theme: any Theme
+    @available(*, deprecated, message: "Remove the deprecated and this property ASAP. (02/02/2026)")
+    private var deprecatedTheme: (any Theme)?
 
     @Binding private var selectedIDs: [ID]
     private let items: [CheckboxGroupItem<ID, Label>]
 
+    @Environment(\.theme) private var theme
     @Environment(\.checkboxGroupAxis) private var axis
 
     // MARK: - Initialization
@@ -54,7 +56,6 @@ public struct SparkCheckboxGroup<ID, Label>: View where ID: SelectionControlsGro
     /// Note : You must provide an *accessibilityLabel* !
     ///
     /// - Parameters:
-    ///   - theme: The current theme.
     ///   - selectedID: A binding to a property that indicates which checkbox is selected.
     ///   - items: The items (array of ``CheckboxGroupItem``) of the group.
     ///
@@ -66,7 +67,6 @@ public struct SparkCheckboxGroup<ID, Label>: View where ID: SelectionControlsGro
     ///
     ///     var body: some View {
     ///         SparkCheckboxGroup(
-    ///             theme: self.theme,
     ///             selectedIDs: self.$selectedIDs,
     ///             items: [
     ///                 CheckboxGroupItem(
@@ -79,17 +79,27 @@ public struct SparkCheckboxGroup<ID, Label>: View where ID: SelectionControlsGro
     ///                 )
     ///             ]
     ///         )
+    ///         .sparkTheme(self.theme)
     ///     }
     /// }     
     /// ```
     ///
     /// ![Checkbox Group rendering.](checkboxGroup.png)
     public init(
+        selectedIDs: Binding<[ID]>,
+        items: [CheckboxGroupItem<ID, Label>]
+    ) {
+        self._selectedIDs = selectedIDs
+        self.items = items
+    }
+
+    @available(*, deprecated, message: "Use the init without theme instead. Set the theme after the init.")
+    public init(
         theme: any Theme,
         selectedIDs: Binding<[ID]>,
         items: [CheckboxGroupItem<ID, Label>]
     ) {
-        self.theme = theme
+        self.deprecatedTheme = theme
         self._selectedIDs = selectedIDs
         self.items = items
     }
@@ -97,10 +107,10 @@ public struct SparkCheckboxGroup<ID, Label>: View where ID: SelectionControlsGro
     // MARK: - View
 
     public var body: some View {
-        CommonGroup(theme: self.theme) {
+        CommonGroup(theme: self.deprecatedTheme) {
             ForEach(self.items, id: \.id) { item in
                 SparkCheckbox(
-                    theme: self.theme,
+                    theme: self.deprecatedTheme,
                     isSelected: Binding(
                         get: {
                             self.selectedIDs.contains(item.id)

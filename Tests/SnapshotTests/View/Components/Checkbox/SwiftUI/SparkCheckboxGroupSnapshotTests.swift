@@ -35,10 +35,10 @@ final class SparkCheckboxGroupSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
             for configuration in configurations {
                 let view = SparkCheckboxGroup(
-                    theme: self.theme,
                     selectedIDs: .constant([1]),
                     items: .allCases(contentResilience: configuration.content)
                 )
+                    .sparkTheme(self.theme)
                     .sparkCheckboxGroupAxis(configuration.axis)
                     .sparkCheckboxIntent(configuration.intent)
                     .disabled(!configuration.status.isEnabled)

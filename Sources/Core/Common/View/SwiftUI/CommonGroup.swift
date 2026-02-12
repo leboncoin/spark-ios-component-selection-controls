@@ -14,21 +14,28 @@ internal struct CommonGroup<Content>: View where Content: View {
 
     // MARK: - Properties
 
-    private let theme: any Theme
+    @available(*, deprecated, message: "Remove the deprecated and this property ASAP. (02/02/2026)")
+    private var deprecatedTheme: (any Theme)?
+
     @ViewBuilder private let content: () -> Content
     private var axis: SelectionControlsAxis = .default
 
+    @Environment(\.theme) private var theme
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     @StateObject private var viewModel = CommonGroupViewModel()
 
     // MARK: - Initialization
 
+    init(content: @escaping () -> Content) {
+        self.content = content
+    }
+
     init(
-        theme: any Theme,
+        theme: (any Theme)?,
         content: @escaping () -> Content
     ) {
-        self.theme = theme
+        self.deprecatedTheme = theme
         self.content = content
     }
 
@@ -36,9 +43,10 @@ internal struct CommonGroup<Content>: View where Content: View {
 
     var body: some View {
         self.stack()
+            .selectionControlsStyleContext(.group(axis: self.axis))
             .onAppear() {
                 self.viewModel.setup(
-                    theme: self.theme,
+                    theme: self.deprecatedTheme ?? self.theme.value,
                     axis: self.axis,
                     isAccessibilitySize: self.dynamicTypeSize.isAccessibilitySize
                 )

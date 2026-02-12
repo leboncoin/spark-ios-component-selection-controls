@@ -21,9 +21,9 @@ import SparkTheming
 ///
 ///     var body: some View {
 ///         SparkCheckbox(
-///             theme: self.theme,
 ///             selectionState: self.$selectionState
 ///         )
+///         .sparkTheme(self.theme)
 ///     }
 /// }
 /// ```
@@ -46,9 +46,9 @@ import SparkTheming
 ///     var body: some View {
 ///         SparkCheckbox(
 ///             "My placeholder",
-///             theme: self.theme,
 ///             selectionState: self.$selectionState
 ///         )
+///         .sparkTheme(self.theme)
 ///     }
 /// }
 /// ```
@@ -65,7 +65,6 @@ import SparkTheming
 ///
 ///     var body: some View {
 ///         SparkCheckbox(
-///             theme: self.theme,
 ///             selectionState: self.$selectionState,
 ///             label: {
 ///                 VStack {
@@ -74,15 +73,39 @@ import SparkTheming
 ///                 }
 ///             }
 ///         )
+///         .sparkTheme(self.theme)
 ///     }
 /// }
 /// ```
 /// ![Checkbox rendering with a Label.](checkbox_with_label.png)
+///
+/// - **Full Width**
+/// If you want to have a full width checkbox, you must use a custom content and add **frame maxWidth** and a **contentShape** like this :
+/// ```swift
+/// struct MyView: View {
+///     let theme: SparkTheming.Theme = MyTheme()
+///     @State var selectionState = .unselected
+///
+///     var body: some View {
+///         SparkCheckbox(
+///             selectionState: self.$selectionState,
+///             label: {
+///                 VStack {
+///                     Text("Hello")
+///                     Text("World")
+///                 }
+///                 .frame(maxWidth: .infinity, alignment: .leading)
+///                 .contentShape(Rectangle())
+///             }
+///         )
+///         .sparkTheme(self.theme)
+///     }
+/// }
+/// ```
 public struct SparkCheckbox<Label>: View where Label: View {
 
     // MARK: - Properties
 
-    private let theme: any Theme
     @Binding private var selectionState: CheckboxSelectionState
     private let selectedIcon: Image = .sparkCheck
     private let indeterminateIcon: Image? = .sparkMinus
@@ -90,8 +113,14 @@ public struct SparkCheckbox<Label>: View where Label: View {
 
     @Environment(\.checkboxIntent) private var intent
     @Environment(\.isEnabled) private var isEnabled
+    @Environment(\.theme) private var theme
 
     @StateObject private var viewModel = CheckboxViewModel()
+
+    // MARK: - Private Properties
+
+    @available(*, deprecated, message: "Remove the deprecated and this property ASAP. (02/02/2026)")
+    private var deprecatedTheme: (any Theme)?
 
     // MARK: - Selection State Initialization
 
@@ -100,7 +129,6 @@ public struct SparkCheckbox<Label>: View where Label: View {
     /// Note : You must provide an *accessibilityLabel* !
     ///
     /// - Parameters:
-    ///   - theme: The current theme.
     ///   - selectionState: A binding to a property that indicates the checkbox selection state.
     ///
     /// Implementation example :
@@ -111,19 +139,17 @@ public struct SparkCheckbox<Label>: View where Label: View {
     ///
     ///     var body: some View {
     ///         SparkCheckbox(
-    ///             theme: self.theme,
     ///             selectionState: self.$selectionState
     ///         )
+    ///         .sparkTheme(self.theme)
     ///     }
     /// }
     /// ```
     ///
     /// ![Checkbox rendering.](checkbox_unselected.png)
     public init(
-        theme: any Theme,
         selectionState: Binding<CheckboxSelectionState>
     ) where Label == EmptyView {
-        self.theme = theme
         self._selectionState = selectionState
         self.label = { EmptyView() }
     }
@@ -133,7 +159,6 @@ public struct SparkCheckbox<Label>: View where Label: View {
     /// - Parameters:
     ///   - titleKey: The key for the checkbox's localized title, that describes
     ///     the purpose of the checkbox.
-    ///   - theme: The current theme.
     ///   - selectionState: A binding to a property that indicates the checkbox selection state.
     ///
     /// Implementation example :
@@ -145,9 +170,9 @@ public struct SparkCheckbox<Label>: View where Label: View {
     ///     var body: some View {
     ///         SparkCheckbox(
     ///             "My placeholder",
-    ///             theme: self.theme,
     ///             selectionState: self.$selectionState
     ///         )
+    ///         .sparkTheme(self.theme)
     ///     }
     /// }
     /// ```
@@ -155,10 +180,8 @@ public struct SparkCheckbox<Label>: View where Label: View {
     /// ![Checkbox rendering with a title.](checkbox_with_title.png)
     public init(
         _ titleKey: LocalizedStringKey,
-        theme: any Theme,
         selectionState: Binding<CheckboxSelectionState>
     ) where Label == Text {
-        self.theme = theme
         self._selectionState = selectionState
         self.label = { Text(titleKey) }
     }
@@ -168,7 +191,6 @@ public struct SparkCheckbox<Label>: View where Label: View {
     /// - Parameters:
     ///   - text: The text for the checkbox's localized title, that describes
     ///     the purpose of the checkbox.
-    ///   - theme: The current theme.
     ///   - selectionState: A binding to a property that indicates the checkbox selection state.
     ///
     /// Implementation example :
@@ -180,9 +202,9 @@ public struct SparkCheckbox<Label>: View where Label: View {
     ///     var body: some View {
     ///         SparkCheckbox(
     ///             "My placeholder",
-    ///             theme: self.theme,
     ///             selectionState: self.$selectionState
     ///         )
+    ///         .sparkTheme(self.theme)
     ///     }
     /// }
     /// ```
@@ -190,10 +212,8 @@ public struct SparkCheckbox<Label>: View where Label: View {
     /// ![Checkbox rendering with a title.](checkbox_with_title.png)
     public init(
         _ text: String,
-        theme: any Theme,
         selectionState: Binding<CheckboxSelectionState>
     ) where Label == Text {
-        self.theme = theme
         self._selectionState = selectionState
         self.label = { Text(text) }
     }
@@ -201,7 +221,6 @@ public struct SparkCheckbox<Label>: View where Label: View {
     /// Creates a Spark checkbox that displays a custom label.
     ///
     /// - Parameters:
-    ///   - theme: The current theme.
     ///   - selectionState: A binding to a property that indicates the checkbox selection state.
     ///   - label: A view that describes the purpose of the checkbox.
     ///
@@ -213,7 +232,6 @@ public struct SparkCheckbox<Label>: View where Label: View {
     ///
     ///     var body: some View {
     ///         SparkCheckbox(
-    ///             theme: self.theme,
     ///             selectionState: self.$selectionState,
     ///             label: {
     ///                 VStack {
@@ -222,18 +240,58 @@ public struct SparkCheckbox<Label>: View where Label: View {
     ///                 }
     ///             }
     ///         )
+    ///         .sparkTheme(self.theme)
     ///     }
     /// }     
     /// ```
     /// ![Checkbox rendering with a Label.](checkbox_with_label.png)
     public init(
-        theme: any Theme,
         selectionState: Binding<CheckboxSelectionState>,
         @ViewBuilder label: @escaping () -> Label
     ) {
-        self.theme = theme
         self._selectionState = selectionState
         self.label = label
+    }
+
+    // MARK: - Deprecated Initialization
+
+    @available(*, deprecated, message: "Use the init without theme instead. Set the theme after the init.")
+    public init(
+        theme: any Theme,
+        selectionState: Binding<CheckboxSelectionState>
+    ) where Label == EmptyView {
+        self.init(selectionState: selectionState)
+        self.deprecatedTheme = theme
+    }
+
+    @available(*, deprecated, message: "Use the init without theme instead. Set the theme after the init.")
+    public init(
+        _ titleKey: LocalizedStringKey,
+        theme: any Theme,
+        selectionState: Binding<CheckboxSelectionState>
+    ) where Label == Text {
+        self.init(titleKey, selectionState: selectionState)
+        self.deprecatedTheme = theme
+    }
+
+    @available(*, deprecated, message: "Use the init without theme instead. Set the theme after the init.")
+    public init(
+        _ text: String,
+        theme: any Theme,
+        selectionState: Binding<CheckboxSelectionState>
+    ) where Label == Text {
+        self.init(text, selectionState: selectionState)
+        self.deprecatedTheme = theme
+    }
+
+    @available(*, deprecated, message: "Use the init without theme instead. Set the theme after the init.")
+    public init(
+        theme: (any Theme)?,
+        selectionState: Binding<CheckboxSelectionState>,
+        @ViewBuilder label: @escaping () -> Label
+    ) {
+        self.init(selectionState: selectionState, label: label)
+        self.deprecatedTheme = theme
     }
 
     // MARK: - View
@@ -257,12 +315,15 @@ public struct SparkCheckbox<Label>: View where Label: View {
         .accessibilityIdentifier(CheckboxAccessibilityIdentifier.view)
         .onAppear() {
             self.viewModel.setup(
-                theme: self.theme,
+                theme: self.deprecatedTheme ?? self.theme.value,
                 intent: self.intent,
                 selectionState: self.selectionState,
                 isEnabled: self.isEnabled,
                 isCustomLabel: Label.self != EmptyView.self && Label.self != Text.self
             )
+        }
+        .onChange(of: self.theme) { newTheme in
+            self.viewModel.theme = newTheme.value
         }
         .onChange(of: self.intent) { intent in
             self.viewModel.intent = intent

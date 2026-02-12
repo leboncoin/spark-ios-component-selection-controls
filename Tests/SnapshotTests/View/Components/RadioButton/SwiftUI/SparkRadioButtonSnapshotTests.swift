@@ -35,6 +35,7 @@ final class SparkRadioButtonSnapshotTests: SwiftUIComponentSnapshotTestCase {
 
             for configuration in configurations {
                 let view = self.component(configuration: configuration)
+                    .sparkTheme(self.theme)
                     .sparkRadioButtonIntent(configuration.intent)
                     .disabled(!configuration.status.isEnabled)
                     .style(forDocumentation: forDocumentation)
@@ -53,18 +54,15 @@ final class SparkRadioButtonSnapshotTests: SwiftUIComponentSnapshotTestCase {
         if let text = configuration.content.text {
             SparkRadioButton(
                 text,
-                theme: self.theme,
                 isSelected: .constant(configuration.value.isSelected)
             )
         } else if configuration.content == .other {
             SparkRadioButton(
-                theme: self.theme,
                 isSelected: .constant(configuration.value.isSelected),
                 label: { OtherContentView() }
             )
         } else {
             SparkRadioButton(
-                theme: self.theme,
                 isSelected: .constant(configuration.value.isSelected)
             )
         }
