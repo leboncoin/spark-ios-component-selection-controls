@@ -35,10 +35,10 @@ final class CheckboxGetColorsUseCaseTests: XCTestCase {
 
     // MARK: - ExecuteStatic Tests
 
-    func test_executeStatic_withBasicIntent_returnsExpectedStaticColors() {
+    func test_executeStatic_withSupportIntent_returnsExpectedStaticColors() {
         // GIVEN
         let theme = ThemeGeneratedMock.mocked()
-        let intent = SelectionControlsIntent.basic
+        let intent = SelectionControlsIntent.support
         let expectedHover = ColorTokenGeneratedMock.random()
 
         self.getColorUseCase.executeHoverWithHoverThemeAndIntentReturnValue = expectedHover
@@ -47,7 +47,7 @@ final class CheckboxGetColorsUseCaseTests: XCTestCase {
         let result = self.useCase.executeStatic(theme: theme, intent: intent)
 
         // THEN
-        XCTAssertTrue(result.iconForeground.equals(theme.colors.basic.onBasic))
+        XCTAssertTrue(result.iconForeground.equals(theme.colors.support.onSupport))
         XCTAssertTrue(result.hover.equals(expectedHover))
 
         // Verify use case was called correctly
@@ -90,7 +90,7 @@ final class CheckboxGetColorsUseCaseTests: XCTestCase {
     func test_executeDynamic_withSelectedState_returnsExpectedDynamicColors() {
         // GIVEN
         let theme = ThemeGeneratedMock.mocked()
-        let intent = SelectionControlsIntent.basic
+        let intent = SelectionControlsIntent.support
         let selectionState = CheckboxSelectionState.selected
         let expectedBackground = ColorTokenGeneratedMock.random()
         let expectedBorder = ColorTokenGeneratedMock.random()
@@ -127,7 +127,7 @@ final class CheckboxGetColorsUseCaseTests: XCTestCase {
     func test_executeDynamic_withIndeterminateState_returnsExpectedDynamicColors() {
         // GIVEN
         let theme = ThemeGeneratedMock.mocked()
-        let intent = SelectionControlsIntent.basic
+        let intent = SelectionControlsIntent.support
         let selectionState = CheckboxSelectionState.indeterminate
         let expectedBackground = ColorTokenGeneratedMock.random()
         let expectedBorder = ColorTokenGeneratedMock.random()
@@ -156,7 +156,7 @@ final class CheckboxGetColorsUseCaseTests: XCTestCase {
     func test_executeDynamic_withUnselectedState_returnsExpectedDynamicColors() {
         // GIVEN
         let theme = ThemeGeneratedMock.mocked()
-        let intent = SelectionControlsIntent.basic
+        let intent = SelectionControlsIntent.support
         let selectionState = CheckboxSelectionState.unselected
         let expectedBorder = ColorTokenGeneratedMock.random()
 

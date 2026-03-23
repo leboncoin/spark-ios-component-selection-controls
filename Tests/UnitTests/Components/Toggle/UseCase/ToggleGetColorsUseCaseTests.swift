@@ -55,7 +55,7 @@ final class ToggleGetColorsUseCaseTests: XCTestCase {
             self.getColorUseCase,
             expectedNumberOfCalls: 1,
             givenHoverTheme: theme,
-            givenIntent: .basic,
+            givenIntent: .support,
             expectedReturnValue: expectedHover
         )
     }
@@ -85,7 +85,7 @@ final class ToggleGetColorsUseCaseTests: XCTestCase {
             self.getColorUseCase,
             expectedNumberOfCalls: 1,
             givenContentTheme: theme,
-            givenIntent: .basic,
+            givenIntent: .support,
             expectedReturnValue: expectedContent
         )
     }
@@ -113,7 +113,7 @@ final class ToggleGetColorsUseCaseTests: XCTestCase {
             self.getColorUseCase,
             expectedNumberOfCalls: 1,
             givenContentTheme: theme,
-            givenIntent: .basic,
+            givenIntent: .support,
             expectedReturnValue: expectedContent
         )
     }

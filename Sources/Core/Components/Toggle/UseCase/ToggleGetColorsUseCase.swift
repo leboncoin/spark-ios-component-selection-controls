@@ -33,7 +33,7 @@ struct ToggleGetColorsUseCase: ToggleGetColorsUseCaseable {
     func executeStatic(theme: any Theme) -> ToggleStaticColors {
         let hover = self.getColorUseCase.executeHover(
             theme: theme,
-            intent: .basic
+            intent: .support
         )
 
         return .init(
@@ -45,7 +45,7 @@ struct ToggleGetColorsUseCase: ToggleGetColorsUseCaseable {
     func executeDynamic(theme: any Theme, isOn: Bool) -> ToggleDynamicColors {
         let color = self.getColorUseCase.executeContent(
             theme: theme,
-            intent: .basic
+            intent: .support
         )
 
         return .init(

@@ -36,7 +36,7 @@ struct CheckboxGetColorsUseCase: CheckboxGetColorsUseCaseable {
     ) -> CheckboxStaticColors {
         let iconForeground = switch intent {
         case .error: theme.colors.feedback.onError
-        case .basic: theme.colors.basic.onBasic
+        case .support: theme.colors.support.onSupport
         }
 
         let hover = self.getColorUseCase.executeHover(

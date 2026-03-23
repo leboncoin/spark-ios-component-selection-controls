@@ -14,10 +14,10 @@ final class CommonGetColorUseCaseTests: XCTestCase {
 
     // MARK: - ExecuteContent Tests
 
-    func test_executeContent_withBasicIntent_returnsBasicColor() {
+    func test_executeContent_withSupportIntent_returnsSupportColor() {
         // GIVEN
         let theme = ThemeGeneratedMock.mocked()
-        let intent = SelectionControlsIntent.basic
+        let intent = SelectionControlsIntent.support
 
         let useCase = CommonGetColorUseCase()
 
@@ -28,7 +28,7 @@ final class CommonGetColorUseCaseTests: XCTestCase {
         )
 
         // THEN
-        XCTAssertTrue(result.equals(theme.colors.basic.basic))
+        XCTAssertTrue(result.equals(theme.colors.support.support))
     }
 
     func test_executeContent_withErrorIntent_returnsErrorColor() {
@@ -50,10 +50,10 @@ final class CommonGetColorUseCaseTests: XCTestCase {
 
     // MARK: - ExecuteBorder Tests
 
-    func test_executeBorder_withBasicIntentAndSelected_returnsBasicColor() {
+    func test_executeBorder_withSupportIntentAndSelected_returnsSupportColor() {
         // GIVEN
         let theme = ThemeGeneratedMock.mocked()
-        let intent = SelectionControlsIntent.basic
+        let intent = SelectionControlsIntent.support
         let isSelected = true
 
         let useCase = CommonGetColorUseCase()
@@ -66,13 +66,13 @@ final class CommonGetColorUseCaseTests: XCTestCase {
         )
 
         // THEN
-        XCTAssertTrue(result.equals(theme.colors.basic.basic))
+        XCTAssertTrue(result.equals(theme.colors.support.support))
     }
 
-    func test_executeBorder_withBasicIntentAndNotSelected_returnsOutlineColor() {
+    func test_executeBorder_withSupportIntentAndNotSelected_returnsOutlineColor() {
         // GIVEN
         let theme = ThemeGeneratedMock.mocked()
-        let intent = SelectionControlsIntent.basic
+        let intent = SelectionControlsIntent.support
         let isSelected = false
 
         let useCase = CommonGetColorUseCase()
@@ -128,10 +128,10 @@ final class CommonGetColorUseCaseTests: XCTestCase {
 
     // MARK: - ExecuteHover Tests
 
-    func test_executeHover_withBasicIntent_returnsBasicContainerColor() {
+    func test_executeHover_withSupportIntent_returnsSupportContainerColor() {
         // GIVEN
         let theme = ThemeGeneratedMock.mocked()
-        let intent = SelectionControlsIntent.basic
+        let intent = SelectionControlsIntent.support
 
         let useCase = CommonGetColorUseCase()
 
@@ -142,7 +142,7 @@ final class CommonGetColorUseCaseTests: XCTestCase {
         )
 
         // THEN
-        XCTAssertTrue(result.equals(theme.colors.basic.basicContainer))
+        XCTAssertTrue(result.equals(theme.colors.support.supportContainer))
     }
 
     func test_executeHover_withErrorIntent_returnsErrorContainerColor() {

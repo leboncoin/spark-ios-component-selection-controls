@@ -191,7 +191,7 @@ final class RadioButtonUIViewModelTests: XCTestCase {
 
         // WHEN
         viewModel.theme = ThemeGeneratedMock.mocked()
-        viewModel.intent = .basic
+        viewModel.intent = .support
         viewModel.selectedValueChanged(oldValue: true)
 
         // THEN

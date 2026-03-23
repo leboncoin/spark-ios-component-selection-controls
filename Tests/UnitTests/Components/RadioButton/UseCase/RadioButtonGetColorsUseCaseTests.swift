@@ -36,10 +36,10 @@ final class RadioButtonGetColorsUseCaseTests: XCTestCase {
 
     // MARK: - ExecuteStatic Tests
 
-    func test_executeStatic_withBasicIntent_returnsExpectedStaticColors() {
+    func test_executeStatic_withSupportIntent_returnsExpectedStaticColors() {
         // GIVEN
         let theme = ThemeGeneratedMock.mocked()
-        let intent = SelectionControlsIntent.basic
+        let intent = SelectionControlsIntent.support
         let expectedDot = ColorTokenGeneratedMock.random()
         let expectedHover = ColorTokenGeneratedMock.random()
 
@@ -117,7 +117,7 @@ final class RadioButtonGetColorsUseCaseTests: XCTestCase {
     func test_executeDynamic_withIsOnTrue_returnsExpectedDynamicColors() {
         // GIVEN
         let theme = ThemeGeneratedMock.mocked()
-        let intent = SelectionControlsIntent.basic
+        let intent = SelectionControlsIntent.support
         let isOn = true
         let expectedCircle = ColorTokenGeneratedMock.random()
 
@@ -147,7 +147,7 @@ final class RadioButtonGetColorsUseCaseTests: XCTestCase {
     func test_executeDynamic_withIsOnFalse_returnsExpectedDynamicColors() {
         // GIVEN
         let theme = ThemeGeneratedMock.mocked()
-        let intent = SelectionControlsIntent.basic
+        let intent = SelectionControlsIntent.support
         let isOn = false
         let expectedCircle = ColorTokenGeneratedMock.random()
 
