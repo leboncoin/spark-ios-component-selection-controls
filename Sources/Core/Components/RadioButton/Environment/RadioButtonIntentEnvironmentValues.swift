@@ -16,7 +16,7 @@ public extension View {
 
     /// Set the **intent** on the ``SparkRadioButton``.
     ///
-    /// The default value for this property is *RadioButtonIntent.basic*.
+    /// The default value for this property is *RadioButtonIntent.support*.
     func sparkRadioButtonIntent(_ intent: RadioButtonIntent) -> some View {
         self.environment(\.radioButtonIntent, intent)
     }

@@ -13,11 +13,11 @@ final class SelectionControlsIntentTests: XCTestCase {
 
     // MARK: - Properties Tests
 
-    func test_default_shouldReturnBasic() {
+    func test_default_shouldReturnSupport() {
         // GIVEN / WHEN
         let result = SelectionControlsIntent.default
 
         // THEN
-        XCTAssertEqual(result, .basic)
+        XCTAssertEqual(result, .support)
     }
 }

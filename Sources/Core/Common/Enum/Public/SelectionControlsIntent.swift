@@ -10,11 +10,11 @@ import Foundation
 
 /// Enum describing intent options for selection controls.
 public enum SelectionControlsIntent: String, CaseIterable {
-    case basic
+    case support
     case error
 
     // MARK: - Properties
 
-    /// The default case. Equals to **.basic**.
-    public static let `default`: Self = .basic
+    /// The default case. Equals to **.support**.
+    public static let `default`: Self = .support
 }

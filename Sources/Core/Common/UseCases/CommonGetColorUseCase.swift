@@ -44,7 +44,7 @@ struct CommonGetColorUseCase: CommonGetColorUseCaseable {
 
         return switch intent {
         case .error: state
-        case .basic: isSelected ? state : borderTheme.colors.base.outline
+        case .support: isSelected ? state : borderTheme.colors.base.outline
         }
     }
 
@@ -54,7 +54,7 @@ struct CommonGetColorUseCase: CommonGetColorUseCaseable {
     ) -> any ColorToken {
         return switch intent {
         case .error: hoverTheme.colors.feedback.errorContainer
-        case .basic: hoverTheme.colors.basic.basicContainer
+        case .support: hoverTheme.colors.support.supportContainer
         }
     }
 
@@ -66,7 +66,7 @@ struct CommonGetColorUseCase: CommonGetColorUseCaseable {
     ) -> any ColorToken {
         return switch intent {
         case .error: theme.colors.feedback.error
-        case .basic: theme.colors.basic.basic
+        case .support: theme.colors.support.support
         }
     }
 }

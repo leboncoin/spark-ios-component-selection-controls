@@ -16,7 +16,7 @@ public extension View {
 
     /// Set the **intent** on the ``SparkCheckbox``.
     ///
-    /// The default value for this property is *CheckboxIntent.basic*.
+    /// The default value for this property is *CheckboxIntent.support*.
     func sparkCheckboxIntent(_ intent: CheckboxIntent) -> some View {
         self.environment(\.checkboxIntent, intent)
     }

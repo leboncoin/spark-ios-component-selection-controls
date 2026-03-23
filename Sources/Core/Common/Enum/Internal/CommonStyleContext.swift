@@ -14,6 +14,6 @@ enum CommonStyleContext: Equatable {
 
     // MARK: - Properties
 
-    /// The default case. Equals to **.basic**.
+    /// The default case. Equals to **.alone**.
     static let `default`: Self = .alone
 }
