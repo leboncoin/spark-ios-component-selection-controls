@@ -2,8 +2,8 @@
 //  SelectionControlsIntent.swift
 //  SparkComponentSelectionControls
 //
-//  Created by michael.zimmermann on 18.09.23.
-//  Copyright © 2023 Leboncoin. All rights reserved.
+//  Created by robin.lemaire on 22/07/2025.
+//  Copyright © 2025 Leboncoin. All rights reserved.
 //
 
 import Foundation
