@@ -98,6 +98,7 @@ struct CheckboxStyle: ToggleStyle {
                         minHeight: self.size
                     )
             }
+            .compositingGroup()
         }
         .buttonPressedStyle(self.$isPressed)
         .sparkSensoryFeedback(trigger: configuration.isOn)

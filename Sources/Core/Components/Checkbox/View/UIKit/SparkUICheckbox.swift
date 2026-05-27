@@ -567,7 +567,7 @@ public final class SparkUICheckbox: UIControl {
     }
 
     private func updateAccessibilityValue() {
-        self.toggleView.accessibilityValue = self.isSelected ? "1" : "0"
+        self.toggleView.accessibilityValue = String.accessibilityValue(selectionState: self.selectionState)
     }
 
     private func updateAccessibilityEnabledTrait() {

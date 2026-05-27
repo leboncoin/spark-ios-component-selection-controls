@@ -534,7 +534,7 @@ public final class SparkUIRadioButton: UIControl {
     }
 
     private func updateAccessibilityValue() {
-        self.toggleView.accessibilityValue = self.isSelected ? "1" : "0"
+        self.toggleView.accessibilityValue = String.accessibilityValue(isSelected: self.isSelected)
     }
 
     private func updateAccessibilityEnabledTrait() {
