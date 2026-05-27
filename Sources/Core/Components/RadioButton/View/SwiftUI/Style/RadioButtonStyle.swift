@@ -71,6 +71,7 @@ struct RadioButtonStyle: ToggleStyle {
                         self.pressedView(configuration: configuration)
                     )
                 }
+                .compositingGroup()
                 .optionalAnimation(
                     .easeInOut(duration: CommonConstants.animationDuration),
                     value: self.isPressed
