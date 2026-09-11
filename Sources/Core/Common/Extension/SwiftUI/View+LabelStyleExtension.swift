@@ -3,7 +3,7 @@
 //  SparkComponentSelectionControls
 //
 //  Created by robin.lemaire on 30/07/2025.
-//  Copyright © 2025 Leboncoin. All rights reserved.
+//  Copyright © 2026 Leboncoin. All rights reserved.
 //
 
 import SwiftUI
@@ -24,13 +24,17 @@ extension View {
     }
 
     func applyHiddenLabelStyle(
-        viewModel: CommonViewModel,
+        showHiddenEmptyLabel: Bool,
+        titleStyle: CommonTitleStyle,
         width: CGFloat
     ) -> some View {
-        self.hiddenLabel(viewModel: viewModel)
-            .lineLimit(1)
-            .frame(width: width, alignment: .top)
-            .hidden()
+        self.hiddenLabel(
+            showHiddenEmptyLabel: showHiddenEmptyLabel,
+            titleStyle: titleStyle
+        )
+        .lineLimit(1)
+        .frame(width: width, alignment: .top)
+        .hidden()
     }
 
     // MARK: - View
@@ -40,6 +44,19 @@ extension View {
         if viewModel.showHiddenEmptyLabel {
             Text(" ")
                 .font(viewModel.titleStyle.typography)
+        } else {
+            self
+        }
+    }
+
+    @ViewBuilder
+    private func hiddenLabel(
+        showHiddenEmptyLabel: Bool,
+        titleStyle: CommonTitleStyle
+    ) -> some View {
+        if showHiddenEmptyLabel {
+            Text(" ")
+                .font(titleStyle.typography)
         } else {
             self
         }

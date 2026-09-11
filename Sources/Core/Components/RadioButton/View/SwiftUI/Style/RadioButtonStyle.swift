@@ -3,7 +3,7 @@
 //  SparkComponentSelectionControls
 //
 //  Created by robin.lemaire on 02/07/2025.
-//  Copyright © 2025 Leboncoin. All rights reserved.
+//  Copyright © 2026 Leboncoin. All rights reserved.
 //
 
 import SwiftUI
@@ -13,7 +13,12 @@ struct RadioButtonStyle: ToggleStyle {
 
     // MARK: - Properties
 
-    private let viewModel: RadioButtonViewModel
+    private let dynamicColors: RadioButtonDynamicColors
+    private let staticColors: RadioButtonStaticColors
+    private let dim: CGFloat
+    private let titleStyle: CommonTitleStyle
+    private let spacing: CGFloat
+    private let showHiddenEmptyLabel: Bool
 
     @State private var isPressed: Bool = false
 
@@ -26,8 +31,20 @@ struct RadioButtonStyle: ToggleStyle {
 
     // MARK: - Initialization
 
-    init(viewModel: RadioButtonViewModel) {
-        self.viewModel = viewModel
+    init(
+        dynamicColors: RadioButtonDynamicColors,
+        staticColors: RadioButtonStaticColors,
+        dim: CGFloat,
+        titleStyle: CommonTitleStyle,
+        spacing: CGFloat,
+        showHiddenEmptyLabel: Bool
+    ) {
+        self.dynamicColors = dynamicColors
+        self.staticColors = staticColors
+        self.dim = dim
+        self.titleStyle = titleStyle
+        self.spacing = spacing
+        self.showHiddenEmptyLabel = showHiddenEmptyLabel
 
         self._size = .init(value: RadioButtonConstants.size)
         self._dotSize = .init(value: RadioButtonConstants.dotSize)
@@ -41,13 +58,14 @@ struct RadioButtonStyle: ToggleStyle {
         Button {
             self.action(configuration: configuration)
         } label: {
-            SparkHStack(viewModel: self.viewModel) {
+            SparkHStack(spacing: self.spacing) {
                 ZStack {
 
                     // Hidden label used to align the toggle and the label
                     configuration.label
                         .applyHiddenLabelStyle(
-                            viewModel: self.viewModel,
+                            showHiddenEmptyLabel: self.showHiddenEmptyLabel,
+                            titleStyle: self.titleStyle,
                             width: self.size
                         )
 
@@ -55,13 +73,13 @@ struct RadioButtonStyle: ToggleStyle {
                     ZStack() {
                         Circle()
                             .strokeBorder(
-                                self.viewModel.dynamicColors.circle.color,
+                                self.dynamicColors.circle.color,
                                 lineWidth: self.lineWidth
                             )
 
                         self.dotView(configuration: configuration)
                     }
-                    .opacity(self.viewModel.dim)
+                    .opacity(self.dim)
                     .frame(
                         width: self.size,
                         height: self.size
@@ -84,7 +102,7 @@ struct RadioButtonStyle: ToggleStyle {
                 // Title
                 configuration.label
                     .applyLabelStyle(
-                        titleStyle: self.viewModel.titleStyle,
+                        titleStyle: self.titleStyle,
                         minHeight: self.size
                     )
             }
@@ -103,7 +121,7 @@ struct RadioButtonStyle: ToggleStyle {
     private func dotView(configuration: Configuration) -> some View {
         let size = configuration.isOn ? self.dotSize : 0
         Circle()
-            .fill(self.viewModel.staticColors.dot)
+            .fill(self.staticColors.dot)
             .frame(
                 width: size,
                 height: size
@@ -116,7 +134,7 @@ struct RadioButtonStyle: ToggleStyle {
             Circle()
                 .inset(by: -self.hoverPadding / 2)
                 .stroke(
-                    self.viewModel.staticColors.hover.color,
+                    self.staticColors.hover.color,
                     lineWidth: self.hoverPadding
                 )
         } else {
@@ -138,6 +156,13 @@ struct RadioButtonStyle: ToggleStyle {
 extension ToggleStyle where Self == RadioButtonStyle {
 
     static func custom(viewModel: RadioButtonViewModel) -> RadioButtonStyle {
-        .init(viewModel: viewModel)
+        .init(
+            dynamicColors: viewModel.dynamicColors,
+            staticColors: viewModel.staticColors,
+            dim: viewModel.dim,
+            titleStyle: viewModel.titleStyle,
+            spacing: viewModel.spacing,
+            showHiddenEmptyLabel: viewModel.showHiddenEmptyLabel
+        )
     }
 }

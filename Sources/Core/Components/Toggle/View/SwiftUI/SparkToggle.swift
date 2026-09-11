@@ -3,7 +3,7 @@
 //  SparkComponentSelectionControls
 //
 //  Created by robin.lemaire on 02/07/2025.
-//  Copyright © 2025 Leboncoin. All rights reserved.
+//  Copyright © 2026 Leboncoin. All rights reserved.
 //
 
 import SwiftUI

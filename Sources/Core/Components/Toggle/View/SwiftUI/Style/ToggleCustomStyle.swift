@@ -3,7 +3,7 @@
 //  SparkComponentSelectionControls
 //
 //  Created by robin.lemaire on 02/07/2025.
-//  Copyright © 2025 Leboncoin. All rights reserved.
+//  Copyright © 2026 Leboncoin. All rights reserved.
 //
 
 import SwiftUI
@@ -13,7 +13,15 @@ struct ToggleCustomStyle: ToggleStyle {
 
     // MARK: - Properties
 
-    private let viewModel: ToggleViewModel
+    private let dynamicColors: ToggleDynamicColors
+    private let staticColors: ToggleStaticColors
+    private let isIcon: Bool
+    private let contentRadius: CGFloat
+    private let dim: CGFloat
+    private let titleStyle: CommonTitleStyle
+    private let spacing: CGFloat
+    private let showHiddenEmptyLabel: Bool
+
     private let onIcon: Image = .sparkCheck
     private let offIcon: Image = .sparkCross
 
@@ -23,20 +31,37 @@ struct ToggleCustomStyle: ToggleStyle {
 
     // MARK: - Initialization
 
-    init(viewModel: ToggleViewModel) {
-        self.viewModel = viewModel
+    init(
+        dynamicColors: ToggleDynamicColors,
+        staticColors: ToggleStaticColors,
+        isIcon: Bool,
+        contentRadius: CGFloat,
+        dim: CGFloat,
+        titleStyle: CommonTitleStyle,
+        spacing: CGFloat,
+        showHiddenEmptyLabel: Bool
+    ) {
+        self.dynamicColors = dynamicColors
+        self.staticColors = staticColors
+        self.isIcon = isIcon
+        self.contentRadius = contentRadius
+        self.dim = dim
+        self.titleStyle = titleStyle
+        self.spacing = spacing
+        self.showHiddenEmptyLabel = showHiddenEmptyLabel
     }
 
     // MARK: - Body
 
     func makeBody(configuration: Configuration) -> some View {
-        SparkHStack(viewModel: self.viewModel) {
+        SparkHStack(spacing: self.spacing) {
             ZStack {
 
                 // Hidden label used to align the toggle and the label
                 configuration.label
                     .applyHiddenLabelStyle(
-                        viewModel: self.viewModel,
+                        showHiddenEmptyLabel: self.showHiddenEmptyLabel,
+                        titleStyle: self.titleStyle,
                         width: ToggleConstants.width
                     )
 
@@ -44,8 +69,8 @@ struct ToggleCustomStyle: ToggleStyle {
                 Button {
                     configuration.isOn.toggle()
                 } label: {
-                    RoundedRectangle(cornerRadius: self.viewModel.contentRadius)
-                        .fill(self.viewModel.dynamicColors.background)
+                    RoundedRectangle(cornerRadius: self.contentRadius)
+                        .fill(self.dynamicColors.background)
                         .overlay {
                             ZStack {
                                 HStack(alignment: .center, spacing: 0) {
@@ -53,18 +78,18 @@ struct ToggleCustomStyle: ToggleStyle {
                                         Spacer()
                                     }
 
-                                    RoundedRectangle(cornerRadius: self.viewModel.contentRadius)
-                                        .fill(self.viewModel.staticColors.dotBackground)
+                                    RoundedRectangle(cornerRadius: self.contentRadius)
+                                        .fill(self.staticColors.dotBackground)
                                         .padding(ToggleConstants.padding)
                                         .frame(
                                             width: self.canChangeDotSize() ? ToggleConstants.dotPressedSize : ToggleConstants.dotSize
                                         )
                                         .overlay {
-                                            if self.viewModel.isIcon {
+                                            if self.isIcon {
                                                 self.icon(configuration: configuration)
                                                     .resizable()
                                                     .aspectRatio(contentMode: .fit)
-                                                    .foregroundStyle(self.viewModel.dynamicColors.dotForeground)
+                                                    .foregroundStyle(self.dynamicColors.dotForeground)
                                                     .frame(size: ToggleConstants.dotIconSize)
                                             }
                                         }
@@ -75,7 +100,7 @@ struct ToggleCustomStyle: ToggleStyle {
                                 }
                             }
                         }
-                        .opacity(self.viewModel.dim)
+                        .opacity(self.dim)
                         .frame(
                             width: ToggleConstants.width,
                             height: ToggleConstants.height
@@ -103,7 +128,7 @@ struct ToggleCustomStyle: ToggleStyle {
             // Title
             configuration.label
                 .applyLabelStyle(
-                    titleStyle: self.viewModel.titleStyle,
+                    titleStyle: self.titleStyle,
                     minHeight: ToggleConstants.height
                 )
         }
@@ -122,10 +147,10 @@ struct ToggleCustomStyle: ToggleStyle {
     @ViewBuilder
     private func pressedView() -> some View {
         if self.isPressed {
-            RoundedRectangle(cornerRadius: self.viewModel.contentRadius)
+            RoundedRectangle(cornerRadius: self.contentRadius)
                 .inset(by: -CommonConstants.hoverPadding / 2)
                 .stroke(
-                    self.viewModel.staticColors.hover.color,
+                    self.staticColors.hover.color,
                     lineWidth: CommonConstants.hoverPadding
                 )
         } else {
@@ -145,7 +170,16 @@ struct ToggleCustomStyle: ToggleStyle {
 extension ToggleStyle where Self == ToggleCustomStyle {
 
     static func custom(viewModel: ToggleViewModel) -> ToggleCustomStyle {
-        .init(viewModel: viewModel)
+        .init(
+            dynamicColors: viewModel.dynamicColors,
+            staticColors: viewModel.staticColors,
+            isIcon: viewModel.isIcon,
+            contentRadius: viewModel.contentRadius,
+            dim: viewModel.dim,
+            titleStyle: viewModel.titleStyle,
+            spacing: viewModel.spacing,
+            showHiddenEmptyLabel: viewModel.showHiddenEmptyLabel
+        )
     }
 }
 
