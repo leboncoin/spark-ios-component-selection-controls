@@ -3,7 +3,7 @@
 //  SparkComponentSelectionControls
 //
 //  Created by robin.lemaire on 02/07/2025.
-//  Copyright © 2025 Leboncoin. All rights reserved.
+//  Copyright © 2026 Leboncoin. All rights reserved.
 //
 
 import SwiftUI
@@ -13,7 +13,16 @@ struct CheckboxStyle: ToggleStyle {
 
     // MARK: - Properties
 
-    private let viewModel: CheckboxViewModel
+    private let dynamicColors: CheckboxDynamicColors
+    private let staticColors: CheckboxStaticColors
+    private let toggleOpacities: CheckboxToggleOpacities
+    private let isIcon: Bool
+    private let selectionState: CheckboxSelectionState?
+    private let contentRadius: CGFloat
+    private let dim: CGFloat
+    private let titleStyle: CommonTitleStyle
+    private let spacing: CGFloat
+    private let showHiddenEmptyLabel: Bool
 
     private let selectedIcon: Image
     private let indeterminateIcon: Image?
@@ -33,11 +42,29 @@ struct CheckboxStyle: ToggleStyle {
     // MARK: - Initialization
 
     init(
-        viewModel: CheckboxViewModel,
+        dynamicColors: CheckboxDynamicColors,
+        staticColors: CheckboxStaticColors,
+        toggleOpacities: CheckboxToggleOpacities,
+        isIcon: Bool,
+        selectionState: CheckboxSelectionState?,
+        contentRadius: CGFloat,
+        dim: CGFloat,
+        titleStyle: CommonTitleStyle,
+        spacing: CGFloat,
+        showHiddenEmptyLabel: Bool,
         selectedIcon: Image,
         indeterminateIcon: Image?
     ) {
-        self.viewModel = viewModel
+        self.dynamicColors = dynamicColors
+        self.staticColors = staticColors
+        self.toggleOpacities = toggleOpacities
+        self.isIcon = isIcon
+        self.selectionState = selectionState
+        self.contentRadius = contentRadius
+        self.dim = dim
+        self.titleStyle = titleStyle
+        self.spacing = spacing
+        self.showHiddenEmptyLabel = showHiddenEmptyLabel
         self.selectedIcon = selectedIcon
         self.indeterminateIcon = indeterminateIcon
 
@@ -45,7 +72,7 @@ struct CheckboxStyle: ToggleStyle {
         self._lineWidth = .init(value: CheckboxConstants.lineWidth)
         self._iconPadding = .init(value: CheckboxConstants.iconPadding)
         self._hoverPadding = .init(value: CommonConstants.hoverPadding)
-        self._rectangleRadius = .init(value: viewModel.contentRadius)
+        self._rectangleRadius = .init(value: contentRadius)
     }
 
     // MARK: - Body
@@ -54,17 +81,18 @@ struct CheckboxStyle: ToggleStyle {
         Button {
             configuration.isOn.toggle()
 
-            if self.viewModel.selectionState != .indeterminate {
+            if self.selectionState != .indeterminate {
                 self.animatedId = .init()
             }
         } label: {
-            SparkHStack(viewModel: self.viewModel) {
+            SparkHStack(spacing: self.spacing) {
                 ZStack {
 
                     // Hidden label used to align the toggle and the label
                     configuration.label
                         .applyHiddenLabelStyle(
-                            viewModel: self.viewModel,
+                            showHiddenEmptyLabel: self.showHiddenEmptyLabel,
+                            titleStyle: self.titleStyle,
                             width: self.size
                         )
 
@@ -72,7 +100,7 @@ struct CheckboxStyle: ToggleStyle {
                         .overlay {
                             self.icon()
                         }
-                        .opacity(self.viewModel.dim)
+                        .opacity(self.dim)
                         .frame(
                             width: self.size,
                             height: self.size
@@ -94,7 +122,7 @@ struct CheckboxStyle: ToggleStyle {
                 // Title
                 configuration.label
                     .applyLabelStyle(
-                        titleStyle: self.viewModel.titleStyle,
+                        titleStyle: self.titleStyle,
                         minHeight: self.size
                     )
             }
@@ -113,32 +141,32 @@ struct CheckboxStyle: ToggleStyle {
     private func roundedRectangle(configuration: Configuration) -> some View {
         ZStack {
             RoundedRectangle(cornerRadius: self.rectangleRadius)
-                .fill(self.viewModel.dynamicColors.background)
-                .opacity(self.viewModel.toggleOpacities.background)
+                .fill(self.dynamicColors.background)
+                .opacity(self.toggleOpacities.background)
 
             RoundedRectangle(cornerRadius: self.rectangleRadius)
                 .strokeBorder(
-                    self.viewModel.dynamicColors.border.color,
+                    self.dynamicColors.border.color,
                     lineWidth: self.lineWidth
                 )
-                .opacity(self.viewModel.toggleOpacities.border)
+                .opacity(self.toggleOpacities.border)
         }
         .id(self.animatedId)
     }
 
     @ViewBuilder
     private func icon() -> some View {
-        let icon: Image? = switch self.viewModel.selectionState {
+        let icon: Image? = switch self.selectionState {
         case .selected: self.selectedIcon
         case .indeterminate: self.indeterminateIcon
         default: nil
         }
 
-        if let icon, self.viewModel.isIcon {
+        if let icon, self.isIcon {
             icon
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .foregroundStyle(self.viewModel.staticColors.iconForeground)
+                .foregroundStyle(self.staticColors.iconForeground)
                 .padding(self.iconPadding)
         } else {
             EmptyView()
@@ -151,7 +179,7 @@ struct CheckboxStyle: ToggleStyle {
             RoundedRectangle(cornerRadius: self.rectangleRadius)
                 .inset(by: -self.hoverPadding / 2)
                 .stroke(
-                    self.viewModel.staticColors.hover.color,
+                    self.staticColors.hover.color,
                     lineWidth: CommonConstants.hoverPadding
                 )
         } else {
@@ -170,7 +198,16 @@ extension ToggleStyle where Self == CheckboxStyle {
         indeterminateIcon: Image?
     ) -> CheckboxStyle {
         .init(
-            viewModel: viewModel,
+            dynamicColors: viewModel.dynamicColors,
+            staticColors: viewModel.staticColors,
+            toggleOpacities: viewModel.toggleOpacities,
+            isIcon: viewModel.isIcon,
+            selectionState: viewModel.selectionState,
+            contentRadius: viewModel.contentRadius,
+            dim: viewModel.dim,
+            titleStyle: viewModel.titleStyle,
+            spacing: viewModel.spacing,
+            showHiddenEmptyLabel: viewModel.showHiddenEmptyLabel,
             selectedIcon: selectedIcon,
             indeterminateIcon: indeterminateIcon
         )

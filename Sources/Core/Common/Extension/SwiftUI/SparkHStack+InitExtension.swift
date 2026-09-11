@@ -12,12 +12,12 @@ import SparkCommon
 extension SparkHStack {
 
     init(
-        viewModel: CommonViewModel,
+        spacing: CGFloat,
         @ViewBuilder content: @escaping () -> Content
     )  {
         self.init(
             alignment: .top,
-            spacing: viewModel.spacing,
+            spacing: spacing,
             content: content
         )
     }
